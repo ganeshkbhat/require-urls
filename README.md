@@ -9,7 +9,7 @@ This module has a single simple function `requireurl` for URL (git raw file) res
 var requireurl = require("require-urls");
 
 var fileone = requireurl("https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/index.js");
-var filetwo = requireurl("https://github.com/ganeshkbhat/requireurl/blob/7cc9eebe406b435182e342b5a4f5fa2702707120/index.js");
+var filetwo = requireurl("https://raw.githubusercontent.com/ganeshkbhat/requireurl/8d8681c4a28d64f23fb473064fa86880a0b930ff/index.js");
 
 ```
 

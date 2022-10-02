@@ -1,7 +1,7 @@
 {
-  "name": "requireurl",
+  "name": "require-remote",
   "version": "0.0.1",
-  "description": "Deno Mode in commonjs: Replace nodejs require function with requireurl",
+  "description": "Deno Mode in commonjs: Replace nodejs require function with requireurl using repository url-require. npm install url-require",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec --recursive --config ./mocha.test.config.js"
@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/ganeshkbhat/requireurl.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Ganesh Bhat",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ganeshkbhat/requireurl/issues"
   },

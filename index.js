@@ -12,7 +12,7 @@
 */
 
 
-function requireurl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon/main/lib/sinon.js", options = { baseType: "git" }) {
+function requireurl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon/main/lib/sinon.js", options = { baseType: "git", forceUpdate: false }) {
     if (!!pathFetch.includes("https://github.com/") || !!pathFetch.includes("https://www.github.com/")) {
         pathFetch = pathFetch.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
     }
@@ -76,15 +76,24 @@ function requireurl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon
 
     return fetch(pathFetch).then(response => response.text())
         .then(function (data) {
+
+            function fetchAndWrite(u) {
+                return fs.writeFile(u, data, function (err) {
+                    if (err) { return console.log("RequireURL: index.js: ", err); }
+                    return require(u);
+                });
+            }
+
+            if (!!options.forceUpdate) {
+                return fetchAndWrite(gitFileCacheUrl);
+            }
+
             try {
                 if (fs.existsSync(gitFileCacheUrl)) {
                     return require(gitFileCacheUrl);
                 }
             } catch (err) {
-                fs.writeFile(gitFileCacheUrl, data, function (err) {
-                    if (err) { return console.log("RequireURL: index.js: ", err); }
-                    return require(gitFileCacheUrl);
-                });
+                return fetchAndWrite(gitFileCacheUrl);
             }
         });
 }

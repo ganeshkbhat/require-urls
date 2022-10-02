@@ -71,7 +71,8 @@ function requireurl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon
             fs.mkdirSync(localGitDir, { recursive: true });
         })
     } catch (err) {
-        console.log("RequireURL: index.js: file access error", err);
+        // console.log("RequireURLs: index.js: file access error", err);
+        throw new Error("RequireURLs: index.js: file access error", err.toString());
     }
 
     return fetch(pathFetch).then(response => response.text())
@@ -79,7 +80,10 @@ function requireurl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon
 
             function fetchAndWrite(u) {
                 return fs.writeFile(u, data, function (err) {
-                    if (err) { return console.log("RequireURL: index.js: ", err); }
+                    if (err) {
+                        // console.log("RequireURLs: index.js: ", err); 
+                        throw new Error("RequireURLs: index.js: ", err.toString());
+                    }
                     return require(u);
                 });
             }

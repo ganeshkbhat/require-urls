@@ -1,7 +1,7 @@
 {
-  "name": "require-remote",
+  "name": "require-urls",
   "version": "0.0.1",
-  "description": "Deno Mode in commonjs: Replace nodejs require function with requireurl using repository url-require. npm install url-require",
+  "description": "Deno Mode in commonjs: Replace nodejs require function with requireurl using repository",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec --recursive --config ./mocha.test.config.js"

@@ -3,7 +3,7 @@
  * Package: requireurl
  * Author: Ganesh B
  * Description: Nodejs npm module to traverse folder using code or cli or use glob patterns
- * Install: npm i requireurl --save
+ * Install: npm i require-urls --save
  * Github: https://github.com/ganeshkbhat/requireurl
  * npmjs Link: 
  * File: index.js
@@ -12,7 +12,7 @@
 */
 
 
-function requireurl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon/main/lib/sinon.js", options = { baseType: "git", forceUpdate: false }) {
+function requireurl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon/main/lib/sinon.js", options = { baseType: "git", forceUpdate: false, recursive: true }) {
     if (!!pathFetch.includes("https://github.com/") || !!pathFetch.includes("https://www.github.com/")) {
         pathFetch = pathFetch.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
     }

@@ -1,4 +1,15 @@
-/** */
+/**
+ * 
+ * Package: requireurl
+ * Author: Ganesh B
+ * Description: Nodejs npm module to traverse folder using code or cli or use glob patterns
+ * Install: npm i requireurl --save
+ * Github: https://github.com/ganeshkbhat/requireurl
+ * npmjs Link: 
+ * File: index.js
+ * File Description: Using requireurl instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
+ * 
+*/
 
 
 function requireUrl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon/main/lib/sinon.js", options = { baseType: "git" }) {

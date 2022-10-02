@@ -12,7 +12,7 @@
 */
 
 
-function requireUrl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon/main/lib/sinon.js", options = { baseType: "git" }) {
+function requireurl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon/main/lib/sinon.js", options = { baseType: "git" }) {
     if (!!pathFetch.includes("https://github.com/") || !!pathFetch.includes("https://www.github.com/")) {
         pathFetch = pathFetch.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
     }
@@ -89,4 +89,4 @@ function requireUrl(pathFetch = "https://raw.githubusercontent.com/sinonjs/sinon
         });
 }
 
-module.exports = requireUrl;
+module.exports = requireurl;

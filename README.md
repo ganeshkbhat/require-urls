@@ -23,6 +23,7 @@ let c = requireurls(
         /* request remote url */
         "https://raw.githubusercontent.com/ganeshkbhat/requireurl/8d8681c4a28d64f23fb473064fa86880a0b930ff/index.js",
         {
+            /* You can add all inbuilt default options of require's resolve function */
             /* options: git, bitbucket */
             baseType: "git",
             /* recursive: will allow for recursive pull and cache of files relative to remote url path */

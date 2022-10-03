@@ -11,44 +11,6 @@
  * 
 */
 
-// const { resolve } = require('path');
-
-// resolve: [Function: resolve] { paths: [Function: paths] },
-//   main: Module {
-//     id: '.',
-//     path: 'C:\\Users\\GB\\Documents\\projects\\requireurl',
-//     exports: {},
-//     filename: 'C:\\Users\\GB\\Documents\\projects\\requireurl\\t.js',
-//     loaded: false,
-//     children: [],
-//     paths: [
-//       'C:\\Users\\GB\\Documents\\projects\\requireurl\\node_modules',
-//       'C:\\Users\\GB\\Documents\\projects\\node_modules',
-//       'C:\\Users\\GB\\Documents\\node_modules',
-//       'C:\\Users\\GB\\node_modules',
-//       'C:\\Users\\node_modules',
-//       'C:\\node_modules'
-//     ]
-//   },
-//   extensions: [Object: null prototype] {
-//     '.js': [Function (anonymous)],
-//     '.json': [Function (anonymous)],
-//     '.node': [Function (anonymous)]
-//   },
-//   cache: [Object: null prototype] {
-//     'C:\\Users\\GB\\Documents\\projects\\requireurl\\t.js': Module {
-//       id: '.',
-//       path: 'C:\\Users\\GB\\Documents\\projects\\requireurl',
-//       exports: {},
-//       filename: 'C:\\Users\\GB\\Documents\\projects\\requireurl\\t.js',
-//       loaded: false,
-//       children: [],
-//       paths: [Array]
-//     }
-//   }
-// }
-
-
 function requireurl(request = "", options = { baseType: "git", recursive: true, forceUpdate: true, logger: console.log }) {
 
     if (!!request.includes("https://github.com/") || !!request.includes("https://www.github.com/")) {

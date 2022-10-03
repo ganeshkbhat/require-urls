@@ -1,7 +1,7 @@
 {
   "name": "require-urls",
-  "version": "0.0.2",
-  "description": "Deno Mode in commonjs: Replace nodejs require function with requireurl using repository",
+  "version": "0.0.3",
+  "description": "Deno Mode in commonjs: Replace nodejs require function with requireurls using repository",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec --recursive --config ./mocha.test.config.js"
@@ -23,5 +23,13 @@
     "unimported": "^1.22.0"
   },
   "dependencies": {
-  }
+  },
+  "keywords": [
+    "require",
+    "urls",
+    "remote",
+    "deno style require",
+    "golang style require",
+    "cache remote require files"
+  ]
 }

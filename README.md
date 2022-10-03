@@ -14,7 +14,9 @@ It also, by default, allows for cacheing files in the repository. The files are 
 
 `let requireurls = require("require-urls"); requireurls(request, options);`
 
+
 ```
+
 
 let requireurls = require("require-urls");
 

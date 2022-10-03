@@ -11,6 +11,8 @@
  * 
 */
 
+// const { resolve } = require('path');
+
 // resolve: [Function: resolve] { paths: [Function: paths] },
 //   main: Module {
 //     id: '.',
@@ -47,16 +49,8 @@
 // }
 
 
-// function moduleIsAvailable(path) {
-//     try {
-//         require.resolve(path);
-//         return true;
-//     } catch (e) {
-//         return false;
-//     }
-// }
-
 function requireurl(request = "", options = { baseType: "git", recursive: true, forceUpdate: true, logger: console.log }) {
+
     if (!!request.includes("https://github.com/") || !!request.includes("https://www.github.com/")) {
         request = request.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
     }
@@ -111,6 +105,21 @@ function requireurl(request = "", options = { baseType: "git", recursive: true, 
     var localGitFile = gitFileCacheUrl.split("\\").pop();
     var localGitDir = gitFileCacheUrl.replace(localGitFile, "");
 
+    var requirePaths = request;
+    requirePaths.split("/").pop();
+    require.main.paths.push(requirePaths);
+
+    if (!!global.require) {
+        global.require = require;
+        global.require.resolve = function (request, options) {
+            try {
+                return require.resolve(request, options);
+            } catch (e) {
+                return requireurl(request, { ...options, baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate });
+            }
+        }
+    }
+
     try {
         fs.access(path.join(localGitDir), (e) => {
             fs.mkdirSync(localGitDir, { recursive: true });
@@ -118,10 +127,6 @@ function requireurl(request = "", options = { baseType: "git", recursive: true, 
     } catch (err) {
         throw new Error("RequireURLs: index.js: file access error", err.toString());
     }
-
-    var requirePaths = request;
-    requirePaths.split("/").pop();
-    require.main.paths.push(requirePaths);
 
     options.logger("RequireURLs: index.js: All Paths request, gitUrlFetch, gitUrl, gitCacheUrl,  gitFileCacheUrl, localGitFile, localGitDir: ", request, ",", gitUrlFetch, ",", gitUrl, ",", gitCacheUrl, ",", gitFileCacheUrl, ",", localGitFile, ",", localGitDir);
     options.logger("RequireURLs: index.js: Making Fetch request to ", request);
@@ -151,17 +156,6 @@ function requireurl(request = "", options = { baseType: "git", recursive: true, 
                 return fetchWriteRequire(gitFileCacheUrl);
             }
         });
-}
-
-if (!!global.require) {
-    global.require = require;
-    global.require.resolve = function (request, options) {
-        try {
-            return require.resolve(request, options);
-        } catch (e) {
-            return requireurl(request, { ...options, baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate });
-        }
-    }
 }
 
 module.exports = requireurl;

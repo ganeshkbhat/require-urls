@@ -10,6 +10,10 @@ It also, by default, allows for cacheing files in the repository. The files are 
 
 `npm install require-urls --save`
 
+### Usage
+
+`let requireurl = require("require-urls"); requireurls(request, options);`
+
 ```
 
 let requireurl = require("require-urls");

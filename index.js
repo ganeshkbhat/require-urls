@@ -11,6 +11,7 @@
  * 
 */
 
+
 function requireurl(request = "", options = { baseType: "git", recursive: true, forceUpdate: true, logger: console.log }) {
 
     if (!!request.includes("https://github.com/") || !!request.includes("https://www.github.com/")) {

@@ -11,10 +11,54 @@
  * 
 */
 
+// resolve: [Function: resolve] { paths: [Function: paths] },
+//   main: Module {
+//     id: '.',
+//     path: 'C:\\Users\\GB\\Documents\\projects\\requireurl',
+//     exports: {},
+//     filename: 'C:\\Users\\GB\\Documents\\projects\\requireurl\\t.js',
+//     loaded: false,
+//     children: [],
+//     paths: [
+//       'C:\\Users\\GB\\Documents\\projects\\requireurl\\node_modules',
+//       'C:\\Users\\GB\\Documents\\projects\\node_modules',
+//       'C:\\Users\\GB\\Documents\\node_modules',
+//       'C:\\Users\\GB\\node_modules',
+//       'C:\\Users\\node_modules',
+//       'C:\\node_modules'
+//     ]
+//   },
+//   extensions: [Object: null prototype] {
+//     '.js': [Function (anonymous)],
+//     '.json': [Function (anonymous)],
+//     '.node': [Function (anonymous)]
+//   },
+//   cache: [Object: null prototype] {
+//     'C:\\Users\\GB\\Documents\\projects\\requireurl\\t.js': Module {
+//       id: '.',
+//       path: 'C:\\Users\\GB\\Documents\\projects\\requireurl',
+//       exports: {},
+//       filename: 'C:\\Users\\GB\\Documents\\projects\\requireurl\\t.js',
+//       loaded: false,
+//       children: [],
+//       paths: [Array]
+//     }
+//   }
+// }
 
-function requireurl(pathFetch = "", options = { baseType: "git", forceUpdate: false, recursive: true }) {
-    if (!!pathFetch.includes("https://github.com/") || !!pathFetch.includes("https://www.github.com/")) {
-        pathFetch = pathFetch.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
+
+// function moduleIsAvailable(path) {
+//     try {
+//         require.resolve(path);
+//         return true;
+//     } catch (e) {
+//         return false;
+//     }
+// }
+
+function requireurl(request = "", options = { baseType: "git", recursive: true, forceUpdate: true, logger: console.log }) {
+    if (!!request.includes("https://github.com/") || !!request.includes("https://www.github.com/")) {
+        request = request.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
     }
 
     const path = require('path');
@@ -31,6 +75,7 @@ function requireurl(pathFetch = "", options = { baseType: "git", forceUpdate: fa
         }
 
         if (!start.length) {
+            options.logger('RequireURL: index.js: repo base .git/ or node_modules/ not found in path');
             throw new Error('RequireURL: index.js: repo base .git/ or node_modules/ not found in path');
         }
 
@@ -51,7 +96,7 @@ function requireurl(pathFetch = "", options = { baseType: "git", forceUpdate: fa
         }
     }
 
-    var gitUrlFetch = pathFetch.split("https://raw.githubusercontent.com/")[1];
+    var gitUrlFetch = request.split("https://")[1];
     var gitUrl = path.join(findGitRoot(process.cwd()).split(".git")[0]);
     var gitCacheUrl = path.join(findGitRoot(process.cwd()).split(".git")[0], ".jscache");
 
@@ -74,12 +119,20 @@ function requireurl(pathFetch = "", options = { baseType: "git", forceUpdate: fa
         throw new Error("RequireURLs: index.js: file access error", err.toString());
     }
 
-    return fetch(pathFetch).then(response => response.text())
+    var requirePaths = request;
+    requirePaths.split("/").pop();
+    require.main.paths.push(requirePaths);
+
+    options.logger("RequireURLs: index.js: All Paths request, gitUrlFetch, gitUrl, gitCacheUrl,  gitFileCacheUrl, localGitFile, localGitDir: ", request, ",", gitUrlFetch, ",", gitUrl, ",", gitCacheUrl, ",", gitFileCacheUrl, ",", localGitFile, ",", localGitDir);
+    options.logger("RequireURLs: index.js: Making Fetch request to ", request);
+
+    return fetch(request).then(response => response.text())
         .then(function (data) {
 
-            function fetchAndWrite(u) {
+            function fetchWriteRequire(u) {
                 return fs.writeFile(u, data, function (err) {
                     if (err) {
+                        options.logger("RequireURLs: index.js: ", err.toString());
                         throw new Error("RequireURLs: index.js: ", err.toString());
                     }
                     return require(u);
@@ -87,7 +140,7 @@ function requireurl(pathFetch = "", options = { baseType: "git", forceUpdate: fa
             }
 
             if (!!options.forceUpdate) {
-                return fetchAndWrite(gitFileCacheUrl);
+                return fetchWriteRequire(gitFileCacheUrl);
             }
 
             try {
@@ -95,9 +148,20 @@ function requireurl(pathFetch = "", options = { baseType: "git", forceUpdate: fa
                     return require(gitFileCacheUrl);
                 }
             } catch (err) {
-                return fetchAndWrite(gitFileCacheUrl);
+                return fetchWriteRequire(gitFileCacheUrl);
             }
         });
+}
+
+if (!!global.require) {
+    global.require = require;
+    global.require.resolve = function (request, options) {
+        try {
+            return require.resolve(request, options);
+        } catch (e) {
+            return requireurl(request, { ...options, baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate });
+        }
+    }
 }
 
 module.exports = requireurl;

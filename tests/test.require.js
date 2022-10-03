@@ -10,3 +10,18 @@
  * File Description: Test for the requireurl function
  * 
 */
+
+
+// // install url
+// require("internalmodule")
+// require("installedmodule")
+// require("filefullpath")
+// require("filerelativepath")
+// require("urlpath")
+// require("urljscachepath")
+
+// // When you find for url path install package.json modules
+// require("urlrelativepath")
+// require("urlrelativejscachepath")
+// require("packageurl")
+

@@ -1,6 +1,6 @@
 {
   "name": "require-urls",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Deno Mode in commonjs: Replace nodejs require function with requireurls using repository",
   "main": "index.js",
   "scripts": {

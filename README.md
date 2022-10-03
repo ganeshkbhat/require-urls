@@ -22,7 +22,7 @@ c.then(d => console.log("testing", d));
 
 ### TODO
 - Does not support ES `import` statement as yet.
-- Add recurisive imports and cacheing for remote files. Minor changes needed.
+- Add `recurisive` imports and cacheing for remote files. Minor changes needed.
 - Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository
 
 ### Contributions

@@ -11,6 +11,9 @@
  * 
 */
 
+/* eslint no-console: 0 */
+
+'use strict';
 
 function requireurl(request = "", options = { baseType: "git", recursive: true, forceUpdate: true, logger: console.log }) {
 

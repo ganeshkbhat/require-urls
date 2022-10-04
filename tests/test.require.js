@@ -10,7 +10,9 @@
  * File Description: Test for the requireurl function
  * 
 */
+/* eslint no-console: 0 */
 
+'use strict';
 
 // // install url
 // require("internalmodule")

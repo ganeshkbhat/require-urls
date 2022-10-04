@@ -22,8 +22,6 @@
     "sinon": "^14.0.0",
     "unimported": "^1.22.0"
   },
-  "dependencies": {
-  },
   "keywords": [
     "require",
     "urls",

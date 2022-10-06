@@ -1,13 +1,13 @@
 /**
  * 
- * Package: requireurl
+ * Package: require-urls
  * Author: Ganesh B
  * Description: Nodejs npm module to traverse folder using code or cli or use glob patterns
  * Install: npm i require-urls --save
  * Github: https://github.com/ganeshkbhat/requireurl
  * npmjs Link: 
  * File: index.js
- * File Description: Using requireurl instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
+ * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * 
 */
 
@@ -122,7 +122,7 @@ function url(request, options = { baseType: "git", recursive: false, forceUpdate
             try {
                 return require.resolve(request, options);
             } catch (e) {
-                return requireurl(request, { ...options, baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate });
+                return requireurls(request, { ...options, baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate });
             }
         }
     }
@@ -141,7 +141,7 @@ function url(request, options = { baseType: "git", recursive: false, forceUpdate
     return fetchOrRequire(request, gitFileCacheUrl, options);
 }
 
-function requireurl(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
+function requireurls(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
     if (!request.includes("package.json")) {
         if (!!options.recursive) {
             return recursiveUrl(request, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: console.log });
@@ -153,4 +153,4 @@ function requireurl(request = "", options = { baseType: "git", recursive: false,
     }
 }
 
-module.exports = requireurl;
+module.exports = requireurls;

@@ -60,7 +60,7 @@ logger: console.log
 ```
 
 ```
-/* Adds the `.jscache` or remotely fetched files to `.cache` [require.cache](https://nodejs.org/api/modules.html#requirecache) of nodejs */
+/* Adds the `.jscache` or remotely fetched files using `require.cache` feature of nodejs */
 /* Default is false */
 
 cacheFetch: true

@@ -98,16 +98,6 @@ function fetchOrRequire(request, gitFileCacheUrl, options) {
         }.bind(fetchWriteRequire));
 }
 
-function recursiveUrl(request = "", options = { baseType: "git", recursive: true, forceUpdate: false, logger: console.log }) {
-
-}
-
-function packageJson(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
-    if (!!request.includes("package.json")) {
-
-    }
-}
-
 function url(request, options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
     if (!!request.includes("https://github.com/") || !!request.includes("https://www.github.com/")) {
         request = request.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
@@ -141,9 +131,20 @@ function url(request, options = { baseType: "git", recursive: false, forceUpdate
     return fetchOrRequire(request, gitFileCacheUrl, options);
 }
 
+function recursiveUrl(request = "", options = { baseType: "git", recursive: true, forceUpdate: false, logger: console.log }) {
+
+}
+
+function packageJson(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
+    if (!!request.includes("package.json")) {
+
+    }
+}
+
+
 function requireurls(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log, getMethods: false }) {
     if (options.getMethods === true) { return { url, recursiveUrl, packageJson } };
-    
+
     if (!request.includes("package.json")) {
         if (!!options.recursive) {
             return recursiveUrl(request, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: console.log });

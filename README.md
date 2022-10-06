@@ -13,7 +13,7 @@ It also, by default, allows for cacheing files in the repository. The files are 
 
 `npm install require-urls --save`
 
-NPM Package: [require-urls](https://www.npmjs.com/package/require-urls)
+npm Package: [require-urls](https://www.npmjs.com/package/require-urls)
 
 
 ### Usage

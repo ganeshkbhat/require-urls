@@ -59,6 +59,13 @@ forceUpdate: false
 logger: console.log
 ```
 
+```
+/* getMethods: Get all the methods of require-urls.*/
+/* Default is false */
+
+getMethods: false
+```
+
 
 #### Demo Usage Code
 

@@ -82,10 +82,10 @@ function getRequirePaths(request, options) {
     };
 }
 
-async function fetchWriteRequire(u, data, options) {
+async function fetchWriteRequire(remoteUrl, data, options) {
     options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
-    await fs.promises.writeFile(u, data.toString());
-    return require(u);
+    await fs.promises.writeFile(remoteUrl, data.toString());
+    return require(remoteUrl);
 }
 
 function fetchOrRequire(request, gitFileCacheUrl, options) {
@@ -141,7 +141,9 @@ function url(request, options = { baseType: "git", recursive: false, forceUpdate
     return fetchOrRequire(request, gitFileCacheUrl, options);
 }
 
-function requireurls(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
+function requireurls(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log, getMethods: false }) {
+    if (options.getMethods === true) { return { url, recursiveUrl, packageJson } };
+    
     if (!request.includes("package.json")) {
         if (!!options.recursive) {
             return recursiveUrl(request, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: console.log });

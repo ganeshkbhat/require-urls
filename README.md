@@ -16,6 +16,7 @@ It also, by default, allows for cacheing files in the repository. The files are 
 
 #### options Object
 
+
 ```
 /* You can add all inbuilt default options of require's resolve function */
 ```

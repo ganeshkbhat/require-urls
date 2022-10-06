@@ -5,7 +5,7 @@ Deno Mode in commonjs require: Replace nodejs require function with requireurls 
 
 This module has a single simple function `requireurls` for URL (git raw file) resolution and parsing meant to have feature parity with node.js core url module.
 
-It also, by default, allows for cacheing (rather storing) files in the repository. The files are stored in `.jscache` folder. The file can be pulled from the cache, if already cached. You can force update the cache file if needed. The `.jscache` looks like the folder in the repository saved. Do have a look at it.
+It also, by default, allows for cacheing (rather storing) files in a temporary working folder/repository. The files are stored in `.jscache` folder. The file can be pulled from the cache, if already cached. You can force update the cache file if needed. The `.jscache` looks like the folder in the repository saved. Do have a look at it.
 
 
 ### Installation

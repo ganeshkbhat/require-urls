@@ -12,7 +12,8 @@ It also, by default, allows for cacheing files in the repository. The files are 
 
 
 `npm install require-urls --save`
-[require-urls](https://www.npmjs.com/package/require-urls)
+
+NPM Package: [require-urls](https://www.npmjs.com/package/require-urls)
 
 
 ### Usage

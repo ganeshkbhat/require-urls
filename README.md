@@ -28,7 +28,7 @@ NPM Package: [require-urls](https://www.npmjs.com/package/require-urls)
 /* You can add all inbuilt default options of require's resolve function */
 ```
 
-The default require options can be found here: [require.resolve](https://nodejs.org/api/modules.html#requireresolverequest-options)
+The default require options can be found here: [require.resolve](https://nodejs.org/api/modules.html#requireresolverequest-options). All other options customized for `require-urls` are as below:
 
 
 ```

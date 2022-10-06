@@ -5,7 +5,7 @@
  * Description: Nodejs npm module to traverse folder using code or cli or use glob patterns
  * Install: npm i require-urls --save
  * Github: https://github.com/ganeshkbhat/requireurl
- * npmjs Link: 
+ * npmjs Link: https://www.npmjs.com/package/require-urls
  * File: tests/test.require.js
  * File Description: Test for the requireurl function
  * 

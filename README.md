@@ -1,7 +1,8 @@
-# requireurl
+# require-urls
 
 
-Deno Mode in commonjs require: Replace nodejs require function with requireurls function that can fetch remote urls.
+`Deno Mode in commonjs require`:
+Replace nodejs require function with requireurls function that can fetch remote urls.
 
 This module has a single simple function `requireurls` for URL (git raw file) resolution and parsing meant to have feature parity with node.js core url module.
 

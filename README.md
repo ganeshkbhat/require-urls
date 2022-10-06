@@ -71,6 +71,7 @@ cacheFetch: true
 /* getMethods: Get all the methods of require-urls.*/
 /* Default is false */
 /* Returns an object { remoteurl, recursiveUrl, packageJson } instead of a requireurls function */
+/* Usage: requireurls("", { getMethods: true }) */
 
 getMethods: false
 ```

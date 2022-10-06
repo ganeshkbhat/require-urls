@@ -147,7 +147,6 @@ function packageJson(request = "", options = { baseType: "git", recursive: false
     }
 }
 
-
 function requireurls(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log, cacheFetch: false, getMethods: false }) {
     if (options.getMethods === true) { return { remoteurl, recursiveUrl, packageJson } };
 

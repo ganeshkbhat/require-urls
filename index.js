@@ -98,17 +98,17 @@ function fetchOrRequire(request, gitFileCacheUrl, options) {
         }.bind(fetchWriteRequire));
 }
 
-function recursiveUrl(request = "", options = { baseType: "git", recursive: true, forceUpdate: true, logger: console.log }) {
+function recursiveUrl(request = "", options = { baseType: "git", recursive: true, forceUpdate: false, logger: console.log }) {
 
 }
 
-function packageJson(request = "", options = { baseType: "git", recursive: false, forceUpdate: true, logger: console.log }) {
+function packageJson(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
     if (!!request.includes("package.json")) {
 
     }
 }
 
-function url(request, options = { baseType: "git", recursive: false, forceUpdate: true, logger: console.log }) {
+function url(request, options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
     if (!!request.includes("https://github.com/") || !!request.includes("https://www.github.com/")) {
         request = request.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
     }

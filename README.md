@@ -14,14 +14,14 @@ It also, by default, allows for cacheing files in the repository. The files are 
 
 `let requireurls = require("require-urls"); requireurls(request, options);`
 
-#### options
+#### options Object
 
 ```
 /* You can add all inbuilt default options of require's resolve function */
 ```
 
 ```
-/* options: git, bitbucket.*/
+/* options: git, bitbucket, etc.*/
 /* Default is `git`. */
 
 baseType: "git"

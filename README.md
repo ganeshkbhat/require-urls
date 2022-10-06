@@ -106,10 +106,11 @@ c.then(d => console.log("testing", d));
 ### TODO
 
 
-- Consider adding the `.jscache` to `.cache` [require.cache](https://nodejs.org/api/modules.html#requirecache) of Nodejs.
-- Does not support ES `import` statement as yet.
 - Add `recursive` imports and cacheing for remote files. Minor changes needed.
+- Consider adding the `.jscache` to `.cache` [require.cache](https://nodejs.org/api/modules.html#requirecache) of Nodejs.
 - Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository
+- Does not support ES `import` statement as yet.
+
 
 
 ### Contributions

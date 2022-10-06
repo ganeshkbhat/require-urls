@@ -23,24 +23,28 @@ It also, by default, allows for cacheing files in the repository. The files are 
 ```
 /* options: git, bitbucket.*/
 /* Default is `git`. */
-baseType: "git",
+
+baseType: "git"
 ```
 
 ```
 /* recursive: will allow for recursive pull and cache of files relative to remote url path. */
 /* Default is false. */
-recursive: false,
+
+recursive: false
 ```
 
 ```
 /* forceUpdate: force update the .jscache folder for the remote url files.*/
 /* Default is false. */
-forceUpdate: false,
+
+forceUpdate: false
 ```
 
 ```
 /* logger: provide a logger function to use.*/
 /* Default is console.log */
+
 logger: console.log
 ```
 

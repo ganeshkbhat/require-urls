@@ -7,6 +7,10 @@
     "demo": "node ./demos/demo.js",
     "test": "mocha --reporter spec --recursive --config ./mocha.test.config.js"
   },
+  "exports": {
+    "require": "./index.js",
+    "import": "./index.mjs"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ganeshkbhat/requireurl.git"

@@ -70,6 +70,7 @@ cacheFetch: true
 ```
 /* getMethods: Get all the methods of require-urls.*/
 /* Default is false */
+/* Returns an object with structure like { remoteurl, recursiveUrl, packageJson } instead of a requireurls function */
 
 getMethods: false
 ```

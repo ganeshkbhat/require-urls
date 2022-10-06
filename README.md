@@ -5,7 +5,7 @@ Deno Mode in commonjs require: Replace nodejs require function with requireurls 
 
 This module has a single simple function `requireurls` for URL (git raw file) resolution and parsing meant to have feature parity with node.js core url module.
 
-It also, by default, allows for cacheing (rather storing) files in a temporary working folder/repository. The files are stored in `.jscache` temporary folder. The file can be pulled from the cache, if already cached. You can force update the cache file if needed. The `.jscache` looks like the folder in the repository saved. Do have a look at it.
+It also, by default, allows for cacheing (rather storing) files in a temporary working folder/repository. The files are stored in `.jscache` temporary folder. The file can be pulled from the cache, if already cached. You can force update the cache file if needed. The `.jscache` looks like the folder in the repository saved. You have an option to cache the files into node cache using the []() option by specifying `cacheFetch` option. Do have a look at it.
 
 
 ### Installation
@@ -60,6 +60,13 @@ logger: console.log
 ```
 
 ```
+/* Adds the `.jscache` or remotely fetched files to `.cache` [require.cache](https://nodejs.org/api/modules.html#requirecache) of nodejs */
+/* Default is false */
+
+cacheFetch: true
+```
+
+```
 /* getMethods: Get all the methods of require-urls.*/
 /* Default is false */
 
@@ -107,8 +114,7 @@ c.then(d => console.log("testing", d));
 
 
 - Add `recursive` imports and cacheing for remote files. Minor changes needed.
-- Consider adding the `.jscache` to `.cache` [require.cache](https://nodejs.org/api/modules.html#requirecache) of Nodejs.
-- Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository
+- Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository.
 - Does not support ES `import` statement as yet.
 
 

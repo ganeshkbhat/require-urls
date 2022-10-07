@@ -15,7 +15,7 @@
 
 'use strict';
 
-import requireurls from "./src/wrapper.js";
+import requireurls from "./wrapper.mjs";
 
 /**
  *
@@ -29,8 +29,9 @@ import requireurls from "./src/wrapper.js";
  */
 export function resolve(specifier, context, nextResolve) {
   const { parentURL = null } = context;
-
-  // console.log("context", context);
+  if (!!parentURL) {
+    return nextResolve(specifier);
+  }
 
   /*
    * 
@@ -81,7 +82,6 @@ export function load(url, context, nextLoad) {
   if (url.startsWith('https://') || url.startsWith('http://')) {
     return new Promise((resolve, reject) => {
       try {
-
         return requireurls(url).then((data) => {
           resolve({
             format: 'module',

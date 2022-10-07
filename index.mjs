@@ -15,5 +15,5 @@
 
 'use strict';
 
-import requireurls from './src/wrapper.js';
+import requireurls from './wrapper.mjs';
 export default requireurls; 

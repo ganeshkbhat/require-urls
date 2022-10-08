@@ -29,9 +29,9 @@ import requireurls from "./wrapper.mjs";
  */
 export function resolve(specifier, context, nextResolve) {
   const { parentURL = null } = context;
-  if (!!parentURL) {
-    return nextResolve(specifier);
-  }
+  // if (!!parentURL) {
+  //   return nextResolve(specifier);
+  // }
 
   /*
    * 
@@ -83,14 +83,21 @@ export function load(url, context, nextLoad) {
     return new Promise((resolve, reject) => {
       try {
         return requireurls(url).then((data) => {
+          console.log(data.toString());
           resolve({
             format: 'module',
             shortCircuit: true,
-            source: data,
+            source: data.toString(),
           })
         });
       } catch (err) {
-        reject(err)
+        console.log(err.toString())
+        // reject(err)
+        resolve({
+          format: 'module',
+          shortCircuit: true,
+          source: err.toString,
+        })
       }
     });
   }

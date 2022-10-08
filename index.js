@@ -86,7 +86,13 @@ async function fetchWriteRequire(remoteUrl, data, options) {
     options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
     if (!!options.cacheFetch) {
+        if (remoteUrl.includes(".mjs")) {
+            import("node:" + remoteUrl);
+        }
         return require("node:" + remoteUrl);
+    }
+    if (remoteUrl.includes(".mjs")) {
+        import(remoteUrl);
     }
     return require(remoteUrl);
 }

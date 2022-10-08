@@ -94,7 +94,7 @@ async function fetchWriteRequire(remoteUrl, data, options) {
     if (remoteUrl.includes(".mjs")) {
         import(remoteUrl);
     }
-    return require(remoteUrl);
+    return import(remoteUrl);
 }
 
 function fetchOrRequire(request, gitFileCacheUrl, options) {

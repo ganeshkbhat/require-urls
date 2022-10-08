@@ -15,7 +15,7 @@
 
 'use strict';
 
-import * as requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/index.mjs";
+import * as requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/wrapper.js";
 console.log(requireurls);
 
 requireurls.then(d => console.log("Testing returns", d));

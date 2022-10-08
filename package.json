@@ -3,6 +3,7 @@
   "version": "0.0.6",
   "description": "Deno Mode in commonjs: Replace nodejs require function with requireurls using repository",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "demojs": "node ./demos/demo.js",
     "demomjs": "node ./demos/demo.mjs",

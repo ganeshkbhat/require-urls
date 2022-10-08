@@ -17,6 +17,7 @@
 
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
 
 function findGitRoot(start) {
     start = start || module.parent.filename;
@@ -85,16 +86,12 @@ function getRequirePaths(request, options) {
 async function fetchWriteRequire(remoteUrl, data, options) {
     options.logger("RequireURLs: index.mjs: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
-    // // Commenting cache import due to error
-    // if (!!options.cacheFetch) {
-    //     if (remoteUrl.includes(".mjs")) {
-    //         return import("node:" + remoteUrl);
-    //     }
-    //     return import("node:" + remoteUrl);
-    // }
+    
     if (remoteUrl.includes("C:") || remoteUrl.includes("c:")) {
-        remoteUrl = remoteUrl.replace("C:", "file://C:");
-        remoteUrl = remoteUrl.replace("c:", "file://c:");
+        if (os.type() === "Windows_NT") {
+            remoteUrl = remoteUrl.replace("C:", "file:///C:");
+            remoteUrl = remoteUrl.replace("c:", "file:///c:");
+        }
     }
     if (remoteUrl.includes(".mjs")) {
         return import(remoteUrl);
@@ -133,18 +130,13 @@ function remoteUrl(request, options = { baseType: "git", recursive: false, force
 
     options.logger("RequireURLs: index.mjs: All Paths request, gitUrlFetch, gitUrl, gitCacheUrl,  gitFileCacheUrl, localGitFile, localGitDir: ", request, ",", gitUrlFetch, ",", gitUrl, ",", gitCacheUrl, ",", gitFileCacheUrl, ",", localGitFile, ",", localGitDir);
     options.logger("RequireURLs: index.mjs: Making Fetch request to ", request);
-
     return fetchOrRequire(request, gitFileCacheUrl, options);
 }
 
-function recursiveUrl(request, options = { baseType: "git", recursive: true, forceUpdate: false, logger: console.log }) {
-
-}
+function recursiveUrl(request, options = { baseType: "git", recursive: true, forceUpdate: false, logger: console.log }) { }
 
 function packageJson(request, options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
-    if (!!request.includes("package.json")) {
-
-    }
+    if (!!request.includes("package.json")) { }
 }
 
 function requireurls(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log, cacheFetch: false, getMethods: false }) {

@@ -15,7 +15,7 @@
 
 'use strict';
 
-import requireurls from './index.js';
+import requireurls from './index.mjs';
 
 // process.env.NODE_OPTIONS = '--experimental-modules --loader ./custom-loader.mjs';
 // export default requireurls; 

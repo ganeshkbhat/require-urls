@@ -6,7 +6,7 @@
  * Install: npm i require-urls --save
  * Github: https://github.com/ganeshkbhat/requireurl
  * npmjs Link: https://www.npmjs.com/package/require-urls
- * File: indexw.mjs
+ * File: index.mjs
  * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * 
 */
@@ -29,8 +29,8 @@ function findGitRoot(start) {
     }
 
     if (!start.length) {
-        options.logger('RequireURL: indexw.mjs: repo base .git/ or node_modules/ not found in path');
-        throw new Error('RequireURL: indexw.mjs: repo base .git/ or node_modules/ not found in path');
+        options.logger('RequireURL: index.mjs: repo base .git/ or node_modules/ not found in path');
+        throw new Error('RequireURL: index.mjs: repo base .git/ or node_modules/ not found in path');
     }
 
     start.pop();
@@ -83,13 +83,13 @@ function getRequirePaths(request, options) {
 }
 
 async function fetchWriteRequire(remoteUrl, data, options) {
-    options.logger("RequireURLs: indexw.mjs: Writing fetched file to .jscache");
+    options.logger("RequireURLs: index.mjs: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
     if (!!options.cacheFetch) {
         if (remoteUrl.includes(".mjs")) {
-            import("node:" + remoteUrl);
+            import(remoteUrl);
         }
-        return import("node:" + remoteUrl);
+        return import(remoteUrl);
     }
     if (remoteUrl.includes(".mjs")) {
         import(remoteUrl);
@@ -116,29 +116,17 @@ function remoteUrl(request, options = { baseType: "git", recursive: false, force
     }
 
     let { gitUrlFetch, gitUrl, gitCacheUrl, gitFileCacheUrl, localGitFile, localGitDir, requirePaths } = getRequirePaths(request, options);
-    // require.main.paths.push(requirePaths);
-
-    // if (!!global.require) {
-    //     global.require = require;
-    //     global.require.resolve = function (request, options) {
-    //         try {
-    //             return import(request, options);
-    //         } catch (e) {
-    //             return requireurls(request, { ...options, baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate });
-    //         }
-    //     }
-    // }
 
     try {
         fs.access(path.join(localGitDir), (e) => {
             fs.mkdirSync(localGitDir, { recursive: true });
         })
     } catch (err) {
-        throw new Error("RequireURLs: indexw.mjs: file access error", err.toString());
+        throw new Error("RequireURLs: index.mjs: file access error", err.toString());
     }
 
-    options.logger("RequireURLs: indexw.mjs: All Paths request, gitUrlFetch, gitUrl, gitCacheUrl,  gitFileCacheUrl, localGitFile, localGitDir: ", request, ",", gitUrlFetch, ",", gitUrl, ",", gitCacheUrl, ",", gitFileCacheUrl, ",", localGitFile, ",", localGitDir);
-    options.logger("RequireURLs: indexw.mjs: Making Fetch request to ", request);
+    options.logger("RequireURLs: index.mjs: All Paths request, gitUrlFetch, gitUrl, gitCacheUrl,  gitFileCacheUrl, localGitFile, localGitDir: ", request, ",", gitUrlFetch, ",", gitUrl, ",", gitCacheUrl, ",", gitFileCacheUrl, ",", localGitFile, ",", localGitDir);
+    options.logger("RequireURLs: index.mjs: Making Fetch request to ", request);
 
     return fetchOrRequire(request, gitFileCacheUrl, options);
 }

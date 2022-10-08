@@ -15,8 +15,8 @@
 
 'use strict';
 
-import requireurls from "https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/index.mjs";
-// console.log(requireurls);
+import requireurls from "https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/indexw.js";
+console.log(requireurls);
 
 requireurls.then(d => console.log("Testing returns", d));
 

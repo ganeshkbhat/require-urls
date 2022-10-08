@@ -16,4 +16,5 @@
 'use strict';
 
 import requireurls from './wrapper.mjs';
+console.log(requireurls);
 export default requireurls; 

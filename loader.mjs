@@ -15,7 +15,7 @@
 
 'use strict';
 
-let requireurls = import("./index.js");
+import requireurls from "./index.js";
 
 /**
  *

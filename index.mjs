@@ -87,7 +87,7 @@ async function fetchWriteRequire(remoteUrl, data, options) {
     await fs.promises.writeFile(remoteUrl, data.toString());
     
     if (remoteUrl.startsWith("c:") || remoteUrl.startsWith("C:")) {
-        remoteUrl.replace("C:", "C").replace("c:", "c");
+        // remoteUrl.replace("C:", "C").replace("c:", "c");
         remoteUrl += "file://"
     }
 

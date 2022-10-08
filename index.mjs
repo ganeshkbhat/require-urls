@@ -92,8 +92,11 @@ async function fetchWriteRequire(remoteUrl, data, options) {
     //     }
     //     return import("node:" + remoteUrl);
     // }
-    remoteUrl.replace("C:", "file://")
-    remoteUrl.replace("c:", "file://")
+    if (remoteUrl.includes("C:") || remoteUrl.includes("c:")) {
+        remoteUrl.replace("C:", "file://C:")
+        remoteUrl.replace("c:", "file://c:")
+    }
+
     if (remoteUrl.includes(".mjs")) {
         return import(remoteUrl);
     }

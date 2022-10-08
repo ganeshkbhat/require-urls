@@ -87,7 +87,7 @@ export function load(url, context, nextLoad) {
           resolve({
             format: 'module',
             shortCircuit: true,
-            source: JSON.stringify(data),
+            source: data,
           })
         });
       } catch (err) {

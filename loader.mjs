@@ -91,7 +91,7 @@ export function load(url, context, nextLoad) {
           })
         });
       } catch (err) {
-        console.log(err.toString())
+        console.log(err.toString());
         // reject(err)
         resolve({
           format: 'module',

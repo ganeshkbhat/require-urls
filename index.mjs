@@ -133,7 +133,9 @@ function remoteUrl(request, options = { baseType: "git", recursive: false, force
     return fetchOrRequire(request, gitFileCacheUrl, options);
 }
 
-function recursiveUrl(request, options = { baseType: "git", recursive: true, forceUpdate: false, logger: console.log }) { }
+function recursiveUrl(request, options = { baseType: "git", recursive: true, forceUpdate: false, logger: console.log }) {
+    
+}
 
 function packageJson(request, options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log }) {
     if (!!request.includes("package.json")) { }

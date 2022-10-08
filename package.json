@@ -4,7 +4,8 @@
   "description": "Deno Mode in commonjs: Replace nodejs require function with requireurls using repository",
   "main": "index.js",
   "scripts": {
-    "demo": "node ./demos/demo.js",
+    "demojs": "node ./demos/demo.js",
+    "demomjs": "node ./demos/demo.mjs",
     "test": "mocha --reporter spec --recursive --config ./mocha.test.config.js"
   },
   "exports": {

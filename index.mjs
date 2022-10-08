@@ -87,9 +87,9 @@ async function fetchWriteRequire(remoteUrl, data, options) {
     await fs.promises.writeFile(remoteUrl, data.toString());
     if (!!options.cacheFetch) {
         if (remoteUrl.includes(".mjs")) {
-            import("node:" + remoteUrl);
+            import(remoteUrl);
         }
-        return import("node:" + remoteUrl);
+        return import(remoteUrl);
     }
     if (remoteUrl.includes(".mjs")) {
         import(remoteUrl);

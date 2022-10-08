@@ -85,7 +85,7 @@ function getRequirePaths(request, options) {
 async function fetchWriteRequire(remoteUrl, data, options) {
     options.logger("RequireURLs: index.mjs: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
-
+    // // Commenting cache import due to error
     // if (!!options.cacheFetch) {
     //     if (remoteUrl.includes(".mjs")) {
     //         return import("node:" + remoteUrl);
@@ -99,6 +99,7 @@ async function fetchWriteRequire(remoteUrl, data, options) {
 }
 
 function fetchOrRequire(request, gitFileCacheUrl, options) {
+    // // Commenting cache import due to error
     // if (fs.existsSync(gitFileCacheUrl) && !options.forceUpdate) {
     //     if (!!options.cacheFetch) {
     //         return import("node:" + gitFileCacheUrl);

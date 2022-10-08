@@ -85,20 +85,15 @@ function getRequirePaths(request, options) {
 async function fetchWriteRequire(remoteUrl, data, options) {
     options.logger("RequireURLs: index.mjs: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
-    
-    if (remoteUrl.startsWith("c:") || remoteUrl.startsWith("C:")) {
-        // remoteUrl.replace("C:", "C").replace("c:", "c");
-        remoteUrl += "file://"
-    }
 
     if (!!options.cacheFetch) {
         if (remoteUrl.includes(".mjs")) {
-            import(remoteUrl);
+            return import("node:" + remoteUrl);
         }
-        return import(remoteUrl);
+        return import("node:" + remoteUrl);
     }
     if (remoteUrl.includes(".mjs")) {
-        import(remoteUrl);
+        return import(remoteUrl);
     }
     return import(remoteUrl);
 }
@@ -108,7 +103,7 @@ function fetchOrRequire(request, gitFileCacheUrl, options) {
         if (!!options.cacheFetch) {
             return import("node:" + gitFileCacheUrl);
         }
-        return import(gitFileCacheUrl);
+        return import("node:" + gitFileCacheUrl);
     }
     return fetch(request).then(response => response.text())
         .then(function (data) {

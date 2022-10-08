@@ -98,7 +98,7 @@ async function fetchWriteRequire(remoteUrl, data, options) {
 }
 
 function fetchOrRequire(request, gitFileCacheUrl, options) {
-    if (fs.existsSync(gitFileCacheUrl) && !!options.forceUpdate) {
+    if (fs.existsSync(gitFileCacheUrl) && !options.forceUpdate) {
         if (!!options.cacheFetch) {
             return require("node:" + gitFileCacheUrl);
         }

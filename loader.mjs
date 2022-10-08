@@ -96,7 +96,7 @@ export function load(url, context, nextLoad) {
         resolve({
           format: 'module',
           shortCircuit: true,
-          source: err.toString,
+          source: err.toString(),
         })
       }
     });

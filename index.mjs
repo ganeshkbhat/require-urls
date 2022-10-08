@@ -15,8 +15,8 @@
 
 'use strict';
 
-const path = import('path');
-const fs = import('fs');
+import * as path from 'path';
+import * as fs from 'fs';
 
 function findGitRoot(start) {
     start = start || module.parent.filename;

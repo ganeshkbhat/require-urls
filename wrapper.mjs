@@ -6,7 +6,7 @@
  * Install: npm i require-urls --save
  * Github: https://github.com/ganeshkbhat/requireurl
  * npmjs Link: https://www.npmjs.com/package/require-urls
- * File: wrapper.js
+ * File: wrapper.mjs
  * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * 
 */
@@ -15,8 +15,7 @@
 
 'use strict';
 
-import requireurls from './index.mjs';
-
+import requireurls from './index.js';
 // process.env.NODE_OPTIONS = '--experimental-modules --loader ./custom-loader.mjs';
-// export default requireurls; 
-console.log(requireurls.default);
+export default requireurls;
+

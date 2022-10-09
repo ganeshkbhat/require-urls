@@ -83,7 +83,7 @@ export function load(url, context, nextLoad) {
     return new Promise((resolve, reject) => {
       try {
         return requireurls(url).then((data) => {
-          console.log(data);
+          console.log(JSON.stringify(data));
           resolve({
             format: 'module',
             shortCircuit: true,

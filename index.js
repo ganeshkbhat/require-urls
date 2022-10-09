@@ -85,6 +85,8 @@ function getRequirePaths(request, options) {
 async function fetchWriteRequire(remoteUrl, data, options) {
     options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
+    options.logger("RequireURLs: index.js: Written fetched file to .jscache");
+    
     if (!!options.cacheFetch) {
         if (remoteUrl.includes(".mjs")) {
             return import("node:" + remoteUrl);

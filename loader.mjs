@@ -83,6 +83,7 @@ export function load(url, context, nextLoad) {
     return new Promise((resolve, reject) => {
       try {
         return requireurls(url).then((data) => {
+          console.log(data);
           resolve({
             format: 'module',
             shortCircuit: true,
@@ -91,7 +92,7 @@ export function load(url, context, nextLoad) {
         });
       } catch (err) {
         console.log(err.toString());
-        // reject(err)
+        // reject(err);
         resolve({
           format: 'module',
           shortCircuit: true,

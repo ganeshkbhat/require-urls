@@ -103,11 +103,36 @@ c.then(d => console.log("testing", d));
 
 ```
 
+```
+
+
+// Importing using the ES import Syntax
+
+let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
+console.log("[REQUIREURLS] demo-import.mjs ", c.then((d) => {
+    console.log(d)
+}));
+
+
+```
+
+
+```
+
+
+// Importing using the ES import Syntax
+
+import  requireurls from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
+console.log("[REQUIREURLS] demo.mjs ", requireurls);
+
+
+```
+
 ### TODO
 
 - Add `recursive` imports and cacheing for remote files. Minor changes needed.
 - Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository.
-- Does not support ES `import` statement as yet.
+
 
 ### Contributions
 

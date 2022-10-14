@@ -19,5 +19,10 @@ import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/wra
 
 console.log("requireurls", requireurls);
 
+import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/index.mjs";
+
+console.log("requireurls", requireurls);
+
+
 // requireurls.then(d => console.log("Testing returns", d));
 

@@ -107,6 +107,8 @@ c.then(d => console.log("testing", d));
 
 
 // Importing using the ES import Syntax
+// Run command with --experimental-loader to run the files through the import syntax support for remote url requires or imports: 
+// node --experimental-loader ./loader.mjs ./file.mjs
 
 let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
 console.log("[REQUIREURLS] demo-import.mjs ", c.then((d) => {
@@ -121,6 +123,8 @@ console.log("[REQUIREURLS] demo-import.mjs ", c.then((d) => {
 
 
 // Importing using the ES import Syntax
+// Run command with --experimental-loader to run the files through the import syntax support for remote url requires or imports: 
+// node --experimental-loader ./loader.mjs ./file.mjs
 
 import  requireurls from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
 console.log("[REQUIREURLS] demo.mjs ", requireurls);

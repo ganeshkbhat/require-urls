@@ -17,6 +17,6 @@
 
 import requireurls from './index.js';
 // process.env.NODE_OPTIONS = '--experimental-modules --loader ./custom-loader.mjs';
-
+console.log(requireurls);
 export default requireurls.requireurls;
 

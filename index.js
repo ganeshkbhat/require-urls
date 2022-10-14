@@ -86,19 +86,21 @@ async function fetchWriteRequire(remoteUrl, data, options) {
     options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
     options.logger("RequireURLs: index.js: Written fetched file to .jscache");
-    if (!!options.noRequire) {
-        return data;
-    }
-    if (!!options.cacheFetch) {
-        if (remoteUrl.includes(".mjs")) {
-            return import("node:" + remoteUrl);
+    try {
+
+        if (!!options.cacheFetch) {
+            if (remoteUrl.includes(".mjs")) {
+                return import("node:" + remoteUrl);
+            }
+            return require("node:" + remoteUrl);
         }
-        return require("node:" + remoteUrl);
+        if (remoteUrl.includes(".mjs")) {
+            return import(remoteUrl);
+        }
+        return require(remoteUrl);
+    } catch (err) {
+        throw new Error("[requireurls] index.js: File type cannot be required or imported.")
     }
-    if (remoteUrl.includes(".mjs")) {
-        return import(remoteUrl);
-    }
-    return require(remoteUrl);
 }
 
 function fetchOrRequire(request, gitFileCacheUrl, options) {
@@ -158,7 +160,7 @@ function packageJson(request, options = { baseType: "git", recursive: false, for
     }
 }
 
-module.exports.requireurls = function requireurls(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log, cacheFetch: false, getMethods: false }) {
+module.exports.requireurls = function requireurls(request = "", options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false }) {
     if (options.getMethods === true) { return { remoteUrl, recursiveUrl, packageJson } };
 
     if (!request.includes("package.json")) {

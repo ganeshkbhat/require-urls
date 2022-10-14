@@ -15,7 +15,7 @@
 'use strict';
 
 let demo = require("../index");
-let c = demo.requireurls("https://stackoverflow.com/questions/5612787/converting-an-object-to-a-string");
+let c = demo.requireurls("https://stackoverflow.com/questions/5612787/converting-an-object-to-a-string", { noRequire: true });
 
 c.then(d => console.log("Testing returns", d));
 

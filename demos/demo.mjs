@@ -19,7 +19,7 @@ import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/wra
 
 console.log("requireurls", requireurls);
 
-import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/index.mjs";
+import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/index.js";
 
 console.log("requireurls", requireurls);
 

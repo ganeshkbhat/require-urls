@@ -1,5 +1,20 @@
-import * as requireurls from '../wrapper.mjs';
+/**
+ * 
+ * Package: requireurl
+ * Author: Ganesh B
+ * Description: Nodejs npm module to traverse folder using code or cli or use glob patterns
+ * Install: npm i require-urls --save
+ * Github: https://github.com/ganeshkbhat/requireurl
+ * npmjs Link: https://www.npmjs.com/package/require-urls
+ * File: demos/demo-wrapper.mjs
+ * File Description: Using requireurl instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
+ * 
+*/
 
-console.log(requireurls.default);
+/* eslint no-console: 0 */
 
-requireurls.default("https://github.com/ganeshkbhat/requireurl/blob/main/index.js").then(d => console.log("Testing returns", d));
+'use strict';
+
+import requireurls from '../wrapper.mjs';
+
+let requireurl = requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/index.js");

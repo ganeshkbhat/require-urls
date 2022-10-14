@@ -15,9 +15,9 @@
 
 'use strict';
 
-import  requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/index.js";
+import  requireurls from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
 
-console.log("requireurls", requireurls);
+console.log("[REQUIREURLS] demo.mjs ", requireurls);
 
 
 // requireurls.then(d => console.log("Testing returns", d));

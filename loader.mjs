@@ -83,22 +83,51 @@ export function load(url, context, nextLoad) {
    */
   if (url.startsWith('https://') || url.startsWith('http://')) {
     return new Promise((resolve, reject) => {
+      let frm = url.endsWith(".js") ? "commonjs" : url.endsWith(".cjs") ? "commonjs" : url.endsWith(".json") ? "json" : url.endsWith(".mjs") ? "module" : url.endsWith(".wasm") ? "wasm" : "builtin";
       try {
-        // console.log("requireurls ", requireurls(url).requireurls(url));
-        let data = requireurls(url).requireurls(url);
-        resolve({
-          format: 'module',
-          shortCircuit: true,
-          source: JSON.stringify(data),
-        })
+        
+        if (typeof requireurls.then === "function") {
+          return requireurls(url).then((data) => {
+            resolve({
+              format: frm,
+              shortCircuit: true,
+              source: String(data),
+            })
+          });
+        }
+
+        let data = requireurls(url);
+        if (typeof data === "object" && ["commonjs", "json"].includes(frm)) {
+          if (frm === "json") {
+            data = JSON.stringify(data);
+          }
+          return () => {
+            resolve({
+              format: frm,
+              shortCircuit: true,
+              source: String(data),
+            })
+          };
+        } else {
+          return () => {
+            resolve({
+              format: frm,
+              shortCircuit: true,
+              source: String(data),
+            })
+          }
+        }
+
       } catch (err) {
-        console.log("Fetch err.toString", err.toString());
-        // reject(err);
-        resolve({
-          format: 'module',
-          shortCircuit: true,
-          source: err.toString(),
-        })
+        console.log(3);
+        console.error("loader.mjs: Fetch err.toString: ", err.toString());
+        return () => {
+          reject({
+            format: frm,
+            shortCircuit: true,
+            source: String(err),
+          })
+        }
       }
     });
   }

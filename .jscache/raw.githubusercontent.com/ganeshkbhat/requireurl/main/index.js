@@ -86,9 +86,7 @@ async function fetchWriteRequire(remoteUrl, data, options) {
     options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
     options.logger("RequireURLs: index.js: Written fetched file to .jscache");
-    if (!!options.noRequire) {
-        return data;
-    }
+    
     if (!!options.cacheFetch) {
         if (remoteUrl.includes(".mjs")) {
             return import("node:" + remoteUrl);
@@ -110,7 +108,6 @@ function fetchOrRequire(request, gitFileCacheUrl, options) {
     }
     return fetch(request).then(response => response.text())
         .then(function (data) {
-            console.log("response ", data);
             return fetchWriteRequire(gitFileCacheUrl, data, options)
         }.bind(fetchWriteRequire));
 }

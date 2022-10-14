@@ -15,9 +15,9 @@
 
 'use strict';
 
-import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/wrapper.mjs";
+// import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/wrapper.mjs";
 
-console.log("requireurls", requireurls);
+// console.log("requireurls", requireurls);
 
 import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/index.js";
 

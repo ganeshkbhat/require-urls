@@ -18,6 +18,7 @@
 import requireurls from "./wrapper.mjs";
 
 
+
 /**
  *
  * resolve
@@ -83,16 +84,15 @@ export function load(url, context, nextLoad) {
   if (url.startsWith('https://') || url.startsWith('http://')) {
     return new Promise((resolve, reject) => {
       try {
-        return requireurls(url).then((data) => {
-          console.log(JSON.stringify(data));
-          resolve({
-            format: 'module',
-            shortCircuit: true,
-            source: data,
-          })
-        });
+        // console.log("requireurls ", requireurls(url).requireurls(url));
+        let data = requireurls(url).requireurls(url);
+        resolve({
+          format: 'module',
+          shortCircuit: true,
+          source: JSON.stringify(data),
+        })
       } catch (err) {
-        console.log(err.toString());
+        console.log("Fetch err.toString", err.toString());
         // reject(err);
         resolve({
           format: 'module',

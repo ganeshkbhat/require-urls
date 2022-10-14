@@ -112,7 +112,7 @@ function fetchOrRequire(request, gitFileCacheUrl, options) {
     }
     return fetch(request).then(response => response.text())
         .then(function (data) {
-            console.log("response ", data);
+            // console.log("response ", data);
             return fetchWriteRequire(gitFileCacheUrl, data, options)
         }.bind(fetchWriteRequire));
 }

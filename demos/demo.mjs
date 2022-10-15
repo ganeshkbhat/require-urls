@@ -2,7 +2,7 @@
  * 
  * Package: requireurl
  * Author: Ganesh B
- * Description: Nodejs npm module to traverse folder using code or cli or use glob patterns
+ * Description: 
  * Install: npm i require-urls --save
  * Github: https://github.com/ganeshkbhat/requireurl
  * npmjs Link: https://www.npmjs.com/package/require-urls

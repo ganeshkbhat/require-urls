@@ -1,0 +1,20 @@
+TODO 
+
+// // requireurl - url (single file)
+ - require("urlpath")
+
+// // requireurl - url (recursive)
+// // Concurrent Fetch support
+- require("urlpath")
+
+// // requireurl - github package url (recursive)
+// // Concurrent Fetch support 
+- require("packageurl")
+
+// // requireurl - github package.json url (recursive)
+// // Concurrent Fetch support
+- require("packagejsonurl")
+
+// // requireurl - url to require entire package using package.json fetch (recursive)
+// // Concurrent Fetch support
+- require("urlpath")

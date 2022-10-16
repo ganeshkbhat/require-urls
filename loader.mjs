@@ -129,7 +129,6 @@ export function load(url, context, nextLoad) {
         }
 
       } catch (err) {
-        console.log(3);
         console.error("loader.mjs: Fetch err.toString: ", err.toString());
         return () => {
           reject({

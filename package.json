@@ -4,6 +4,7 @@
   "description": "Deno like and GoLang like Mode in ES and commonjs: Replace nodejs require function with requireurls function using repository",
   "main": "index.js",
   "scripts": {
+    "start": "node --experimental-loader=./loader.mjs",
     "demojs": "node ./demos/demo.js",
     "demomjs": "node ./demos/demo.mjs",
     "test": "mocha --reporter spec --recursive --config ./mocha.test.config.js"

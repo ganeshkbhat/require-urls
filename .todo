@@ -1,5 +1,19 @@
 TODO 
 
+    - [D] Add support to fetch remote files using requireurls function
+    - [D] Add support to fetch remote files using import() function in Commonjs using loader file
+    - [D] Add support to fetch remote files using import { default } from 'x' in ES using loader file
+    - [D] Add support to fetch remote files using import() function in ES using loader file
+    - [D] Add caching support for all remote url imports
+    - [] Add `recursive` imports and cacheing for remote files. Minor changes needed
+    - [] Add support for package.json import 
+            - [] options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository
+    - [] Add support for .ts (typescript) files import with transpiling dynamically during import
+    - [] Add support for .coffee (coffeescript) files import with transpiling dynamically during import
+
+
+// // // Strategies:
+
 // // requireurl - url (single file)
  - require("urlpath")
 

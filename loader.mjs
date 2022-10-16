@@ -15,7 +15,7 @@
 
 'use strict';
 
-import requireurls from "./wrapper.mjs";
+import requireurls from "./index.mjs";
 
 
 

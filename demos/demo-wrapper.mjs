@@ -15,6 +15,6 @@
 
 'use strict';
 
-import requireurls from '../wrapper.mjs';
+import { default as requireurls} from '../index.mjs';
 
 let requireurl = requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/index.js");

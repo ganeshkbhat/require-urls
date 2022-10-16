@@ -17,7 +17,7 @@
 
 import { default as requireurls } from "https://github.com/ganeshkbhat/requireurl/blob/main/index.js";
 
-console.log("requireurls", requireurls);
-
-// requireurls.then(d => console.log("Testing returns", d));
+console.log("[requireurls@latest] Testing returns: ", requireurls);
+let r = requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/loader.mjs");
+console.log(r);
 

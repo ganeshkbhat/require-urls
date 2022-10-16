@@ -58,9 +58,10 @@ function getRequirePaths(request, options) {
     var gitFileCacheUrl;
 
     if (options.baseType === "git") {
-        console.log(findGitRoot(process.cwd()).split(".git")[0], gitUrlFetch)
+        options.logger("RequireURLs: index.js: Base directory", findGitRoot(process.cwd()).split(".git")[0]);
+        options.logger("RequireURLs: index.js: Fetch URL", gitUrlFetch);
         gitFileCacheUrl = path.join(findGitRoot(process.cwd()).split(".git")[0], ".jscache", gitUrlFetch);
-        console.log(gitFileCacheUrl)
+        options.logger("RequireURLs: index.js: cache URL", gitFileCacheUrl);
     } else {
         gitFileCacheUrl = path.join(findGitRoot(process.cwd()).split("node_modules")[0], ".jscache", gitUrlFetch);
     }
@@ -112,7 +113,7 @@ function fetchOrRequire(request, gitFileCacheUrl, options) {
     }
     return fetch(request).then(response => response.text())
         .then(function (data) {
-            // console.log("response ", data);
+            // options.logger("RequireURLs: index.js: Data from fetched file", data, "\n");
             return fetchWriteRequire(gitFileCacheUrl, data, options)
         }.bind(fetchWriteRequire));
 }
@@ -144,7 +145,7 @@ function remoteUrl(request, options = { baseType: "git", recursive: false, force
         throw new Error("RequireURLs: index.js: file access error", err.toString());
     }
 
-    options.logger("RequireURLs: index.js: All Paths request, gitUrlFetch, gitUrl, gitCacheUrl,  gitFileCacheUrl, localGitFile, localGitDir: ", request, ",", gitUrlFetch, ",", gitUrl, ",", gitCacheUrl, ",", gitFileCacheUrl, ",", localGitFile, ",", localGitDir);
+    // options.logger("RequireURLs: index.js: All Paths request, gitUrlFetch, gitUrl, gitCacheUrl,  gitFileCacheUrl, localGitFile, localGitDir: ", request, ",", gitUrlFetch, ",", gitUrl, ",", gitCacheUrl, ",", gitFileCacheUrl, ",", localGitFile, ",", localGitDir);
     options.logger("RequireURLs: index.js: Making Fetch request to ", request);
 
     return fetchOrRequire(request, gitFileCacheUrl, options);

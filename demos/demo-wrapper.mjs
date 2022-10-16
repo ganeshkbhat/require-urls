@@ -15,6 +15,14 @@
 
 'use strict';
 
+/** 
+ * 
+ * ES Module import demo
+ * Usage of wrapper for index.js
+ * 
+*/
 import { default as requireurls} from '../index.mjs';
 
 let requireurl = requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/index.js");
+console.log("[requireurl@latest] Testing returns: ", requireurl);
+

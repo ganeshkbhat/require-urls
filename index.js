@@ -175,4 +175,4 @@ function requireurls(request = "", options = { baseType: "git", recursive: false
     }
 }
 
-module.exports = requireurls
+module.exports = requireurls;

@@ -106,14 +106,13 @@ c.then(d => console.log("testing", d));
 ```
 
 
-// Importing using the ES import Syntax
-// Run command with --experimental-loader to run the files through the import syntax support for remote url requires or imports: 
+// Importing using the CommonJS and ES import Syntax
+// RUN command with --experimental-loader to run the files through the import syntax support for remote url requires or imports: 
 // node --experimental-loader ./node_modules/require-urls/loader.mjs ./file.mjs
+// node --experimental-loader ./node_modules/require-urls/loader.mjs ./file.js
 
 let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
-console.log("[REQUIREURLS] demo-import.mjs ", c.then((d) => {
-    console.log(d)
-}));
+console.log("[REQUIREURLS] demo-import.mjs ", cgijs);
 
 
 ```
@@ -123,21 +122,30 @@ console.log("[REQUIREURLS] demo-import.mjs ", c.then((d) => {
 
 
 // Importing using the ES import Syntax
-// Run command with --experimental-loader to run the files through the import syntax support for remote url requires or imports: 
+// RUN command with --experimental-loader to run the files through the import syntax support for remote url requires or imports: 
 // node --experimental-loader ./node_modules/require-urls/loader.mjs ./file.mjs
 
-import  requireurls from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
-console.log("[REQUIREURLS] demo.mjs ", requireurls);
+import  cgijs from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
+console.log("[REQUIREURLS] demo.mjs ", cgijs);
+
+import  { default as cgijs} from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
+console.log("[REQUIREURLS] demo.mjs ", cgijs_default);
 
 
 ```
+
 
 ### TODO
 
 - Add `recursive` imports and cacheing for remote files. Minor changes needed.
 - Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository.
+- Add support for .ts (typescript) and .coffee (coffeescript) files import with transpiling dynamically during import
 
 
 ### Contributions
 
-Contributions, Feature Improvements, Bugs, and Issues are invited.
+Contributions, Feature Improvements, Bugs, and Issues are invited. [raising an issue](https://github.com/ganeshkbhat/requireurl/issues)
+
+# License
+
+[MIT License](./LICENSE)

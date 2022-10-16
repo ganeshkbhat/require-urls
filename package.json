@@ -1,7 +1,7 @@
 {
   "name": "require-urls",
   "version": "0.0.7",
-  "description": "Deno Mode in commonjs: Replace nodejs require function with requireurls using repository",
+  "description": "Deno like and GoLang like Mode in ES and commonjs: Replace nodejs require function with requireurls function using repository",
   "main": "index.js",
   "scripts": {
     "demojs": "node ./demos/demo.js",

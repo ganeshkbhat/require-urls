@@ -9,6 +9,7 @@
  * File: loader.js
  * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * 
+ * 
 */
 
 /* eslint no-console: 0 */
@@ -17,6 +18,15 @@
 
 import requireurls from "./index.mjs";
 
+
+// CoffeeScript files end in .coffee, .litcoffee, or .coffee.md.
+const coffeeExtensionsRegex = /\.coffee$|\.litcoffee$|\.coffee\.md$/;
+
+// Module package.json files end in package.json
+const packagejsonExtensionsRegex = /\package\.json$/;
+
+// Module ts files end in .ts
+const tsExtensionsRegex = /\.ts$/;
 
 
 /**
@@ -85,7 +95,7 @@ export function load(url, context, nextLoad) {
     return new Promise((resolve, reject) => {
       let frm = url.endsWith(".js") ? "commonjs" : url.endsWith(".cjs") ? "commonjs" : url.endsWith(".json") ? "json" : url.endsWith(".mjs") ? "module" : url.endsWith(".wasm") ? "wasm" : "builtin";
       try {
-        
+
         if (typeof requireurls.then === "function") {
           return requireurls(url).then((data) => {
             resolve({

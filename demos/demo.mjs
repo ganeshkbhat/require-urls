@@ -46,8 +46,8 @@ import { default as ESC_8d8681c4a2 } from "https://raw.githubusercontent.com/gan
 import { default as ESV_00_00_7 } from "https://github.com/ganeshkbhat/requireurl/blob/a34a222d761bb70d51ff3267c8530f40918db53e/index.js";
 import { default as EST_0_0_7 } from "https://github.com/ganeshkbhat/requireurl/blob/a34a222d761bb70d51ff3267c8530f40918db53e/index.js";
 import { default as ESC_2e5181793d } from "https://github.com/ganeshkbhat/requireurl/blob/2e5181793dd8c076aafd46f3330c59e4abd70908/index.js";
+const ESC_2e5181793d_2 = import("https://github.com/ganeshkbhat/requireurl/blob/2e5181793dd8c076aafd46f3330c59e4abd70908/index.js");
 
-console.log(ESC_2e5181793d.toString())
 
 // let requireurls = import("../index");
 
@@ -106,4 +106,15 @@ console.log(ESC_2e5181793d.toString())
 // let C2e5181793d = requireurls("https://github.com/ganeshkbhat/requireurl/blob/2e5181793dd8c076aafd46f3330c59e4abd70908/index.js");
 // console.log("[C2e5181793d] Testing returns: ", C2e5181793d);
 // console.log("[ESC_2e5181793d] Testing returns: ", ESC_2e5181793d);
+
+
+// /** 
+//  * Commit:
+//  * C2e5181793d
+//  * 
+//  * @type {*}
+//  * 
+//  */
+//  let ESCJSC_2e5181793d = import("https://github.com/ganeshkbhat/requireurl/blob/2e5181793dd8c076aafd46f3330c59e4abd70908/index.js");
+//  console.log("[ESCJSC_2e5181793d] Testing returns: ", ESCJSC_2e5181793d);
 

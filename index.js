@@ -105,16 +105,16 @@ function _getNodeModulesRoot(startdirectory, options) {
     return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
 }
 function _createJscachePath(request, baseDirectory, options) { }
+function _concurrency(jsFunction, options) { }
 
 function _registerNodeCache(localPath, options) { }
 function _requireImportLocalFile(localPath, options) { }
 function _requireImportNodeCache(localPath, options) { }
 function _requireImport(localPath, options) { }
 
-function _getRemoteBaseUrl(remoteUrl, options) { }
-function _getRemotePackageJsonUrl(remoteUrl, options) { }
+function _getRemoteBaseUrl(remoteUrl, options) { } // Implement _getRoot logic into remote url with concurrency
+function _getRemotePackageJsonUrl(remoteUrl, options) { } // Implement _getRoot logic into remote package.json url with concurrency
 
-function _concurrency(jsFunction, options) { }
 function _getRemoteUrl(request, options) { }
 function _getRecursiveRemoteUrl(request, options) { } // Couple of functions needed
 function _getRecursiveRemotePsckageJsonUrl(request, options) { }

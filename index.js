@@ -43,8 +43,8 @@ function _getRoot(startdirectory, options = { baseType: ".git" }) {
         return path.normalize(fullPath);
     }
 
-    if (!options.cb) {
-        options["cb"] = cb
+    if (!options.getRootCallback) {
+        options["getRootCallback"] = cb
     }
 
     startdirectory = startdirectory || module.parent.filename;
@@ -71,8 +71,8 @@ function _getRoot(startdirectory, options = { baseType: ".git" }) {
     }
 }
 function _getGitRoot(startdirectory, options) {
-    function cb(fullPath) {
-        if (rootType.fileFolder === "folder" && (options.baseType === ".git" || options.baseType === "git") && !fs.lstatSync(fullPath).isDirectory()) {
+    function cb(fullPath, options) {
+        if (options.baseType === ".git" && !fs.lstatSync(fullPath).isDirectory()) {
             var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
             var match = /^gitdir: (.*)\s*$/.exec(content);
             if (match) {
@@ -81,33 +81,28 @@ function _getGitRoot(startdirectory, options) {
         }
         return path.normalize(fullPath);
     }
-    return _getRoot(startdirectory, { ...options, baseType: "package.json", cb: cb });
+    options.baseType = ".git";
+    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
 }
 function _getPackageJsonRoot(startdirectory, options) {
-    function cb(fullPath) {
-        if (rootType.fileFolder === "file" && (options.baseType === "package.json" || options.baseType === "packagejson") && !fs.lstatSync(fullPath).isFile()) {
-            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
-            var match = /\package\.json$/.exec(content);  // Check this regex
-            if (match) {
-                return path.normalize(match[1]);
-            }
+    function cb(fullPath, options) {
+        if ((options.baseType === "package.json")) {
+
         }
         return path.normalize(fullPath);
     }
-    return _getRoot(startdirectory, { ...options, baseType: "package.json", cb: cb });
+    options.baseType = "package.json";
+    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
 }
 function _getNodeModulesRoot(startdirectory, options) {
-    function cb(fullPath) {
-        if (rootType.fileFolder === "folder" && baseType.type === "node_modules" && !fs.lstatSync(fullPath).isDirectory()) {
-            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
-            var match = /node_modules$/.exec(content); // Check this regex
-            if (match) {
-                return path.normalize(match[1]);
-            }
+    function cb(fullPath, options) {
+        if (options.baseType === "node_modules") {
+
         }
         return path.normalize(fullPath);
     }
-    return _getRoot(startdirectory, { ...options, baseType: "node_modules", cb: cb });
+    options.baseType = "node_modules";
+    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
 }
 function _createJscachePath(request, baseDirectory, options) { }
 

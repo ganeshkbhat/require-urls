@@ -18,6 +18,118 @@
 const path = require('path');
 const fs = require('fs');
 
+
+/** New Structure for Revamped version of index.js with better isolation, and independent functions */
+
+async function _writeFile(localPath, data) {
+    try {
+        options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
+        await fs.promises.writeFile(localPath, data.toString());
+        options.logger("RequireURLs: index.js: Written fetched file to .jscache");
+        return true;
+    } catch (e) {
+        throw new Error(e.toString());
+    }
+}
+function _getRoot(startdirectory, options = { baseType: ".git" }) {
+    function cb(fullPath) {
+        if (rootType.fileFolder === "folder" && rootType.type === ".git" && !fs.lstatSync(fullPath).isDirectory()) {
+            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
+            var match = /^gitdir: (.*)\s*$/.exec(content);
+            if (match) {
+                return path.normalize(match[1]);
+            }
+        }
+        return path.normalize(fullPath);
+    }
+
+    if (!options.cb) {
+        options["cb"] = cb
+    }
+
+    startdirectory = startdirectory || module.parent.filename;
+    if (typeof startdirectory === 'string') {
+        if (startdirectory[startdirectory.length - 1] !== path.sep) {
+            startdirectory += path.sep;
+        }
+        startdirectory = path.normalize(startdirectory);
+        startdirectory = startdirectory.split(path.sep);
+    }
+
+    if (!startdirectory.length) {
+        options.logger('[require-urls]: index.js: repo base .git/ or node_modules/ or package.json not found in path');
+        throw new Error('[require-urls]: index.js: repo base .git/ or node_modules/ not found in path');
+    }
+
+    startdirectory.pop();
+    var fullPath = path.join(startdirectory.join(path.sep), options.baseType);
+
+    if (fs.existsSync(fullPath)) {
+        return cb(fullPath);
+    } else {
+        return _getRoot(startdirectory, options);
+    }
+}
+function _getGitRoot(startdirectory, options) {
+    function cb(fullPath) {
+        if (rootType.fileFolder === "folder" && (options.baseType === ".git" || options.baseType === "git") && !fs.lstatSync(fullPath).isDirectory()) {
+            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
+            var match = /^gitdir: (.*)\s*$/.exec(content);
+            if (match) {
+                return path.normalize(match[1]);
+            }
+        }
+        return path.normalize(fullPath);
+    }
+    return _getRoot(startdirectory, { ...options, baseType: "package.json", cb: cb });
+}
+function _getPackageJsonRoot(startdirectory, options) {
+    function cb(fullPath) {
+        if (rootType.fileFolder === "file" && (options.baseType === "package.json" || options.baseType === "packagejson") && !fs.lstatSync(fullPath).isFile()) {
+            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
+            var match = /\package\.json$/.exec(content);  // Check this regex
+            if (match) {
+                return path.normalize(match[1]);
+            }
+        }
+        return path.normalize(fullPath);
+    }
+    return _getRoot(startdirectory, { ...options, baseType: "package.json", cb: cb });
+}
+function _getNodeModulesRoot(startdirectory, options) {
+    function cb(fullPath) {
+        if (rootType.fileFolder === "folder" && baseType.type === "node_modules" && !fs.lstatSync(fullPath).isDirectory()) {
+            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
+            var match = /node_modules$/.exec(content); // Check this regex
+            if (match) {
+                return path.normalize(match[1]);
+            }
+        }
+        return path.normalize(fullPath);
+    }
+    return _getRoot(startdirectory, { ...options, baseType: "node_modules", cb: cb });
+}
+function _createJscachePath(request, baseDirectory, options) { }
+
+function _registerNodeCache(localPath, options) { }
+function _requireImportLocalFile(localPath, options) { }
+function _requireImportNodeCache(localPath, options) { }
+function _requireImport(localPath, options) { }
+
+function _getRemoteBaseUrl(remoteUrl, options) { }
+function _getRemotePackageJsonUrl(remoteUrl, options) { }
+
+function _concurrency(jsFunction, options) { }
+function _getRemoteUrl(request, options) { }
+function _getRecursiveRemoteUrl(request, options) { } // Couple of functions needed
+function _getRecursiveRemotePsckageJsonUrl(request, options) { }
+
+
+function _requireurls(remoteUrl, options) { }
+
+/** New Structure for Revamped version of index.js with better isolation, and independent functions */
+
+
 function findGitRoot(start) {
     start = start || module.parent.filename;
     if (typeof start === 'string') {

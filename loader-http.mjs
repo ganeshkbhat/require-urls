@@ -6,7 +6,7 @@
  * Install: npm i require-urls --save
  * Github: https://github.com/ganeshkbhat/requireurl
  * npmjs Link: https://www.npmjs.com/package/require-urls
- * File: loader-http.js
+ * File: loader-http.mjs
  * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * Reference: https://nodejs.org/api/esm.html#import-statements
  * 

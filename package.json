@@ -44,5 +44,6 @@
     "deno style require",
     "golang style require",
     "cache remote require files"
-  ]
+  ],
+  "dependencies": {}
 }

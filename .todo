@@ -9,8 +9,14 @@ TODO
     - [] Add support for package.json import 
             - [] options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository
     - [] Add support for .ts (typescript) files import with transpiling dynamically during import
-    - [] Add support for .coffee (coffeescript) files import with transpiling dynamically during import
-
+    - [T] Add support for .coffee (coffeescript) files import with transpiling dynamically during import
+    - [] Add changes to .jscache folder naming - use smaller name versions
+        - [D] Add changes to .jscache folder naming - use smaller naming for git path store
+        - [] Add changes to .jscache folder naming - use commit numbers as folder names for repo instead of sha hash number, NEXT VERSION of indexnew.js 
+        - [T] Add changes to .jscache folder naming - when commit number not present then "store as-is" (for ftp support)
+        - [] Add changes to .jscache folder naming - when "store as-is" (for ftp), never allow options.forceUpdate.
+        - [] Add changes to .jscache folder naming - when "store as-is" options.forceUpdate use --update command for running file "node demo.js --update"
+    - [] Add SVN support
 
 // // // Strategies:
 
@@ -32,3 +38,6 @@ TODO
 // // requireurl - url to require entire package using package.json fetch (recursive)
 // // Concurrent Fetch support
 - require.resolve("urlpath"), ...
+
+// Consider exports syntax
+// https://nodejs.org/api/packages.html#introduction

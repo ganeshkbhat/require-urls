@@ -93,7 +93,12 @@ export function load(url, context, nextLoad) {
    */
   if (url.startsWith('https://') || url.startsWith('http://')) {
     return new Promise((resolve, reject) => {
-      let frm = url.endsWith(".js") ? "commonjs" : url.endsWith(".cjs") ? "commonjs" : url.endsWith(".json") ? "json" : url.endsWith(".mjs") ? "module" : url.endsWith(".wasm") ? "wasm" : "builtin";
+      let frm = url.endsWith(".js") ?
+        "commonjs" : url.endsWith(".cjs") ?
+          "commonjs" : url.endsWith(".json") ?
+            "json" : url.endsWith(".mjs") ?
+              "module" : url.endsWith(".wasm") ?
+                "wasm" : "builtin";
       try {
 
         if (typeof requireurls.then === "function") {

@@ -9,6 +9,8 @@
  * File: index.js
  * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * 
+ * https://www.softwaretestinghelp.com/github-rest-api-tutorial/#:~:text=Log%20in%20to%20your%20GitHub,and%20click%20on%20Create%20Token.
+ * 
 */
 
 /* eslint no-console: 0 */
@@ -17,112 +19,6 @@
 
 const path = require('path');
 const fs = require('fs');
-
-
-/** New Structure for Revamped version of index.js with better isolation, and independent functions */
-
-async function _writeFile(localPath, data) {
-    try {
-        options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
-        await fs.promises.writeFile(localPath, data.toString());
-        options.logger("RequireURLs: index.js: Written fetched file to .jscache");
-        return true;
-    } catch (e) {
-        throw new Error(e.toString());
-    }
-}
-function _getRoot(startdirectory, options = { baseType: ".git" }) {
-    function cb(fullPath) {
-        if (rootType.fileFolder === "folder" && rootType.type === ".git" && !fs.lstatSync(fullPath).isDirectory()) {
-            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
-            var match = /^gitdir: (.*)\s*$/.exec(content);
-            if (match) {
-                return path.normalize(match[1]);
-            }
-        }
-        return path.normalize(fullPath);
-    }
-
-    if (!options.getRootCallback) {
-        options["getRootCallback"] = cb
-    }
-
-    startdirectory = startdirectory || module.parent.filename;
-    if (typeof startdirectory === 'string') {
-        if (startdirectory[startdirectory.length - 1] !== path.sep) {
-            startdirectory += path.sep;
-        }
-        startdirectory = path.normalize(startdirectory);
-        startdirectory = startdirectory.split(path.sep);
-    }
-
-    if (!startdirectory.length) {
-        options.logger('[require-urls]: index.js: repo base .git/ or node_modules/ or package.json not found in path');
-        throw new Error('[require-urls]: index.js: repo base .git/ or node_modules/ not found in path');
-    }
-
-    startdirectory.pop();
-    var fullPath = path.join(startdirectory.join(path.sep), options.baseType);
-
-    if (fs.existsSync(fullPath)) {
-        return cb(fullPath);
-    } else {
-        return _getRoot(startdirectory, options);
-    }
-}
-function _getGitRoot(startdirectory, options) {
-    function cb(fullPath, options) {
-        if (options.baseType === ".git" && !fs.lstatSync(fullPath).isDirectory()) {
-            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
-            var match = /^gitdir: (.*)\s*$/.exec(content);
-            if (match) {
-                return path.normalize(match[1]);
-            }
-        }
-        return path.normalize(fullPath);
-    }
-    options.baseType = ".git";
-    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
-}
-function _getPackageJsonRoot(startdirectory, options) {
-    function cb(fullPath, options) {
-        if ((options.baseType === "package.json")) {
-
-        }
-        return path.normalize(fullPath);
-    }
-    options.baseType = "package.json";
-    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
-}
-function _getNodeModulesRoot(startdirectory, options) {
-    function cb(fullPath, options) {
-        if (options.baseType === "node_modules") {
-
-        }
-        return path.normalize(fullPath);
-    }
-    options.baseType = "node_modules";
-    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
-}
-function _createJscachePath(request, baseDirectory, options) { }
-function _concurrency(jsFunction, options) { }
-
-function _registerNodeCache(localPath, options) { }
-function _requireImportLocalFile(localPath, options) { }
-function _requireImportNodeCache(localPath, options) { }
-function _requireImport(localPath, options) { }
-
-function _getRemoteBaseUrl(remoteUrl, options) { } // Implement _getRoot logic into remote url with concurrency
-function _getRemotePackageJsonUrl(remoteUrl, options) { } // Implement _getRoot logic into remote package.json url with concurrency
-
-function _getRemoteUrl(request, options) { }
-function _getRecursiveRemoteUrl(request, options) { } // Couple of functions needed
-function _getRecursiveRemotePsckageJsonUrl(request, options) { }
-
-
-function _requireurls(remoteUrl, options) { }
-
-/** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
 
 function findGitRoot(start) {
@@ -159,20 +55,25 @@ function findGitRoot(start) {
 
 function getRequirePaths(request, options) {
     var gitUrlFetch = request.split("https://")[1];
-    var gitUrl = path.join(findGitRoot(process.cwd()).split(".git")[0]);
-    var gitCacheUrl = path.join(findGitRoot(process.cwd()).split(".git")[0], ".jscache");
-
-    var gitFileCacheUrl;
+    var gitUrl, gitRoot, gitFileCacheUrl;
 
     if (options.baseType === "git") {
-        options.logger("RequireURLs: index.js: Base directory", findGitRoot(process.cwd()).split(".git")[0]);
-        options.logger("RequireURLs: index.js: Fetch URL", gitUrlFetch);
-        gitFileCacheUrl = path.join(findGitRoot(process.cwd()).split(".git")[0], ".jscache", gitUrlFetch);
-        options.logger("RequireURLs: index.js: cache URL", gitFileCacheUrl);
+        gitRoot = gitUrl = path.join(findGitRoot(process.cwd()).split(".git")[0]);
+        gitUrlFetch = gitUrlFetch.replace("raw.githubusercontent.com", "github");
+        let arrUrl = gitUrlFetch.split("github");
+        let bArrUrl = arrUrl[1].split("/");
+        bArrUrl[0] = bArrUrl[1] + "@" + bArrUrl[2];
+        bArrUrl.splice(1, 2);
+        gitUrlFetch = [...arrUrl[0], "github", ...bArrUrl].join("/");
+        options.logger("RequireURLs: index.js: Base directory", gitUrl);
+        options.logger("RequireURLs: index.js: Fetch URL: gitUrlFetch:", gitUrlFetch);
+        gitFileCacheUrl = path.join(gitUrl, ".jscache", gitUrlFetch);
+        options.logger("RequireURLs: index.js: cache URL: gitFileCacheUrl:", gitFileCacheUrl);
     } else {
         gitFileCacheUrl = path.join(findGitRoot(process.cwd()).split("node_modules")[0], ".jscache", gitUrlFetch);
     }
 
+    var gitCacheUrl = path.join(gitRoot, ".jscache");
     var localGitFile = gitFileCacheUrl.split("\\").pop();
     var localGitDir = gitFileCacheUrl.replace(localGitFile, "");
 
@@ -182,6 +83,7 @@ function getRequirePaths(request, options) {
     return {
         gitUrlFetch,
         gitUrl,
+        gitRoot,
         gitCacheUrl,
         gitFileCacheUrl,
         localGitFile,
@@ -191,14 +93,18 @@ function getRequirePaths(request, options) {
 }
 
 async function fetchWriteRequire(remoteUrl, data, options) {
+    // Add checksum or file content hash in a file for checks
+    // Store the files always in a commit number file
+    // If commit number is not present, store as is (for ftp support)
+    // Store as is - will always not options.forceUpdate, use the --update argument for node command
+
     options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
     await fs.promises.writeFile(remoteUrl, data.toString());
     options.logger("RequireURLs: index.js: Written fetched file to .jscache");
     try {
-
         if (!!options.cacheFetch) {
             if (remoteUrl.includes(".mjs")) {
-                return import("node:" + remoteUrl);
+                // return import("node:" + remoteUrl);
             }
             return require("node:" + remoteUrl);
         }
@@ -207,6 +113,7 @@ async function fetchWriteRequire(remoteUrl, data, options) {
         }
         return require(remoteUrl);
     } catch (err) {
+        console.log("[requireurls] index.js: File type cannot be required or imported.", err.toString())
         throw new Error("[requireurls] index.js: File type cannot be required or imported.")
     }
 }

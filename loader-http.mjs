@@ -42,16 +42,14 @@ export function resolve(specifier, context, nextResolve) {
 }
 
 export function load(url, context, nextLoad) {
-  // For JavaScript to be loaded over the network, we need to fetch and
-  // return it.
+  // For JavaScript to be loaded over the network, we need to fetch and return it.
   if (url.startsWith('https://')) {
     return new Promise((resolve, reject) => {
       get(url, (res) => {
         let data = '';
         res.on('data', (chunk) => data += chunk);
         res.on('end', () => resolve({
-          // This example assumes all network-provided JavaScript is ES module
-          // code.
+          // This example assumes all network-provided JavaScript is ES module code.
           format: 'module',
           shortCircuit: true,
           source: data,

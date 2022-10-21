@@ -17,6 +17,14 @@ TODO
         - [] Add changes to .jscache folder naming - when "store as-is" (for ftp), never allow options.forceUpdate.
         - [] Add changes to .jscache folder naming - when "store as-is" options.forceUpdate use --update command for running file "node demo.js --update"
     - [] Add SVN support
+    - [] Consider adding support for docker style naming (node:14.19.2-slim) to fetch remote urls
+        - [] requireurls("github:ganeshkbhat:requireurls:1c0mm1t1:index.js")
+        - [] requireurls("github:ganeshkbhat:requireurls:1c0mm1t1")
+        - [] requireurls("git-gitdomain:ganeshkbhat:requireurls:1c0mm1t1")
+        - [] requireurls("svn-svndomain:ganeshkbhat:requireurls:1c0mm1t1")
+        - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1")
+        - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:src/index.js")
+
 
 // // // Strategies:
 

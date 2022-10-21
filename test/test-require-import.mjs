@@ -39,16 +39,11 @@
 
 // });
 
-
-
-let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
-console.log("[REQUIREURLS] demo-import.mjs ", c.then((d) => {
-    console.log(d)
-}));
-
-
-let d = import("https://github.com/cgi-js/cgi-js/blob/main/src/index.js");
-console.log("[REQUIREURLS] demo-import.mjs ", d);
+    let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
+    console.log(c);
+    
+    // // Following needs recursive url import
+    // let d = import("https://github.com/cgi-js/cgi-js/blob/main/src/index.js");
 
 
 // requireurls.then(d => console.log("Testing returns", d));

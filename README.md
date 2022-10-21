@@ -25,7 +25,7 @@ npm Package: [require-urls](https://www.npmjs.com/package/require-urls)
 The default require options can be found here: [require.resolve](https://nodejs.org/api/modules.html#requireresolverequest-options). All other options customized for `require-urls` function's `options` argument object are as below:
 
 ```
-/* options: git, bitbucket, etc.*/
+/* options: git, bitbucket, gitlab, svn [TODO], ftp [TODO], etc.*/
 /* Default is `git`. */
 
 baseType: "git"

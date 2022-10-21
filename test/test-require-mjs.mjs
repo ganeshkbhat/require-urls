@@ -39,12 +39,9 @@
 
 // });
 
+// import requireurls from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
+// console.log("[REQUIREURLS] demo.mjs ", requireurls);
 
 
-import  requireurls from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
-
-console.log("[REQUIREURLS] demo.mjs ", requireurls);
-
-
-// requireurls.then(d => console.log("Testing returns", d));
+    // requireurls.then(d => console.log("Testing returns", d));
 

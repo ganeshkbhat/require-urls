@@ -42,7 +42,6 @@
 
 
 import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/index.js";
-
 console.log("requireurls", requireurls);
 
 // requireurls.then(d => console.log("Testing returns", d));

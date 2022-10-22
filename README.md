@@ -120,7 +120,7 @@ c.then(d => console.log("testing", d));
 // node --experimental-loader ./node_modules/require-urls/loader.mjs ./file.js
 
 let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
-console.log("[REQUIREURLS] demo-import.mjs ", cgijs);
+console.log("[require-urls] demo-import.mjs ", cgijs);
 
 
 ```
@@ -134,10 +134,10 @@ console.log("[REQUIREURLS] demo-import.mjs ", cgijs);
 // node --experimental-loader ./node_modules/require-urls/loader.mjs ./file.mjs
 
 import  cgijs from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
-console.log("[REQUIREURLS] demo.mjs ", cgijs);
+console.log("[require-urls] demo.mjs ", cgijs);
 
 import  { default as cgijsd } from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
-console.log("[REQUIREURLS] demo.mjs ", cgijsd);
+console.log("[require-urls] demo.mjs ", cgijsd);
 
 
 ```

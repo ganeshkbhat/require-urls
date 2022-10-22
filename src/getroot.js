@@ -130,6 +130,44 @@ function _getGitRoot(startdirectory, options) {
  * @param {*} options
  * @return {*} 
  */
+ function _getSvnRoot(startdirectory, options) {
+    function cb(fullPath, options) {
+        if ((options.baseType === ".svn" || options.baseType === "svn") && !fs.lstatSync(fullPath).isDirectory()) {
+            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
+            var match = /^svndir: (.*)\s*$/.exec(content);
+            if (match) {
+                return path.normalize(match[1]);
+            }
+        }
+        return path.normalize(fullPath);
+    }
+    options.baseType = "svn";
+    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
+}
+
+/**
+ *
+ *
+ * @param {*} startdirectory
+ * @param {*} options
+ * @return {*} 
+ */
+ function _getFtpRoot(startdirectory, options) {
+    function cb(fullPath, options) {
+        
+        return path.normalize(fullPath);
+    }
+    options.baseType = "ftp";
+    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
+}
+
+/**
+ *
+ *
+ * @param {*} startdirectory
+ * @param {*} options
+ * @return {*} 
+ */
 function _getPackageJsonRoot(startdirectory, options) {
     function cb(fullPath, options) {
         if (!fs.lstatSync(fullPath).isDirectory()) {
@@ -148,6 +186,8 @@ function _createJscachePath(request, baseDirectory, options) { }
 
 module.exports._getRoot = _getRoot;
 module.exports._getGitRoot = _getGitRoot;
+module.exports._getSvnRoot = _getSvnRoot;
+module.exports._getFtpRoot = _getFtpRoot;
 module.exports._getNodeModulesRoot = _getNodeModulesRoot;
 module.exports._getPackageJsonRoot = _getPackageJsonRoot;
 module.exports._createJscachePath = _createJscachePath;

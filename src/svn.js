@@ -63,7 +63,7 @@ function _getSvnRoot(startdirectory, options) {
         }
         return path.normalize(fullPath);
     }
-    options.baseType = ".svn";
+    options.baseType = "svn";
     return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
 }
 

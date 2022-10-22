@@ -44,7 +44,6 @@ const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require }
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
-
 /**
  *
  *
@@ -75,7 +74,6 @@ const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require }
         options.logger("RequireURLs: index.js: Fetch URL: urlFetch:", urlFetch);
 
         gitFileCacheUrl = path.join(jsCacheUrl, urlFetch);
-
 
         options.logger("RequireURLs: index.js: cache URL: gitFileCacheUrl:", gitFileCacheUrl);
     } else if (options.baseType === "svn") {

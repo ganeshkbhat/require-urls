@@ -17,9 +17,22 @@
 
 'use strict';
 
-const path = require('path');
-const fs = require('fs');
-const { _getRoot } = require("./getroot.js");
+/**
+ *
+ *
+ * @param {*} module_name
+ * @return {*} 
+ */
+function _getRequireOrImport(module_name) {
+    if (process.versions.node.split('.')[0] > "14") {
+        return import(module_name);
+    }
+    return require(module_name);
+}
+
+const path = _getRequireOrImport('path');
+const fs = _getRequireOrImport('fs');
+const { _getRoot } = _getRequireOrImport("./getroot.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 

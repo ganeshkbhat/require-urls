@@ -23,12 +23,15 @@
  * @param {*} module_name
  * @return {*} 
  */
-function _getRequireOrImport(module_name) {
+ function _getRequireOrImport(module_name) {
   if (process.versions.node.split('.')[0] > "14") {
-    return import(module_name);
+      return import(module_name);
   }
   return require(module_name);
 }
+
+const path = _getRequireOrImport('path');
+const fs = _getRequireOrImport('fs');
 
 /**
 *

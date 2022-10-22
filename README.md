@@ -1,6 +1,6 @@
 # require-urls
 
-`Deno and GoLang Mode in commonjs import (require) and ES import [todo] syntax`: Replace nodejs require function with requireurls function or use loader.mjs replacing import functionality that can fetch remote urls.
+`Deno and GoLang Mode in commonjs import (require) and ES import syntax`: Replace nodejs require function with requireurls function or use loader.mjs replacing import functionality that can fetch remote urls.
 
 This module has a single simple function `requireurls` for URL (git raw file) resolution and parsing meant to have feature parity with node.js core url module.
 
@@ -68,6 +68,15 @@ cacheFetch: true
 getMethods: false
 ```
 
+```
+/* noRequire: Get all the methods of require-urls.*/
+/* Default is false */
+/* Usage: requireurls("", { noRequire: true }) */
+/*  */
+
+noRequire: false
+```
+
 #### Demo Usage Code
 
 ```
@@ -127,8 +136,8 @@ console.log("[REQUIREURLS] demo-import.mjs ", cgijs);
 import  cgijs from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
 console.log("[REQUIREURLS] demo.mjs ", cgijs);
 
-import  { default as cgijs} from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
-console.log("[REQUIREURLS] demo.mjs ", cgijs_default);
+import  { default as cgijsd } from "https://github.com/cgi-js/cgi-js/blob/main/src/index.js";
+console.log("[REQUIREURLS] demo.mjs ", cgijsd);
 
 
 ```
@@ -138,7 +147,7 @@ console.log("[REQUIREURLS] demo.mjs ", cgijs_default);
 
 - Add `recursive` imports and cacheing for remote files. Minor changes needed.
 - Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository.
-- Add support for .ts (typescript) and .coffee (coffeescript) files import with transpiling dynamically during import
+- Add support for `.ts` (typescript) and `.coffee` (coffeescript) files import with transpiling dynamically during import
 - Add support for SVN, FTP.
 
 

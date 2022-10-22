@@ -25,6 +25,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 // Add support for https/http
 import * as ts from "typescript";
 
+const extensionsRegex = /\.ts$/;
+
 // // 
 // // Getting a dts file from javascript file
 // //

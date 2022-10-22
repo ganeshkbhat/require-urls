@@ -30,8 +30,8 @@
     return require(module_name);
 }
 
-const path = _getRequireOrImport('path');
-const fs = _getRequireOrImport('fs');
+const path = require('path');
+const fs = require('fs');
 
 function _findSvnRemoteFileUrl(remoteUrl, searchOptions, options) {
     // Implement _getRoot logic into remote url with concurrency

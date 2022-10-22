@@ -30,24 +30,11 @@ function _getRequireOrImport(module_name) {
     return require(module_name);
 }
 
-const path = _getRequireOrImport('path');
-const fs = _getRequireOrImport('fs');
-const { _getRoot } = _getRequireOrImport("./getroot.js");
+const path = require('path');
+const fs = require('fs');
+const { _getRoot } = require("./getroot.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
-
-/**
- *
- *
- * @param {*} module_name
- * @return {*} 
- */
-function _getRequireOrImport(module_name) {
-    if (process.versions.node.split('.')[0] > "14") {
-        return import(module_name);
-    }
-    return require(module_name);
-}
 
 /**
  *
@@ -170,61 +157,6 @@ function _findGitRemotePackageJsonUrl(remoteUrl, options) {
 /**
  *
  *
- * @param {*} request
- * @param {*} options
- * @return {*} 
- */
-function _getRequirePaths(request, options) {
-    let urlFetch = request.split("https://")[1];
-    let git = _getGitRoot(process.cwd(), options);
-
-    let gitRoot = path.join(git.split(".git")[0]);
-    let jsCacheUrl = path.join(gitRoot, ".jscache");
-    let gitFileCacheUrl;
-
-
-    if (options.baseType === "git") {
-        let tmpUrl = urlFetch.replace("raw.githubusercontent.com", "github");
-        let arrUrl = tmpUrl.split("github");
-        let bArrUrl = arrUrl[1].split("/");
-
-        bArrUrl[0] = bArrUrl[1] + "@" + bArrUrl[2];
-        bArrUrl.splice(1, 2);
-
-        urlFetch = [...arrUrl[0], "github", ...bArrUrl].join("/");
-
-        options.logger("RequireURLs: index.js: Base directory", gitRoot);
-        options.logger("RequireURLs: index.js: Fetch URL: urlFetch:", urlFetch);
-
-        gitFileCacheUrl = path.join(jsCacheUrl, urlFetch);
-
-
-        options.logger("RequireURLs: index.js: cache URL: gitFileCacheUrl:", gitFileCacheUrl);
-    } else if (options.baseType === "svn") {
-        // gitFileCacheUrl = path.join(_getGitRoot(process.cwd().toString(), options).split(".svn")[0], ".jscache", urlFetch);
-    } else {
-        // gitFileCacheUrl = path.join(_getGitRoot(process.cwd().toString(), options).split("node_modules")[0], ".jscache", urlFetch);
-    }
-
-    var localGitFile = gitFileCacheUrl.split("\\").pop();
-    var localFullPath = gitFileCacheUrl.replace(localGitFile, "");
-
-    var requireRemotePaths = request;
-    requireRemotePaths.split("/").pop();
-
-    return {
-        gitRoot: gitRoot,
-        jsCacheUrl: jsCacheUrl,
-        gitFileCacheUrl: gitFileCacheUrl,
-        localGitFile: localGitFile,
-        localFullPath, localFullPath,
-        requireRemotePaths: requireRemotePaths
-    };
-}
-
-/**
- *
- *
  * @param {*} results
  * @param {*} options
  * @return {*} 
@@ -313,6 +245,5 @@ module.exports._searchGit = _searchGit;
 module.exports._findGitRemoteFileUrl = _findGitRemoteFileUrl;
 module.exports._findGitRemoteRootUrl = _findGitRemoteRootUrl;
 module.exports._findGitRemotePackageJsonUrl = _findGitRemotePackageJsonUrl;
-module.exports._getRequirePaths = _getRequirePaths;
 module.exports._searchGitFilesResultsModifier = _searchGitFilesResultsModifier;
 module.exports._getDirContentResultsModifier = _getDirContentResultsModifier;

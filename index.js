@@ -17,18 +17,6 @@
 
 'use strict';
 
-const path = require('path');
-const fs = require('fs');
-const os = require("os");
-
-const { _getRequireOrImport, _getRequest, _fetch } = require("./src/request.js");
-const { _concurrency } = require("./src/concurrency.js");
-const { _getRoot, _getGitRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath } = require("./src/getroot.js");
-const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
-const { _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _getRequirePaths, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
-
-/** New Structure for Revamped version of index.js with better isolation, and independent functions */
-
 /**
  *
  *
@@ -42,74 +30,74 @@ function _getRequireOrImport(module_name) {
     return require(module_name);
 }
 
-/**
- *
- *
- * @param {*} gitFileCacheUrl
- * @param {*} options
- * @return {*} 
- */
-function _requireImportNodeCache(gitFileCacheUrl, options) {
-    return _getRequireOrImport("node:" + gitFileCacheUrl)
-}
+const path = require('path');
+const fs = require('fs');
+const os = require("os");
+
+const { _getRequest, _fetch } = require("./src/request.js");
+const { _concurrency } = require("./src/concurrency.js");
+const { _getRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath } = require("./src/getroot.js");
+const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
+const { _getGitRoot, _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
+const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
+
+
+/** New Structure for Revamped version of index.js with better isolation, and independent functions */
+
 
 /**
  *
  *
  * @param {*} request
- * @param {*} gitFileCacheUrl
  * @param {*} options
  * @return {*} 
  */
-function _requireImport(request, gitFileCacheUrl, options) {
-    try {
-        if (!!fs.existsSync(gitFileCacheUrl) && !options.forceUpdate) {
-            gitFileCacheUrl = (os.type() === "Windows_NT" && !gitFileCacheUrl.includes("file://")) ? ("file://" + gitFileCacheUrl) : gitFileCacheUrl;
-            if (!!options.cacheFetch) return _requireImportNodeCache(gitFileCacheUrl);
-            return _getRequireOrImport(gitFileCacheUrl);
-        }
-        return false;
-    } catch (err) {
-        throw new Error("[require-urls] index.js: File type cannot be required or imported.\n", err.toString())
+ function _getRequirePaths(request, options) {
+    let urlFetch = request.split("https://")[1];
+    let git = _getGitRoot(process.cwd(), options);
+
+    let gitRoot = path.join(git.split(".git")[0]);
+    let jsCacheUrl = path.join(gitRoot, ".jscache");
+    let gitFileCacheUrl;
+
+
+    if (options.baseType === "git") {
+        let tmpUrl = urlFetch.replace("raw.githubusercontent.com", "github");
+        let arrUrl = tmpUrl.split("github");
+        let bArrUrl = arrUrl[1].split("/");
+
+        bArrUrl[0] = bArrUrl[1] + "@" + bArrUrl[2];
+        bArrUrl.splice(1, 2);
+
+        urlFetch = [...arrUrl[0], "github", ...bArrUrl].join("/");
+
+        options.logger("RequireURLs: index.js: Base directory", gitRoot);
+        options.logger("RequireURLs: index.js: Fetch URL: urlFetch:", urlFetch);
+
+        gitFileCacheUrl = path.join(jsCacheUrl, urlFetch);
+
+
+        options.logger("RequireURLs: index.js: cache URL: gitFileCacheUrl:", gitFileCacheUrl);
+    } else if (options.baseType === "svn") {
+        // gitFileCacheUrl = path.join(_getGitRoot(process.cwd().toString(), options).split(".svn")[0], ".jscache", urlFetch);
+    } else {
+        // gitFileCacheUrl = path.join(_getGitRoot(process.cwd().toString(), options).split("node_modules")[0], ".jscache", urlFetch);
     }
-}
 
-/**
- *
- *
- * @param {*} request
- * @param {*} gitFileCacheUrl
- * @param {*} data
- * @param {*} options
- * @return {*} 
- */
-async function _requireWriteImport(request, gitFileCacheUrl, data, options) {
-    try {
-        options.logger("[require-urls] index.js: Writing fetched file to .jscache, File:", gitFileCacheUrl);
-        await fs.promises.writeFile(gitFileCacheUrl, data.toString());
-        options.logger("[require-urls] index.js: Written fetched file to .jscache, File:", gitFileCacheUrl);
-        return _requireImport(request, gitFileCacheUrl, options);
-    } catch (err) {
-        throw new Error("[require-urls] index.js: File type cannot be required or imported.\n", err.toString())
-    }
-}
+    var localGitFile = gitFileCacheUrl.split("\\").pop();
+    var localFullPath = gitFileCacheUrl.replace(localGitFile, "");
 
-/**
- *
- *
- * @param {*} request
- * @param {*} gitFileCacheUrl
- * @param {*} options
- * @return {*} 
- */
-function _require(request, gitFileCacheUrl, options) {
-    let _import = _requireImport(request, gitFileCacheUrl, options);
-    if (!!_import) return _import;
-    return fetch(request).then(response => response.text())
-        .then(function (data) {
-            // options.logger("[require-urls] index.js: Data from fetched file", data, "\n");
-            return _requireWriteImport(request, gitFileCacheUrl, data, options)
-        }.bind(_requireWriteImport));
+    var requireRemotePaths = request;
+    requireRemotePaths.split("/").pop();
+
+    return {
+        gitRoot: gitRoot,
+        jsCacheUrl: jsCacheUrl,
+        gitFileCacheUrl: gitFileCacheUrl,
+        localGitFile: localGitFile,
+        localFullPath, localFullPath,
+        requireRemotePaths: requireRemotePaths
+    };
 }
 
 /**
@@ -257,6 +245,7 @@ function _getRecursiveRemotePackageJsonUrl(request, options) {
 
     return packagejson;
 }
+
 
 /**
  *

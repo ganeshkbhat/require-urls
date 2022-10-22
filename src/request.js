@@ -30,8 +30,9 @@
     return require(module_name);
 }
 
-const path = _getRequireOrImport('path');
-const fs = _getRequireOrImport('fs');
+const path = require('path');
+const fs = require('fs');
+const { _getRequirePaths } = require("./git.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 

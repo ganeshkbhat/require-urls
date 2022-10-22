@@ -136,7 +136,7 @@ export function resolve(specifier, context, nextResolve) {
         const { parentURL = baseURL } = context;
 
         // Node.js normally errors on unknown file extensions, so return a URL for
-        // specifiers ending in the CoffeeScript file extensions.
+        // specifiers ending in the TypeScript file extensions.
         return {
             shortCircuit: true,
             url: new URL(specifier, parentURL).href
@@ -149,13 +149,13 @@ export function resolve(specifier, context, nextResolve) {
 
 export function load(url, context, nextLoad) {
     if (extensionsRegex.test(url)) {
-        // Now that we patched resolve to let CoffeeScript URLs through, we need to
+        // Now that we patched resolve to let TypeScript URLs through, we need to
         // tell Node.js what format such URLs should be interpreted as. Because
-        // CoffeeScript transpiles into JavaScript, it should be one of the two
+        // TypeScript transpiles into JavaScript, it should be one of the two
         // JavaScript formats: 'commonjs' or 'module'.
 
-        // CoffeeScript files can be either CommonJS or ES modules, so we want any
-        // CoffeeScript file to be treated by Node.js the same as a .js file at the
+        // TypeScript files can be either CommonJS or ES modules, so we want any
+        // TypeScript file to be treated by Node.js the same as a .js file at the
         // same location. To determine how Node.js would interpret an arbitrary .js
         // file, search up the file system for the nearest parent package.json file
         // and read its "type" field.
@@ -173,7 +173,7 @@ export function load(url, context, nextLoad) {
         }
 
         const { source: rawSource } = await nextLoad(url, { ...context, format });
-        // This hook converts CoffeeScript source code into JavaScript source code
+        // This hook converts TypeScript source code into JavaScript source code
         // for all imported typescript files.
         const transformedSource = tsCompile(rawSource.toString(), url);
 

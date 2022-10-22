@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/ganeshkbhat/requireurl#readme",
   "devDependencies": {
+    "@types/node": "^18.11.3",
     "chai": "^4.3.6",
     "mocha": "^10.0.0",
     "sinon": "^14.0.0",
@@ -45,6 +46,5 @@
     "deno style require",
     "golang style require",
     "cache remote require files"
-  ],
-  "dependencies": {}
+  ]
 }

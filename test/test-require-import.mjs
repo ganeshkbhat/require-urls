@@ -39,12 +39,11 @@
 
 // });
 
-    let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
-    console.log(c);
-    
-    // // Following needs recursive url import
-    // let d = import("https://github.com/cgi-js/cgi-js/blob/main/src/index.js");
+let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
+console.log(c);
 
+// // Following needs recursive url import
+let d = import("https://github.com/cgi-js/cgi-js/blob/main/src/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
 
 // requireurls.then(d => console.log("Testing returns", d));
 

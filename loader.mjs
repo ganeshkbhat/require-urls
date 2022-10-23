@@ -113,6 +113,7 @@ export function load(url, context, nextLoad) {
         }
 
         let data = requireurls(url);
+
         if (typeof data === "object" && ["commonjs", "json"].includes(frm)) {
           if (frm === "json") {
             data = JSON.stringify(data);

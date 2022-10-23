@@ -102,10 +102,13 @@ async function _requireWriteImport(request, gitFileCacheUrl, data, options) {
 function _require(request, gitFileCacheUrl, options) {
     let _import = _requireImport(request, gitFileCacheUrl, options);
     if (!!_import) return _import;
-    return fetch(request).then(response => response.text())
+    return fetch(request).then(response => {
+        if (!!response.status) { if (response.status === 404) { throw new Error("404 Error: File not found: " + request) } }
+        return response.text()
+    })
         .then(function (data) {
             // options.logger("[require-urls] index.js: Data from fetched file", data, "\n");
-            return _requireWriteImport(request, gitFileCacheUrl, data, options)
+            return _requireWriteImport(request, gitFileCacheUrl, data, options);
         }.bind(_requireWriteImport));
 }
 

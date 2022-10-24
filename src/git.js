@@ -237,6 +237,10 @@ function _getDirContentResultsModifier(results, options) {
     return contents;
 }
 
+function _getGitCommitNumber(request, options) {}
+function _getGitSHAHash(request, options) {}
+function _getGitTagName(request, options) {}
+function _getGitBranchName(request, options) {}
 
 module.exports._getGitRoot = _getGitRoot;
 module.exports._getRequireOrImport = _getRequireOrImport;
@@ -247,3 +251,7 @@ module.exports._findGitRemoteRootUrl = _findGitRemoteRootUrl;
 module.exports._findGitRemotePackageJsonUrl = _findGitRemotePackageJsonUrl;
 module.exports._searchGitFilesResultsModifier = _searchGitFilesResultsModifier;
 module.exports._getDirContentResultsModifier = _getDirContentResultsModifier;
+module.exports._getGitCommitNumber = _getGitCommitNumber;
+module.exports._getGitSHAHash = _getGitSHAHash;
+module.exports._getGitTagName = _getGitTagName;
+module.exports._getGitBranchName = _getGitBranchName;

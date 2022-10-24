@@ -237,7 +237,7 @@ function _createJscachePath(request, baseDirectory, options) { }
         localGitRoot: localGitRoot,
         jsCacheUrl: jsCacheUrl,
         localGitFileCacheUrl: localGitFileCacheUrl,
-        localFullPath, localFullPath,
+        localFullPath: localFullPath,
         remoteGitRoot: remoteGitRoot,
         remotePackagejsonRoot: remotePackagejsonRoot,
         requireRemotePaths: requireRemotePaths

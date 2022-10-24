@@ -55,10 +55,10 @@ function _getRequest(options, data, protocol) {
     });
 }
 
-function _fetch(request, options, gitFileCacheUrl, _requireWriteImport) {
+function _fetch(request, options, localGitFileCacheUrl, _requireWriteImport) {
     return fetch(request).then(response => response.text())
         .then(function (data) {
-            return _requireWriteImport(request, gitFileCacheUrl, data, options)
+            return _requireWriteImport(request, localGitFileCacheUrl, data, options)
         }.bind(_requireWriteImport));
 }
 

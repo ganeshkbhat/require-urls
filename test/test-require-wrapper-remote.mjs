@@ -42,7 +42,7 @@
 
 
 import requireurls from "https://github.com/ganeshkbhat/requireurl/blob/main/index.js";
-console.log("requireurls", requireurls);
+console.log("[require-urls] test-require-wrapper-remote.mjs: Testing file: ", requireurls);
 
 // requireurls.then(d => console.log("Testing returns", d));
 

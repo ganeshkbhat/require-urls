@@ -74,3 +74,13 @@ let C2e5181793d = requireurls("https://github.com/ganeshkbhat/requireurl/blob/2e
 console.log("[C2e5181793d] Testing returns: ", C2e5181793d);
 
 
+/** 
+ * Commit:
+ * Clatestcommit
+ * 
+ * @type {*}
+ * 
+ */
+let Clatestcommit = requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
+console.log("[Clatestcommit] index.js: ", Clatestcommit);
+

@@ -42,32 +42,32 @@ const { _getRequest, _fetch } = require("./request.js");
 /**
  *
  *
- * @param {*} gitFileCacheUrl
+ * @param {*} localGitFileCacheUrl
  * @param {*} options
  * @return {*} 
  */
-function _requireImportNodeCache(gitFileCacheUrl, options) {
-    return _getRequireOrImport("node:" + gitFileCacheUrl)
+function _requireImportNodeCache(localGitFileCacheUrl, options) {
+    return _getRequireOrImport("node:" + localGitFileCacheUrl)
 }
 
 /**
  *
  *
  * @param {*} request
- * @param {*} gitFileCacheUrl
+ * @param {*} localGitFileCacheUrl
  * @param {*} options
  * @return {*} 
  */
-function _requireImport(request, gitFileCacheUrl, options) {
+function _requireImport(request, localGitFileCacheUrl, options) {
     try {
-        if (!!fs.existsSync(gitFileCacheUrl) && !options.forceUpdate) {
-            gitFileCacheUrl = (os.type() === "Windows_NT" && !gitFileCacheUrl.includes("file://")) ? ("file://" + gitFileCacheUrl) : gitFileCacheUrl;
-            if (!!options.cacheFetch) return _requireImportNodeCache(gitFileCacheUrl);
-            return _getRequireOrImport(gitFileCacheUrl);
+        if (!!fs.existsSync(localGitFileCacheUrl) && !options.forceUpdate) {
+            localGitFileCacheUrl = (os.type() === "Windows_NT" && !localGitFileCacheUrl.includes("file://")) ? ("file://" + localGitFileCacheUrl) : localGitFileCacheUrl;
+            if (!!options.cacheFetch) return _requireImportNodeCache(localGitFileCacheUrl);
+            return _getRequireOrImport(localGitFileCacheUrl);
         }
         return false;
     } catch (err) {
-        throw new Error("[require-urls] index.js: File type cannot be required or imported.\n", err.toString())
+        throw new Error("[require-urls]: index.js: File type cannot be required or imported.\n", err.toString())
     }
 }
 
@@ -75,17 +75,17 @@ function _requireImport(request, gitFileCacheUrl, options) {
  *
  *
  * @param {*} request
- * @param {*} gitFileCacheUrl
+ * @param {*} localGitFileCacheUrl
  * @param {*} data
  * @param {*} options
  * @return {*} 
  */
-async function _requireWriteImport(request, gitFileCacheUrl, data, options) {
+async function _requireWriteImport(request, localGitFileCacheUrl, data, options) {
     try {
-        options.logger("[require-urls] index.js: Writing fetched file to .jscache, File:", gitFileCacheUrl);
-        await fs.promises.writeFile(gitFileCacheUrl, data.toString());
-        options.logger("[require-urls] index.js: Written fetched file to .jscache, File:", gitFileCacheUrl);
-        return _requireImport(request, gitFileCacheUrl, options);
+        options.logger("[require-urls] index.js: Writing fetched file to .jscache, File:", localGitFileCacheUrl);
+        await fs.promises.writeFile(localGitFileCacheUrl, data.toString());
+        options.logger("[require-urls] index.js: Written fetched file to .jscache, File:", localGitFileCacheUrl);
+        return _requireImport(request, localGitFileCacheUrl, options);
     } catch (err) {
         throw new Error("[require-urls] index.js: File type cannot be required or imported.\n", err.toString())
     }
@@ -95,20 +95,20 @@ async function _requireWriteImport(request, gitFileCacheUrl, data, options) {
  *
  *
  * @param {*} request
- * @param {*} gitFileCacheUrl
+ * @param {*} localGitFileCacheUrl
  * @param {*} options
  * @return {*} 
  */
-function _require(request, gitFileCacheUrl, options) {
-    let _import = _requireImport(request, gitFileCacheUrl, options);
+function _require(request, localGitFileCacheUrl, options) {
+    let _import = _requireImport(request, localGitFileCacheUrl, options);
     if (!!_import) return _import;
     return fetch(request).then(response => {
-        if (!!response.status) { if (response.status === 404) { throw new Error("404 Error: File not found: " + request) } }
+        if (!!response.status) { if (response.status === 404) { throw new Error("[require-urls] index.js: \n[ERROR]: 404 Error.\n[DETAILS]: The file or package does not exist in the repository.\nPlease check if any dependenecies were not available or installed in your project needed for the package.\nDependency File or Package path and name: " + request) } }
         return response.text()
     })
         .then(function (data) {
             // options.logger("[require-urls] index.js: Data from fetched file", data, "\n");
-            return _requireWriteImport(request, gitFileCacheUrl, data, options);
+            return _requireWriteImport(request, localGitFileCacheUrl, data, options);
         }.bind(_requireWriteImport));
 }
 

@@ -55,7 +55,7 @@ function _createFolders(localGitDir) {
             fs.mkdirSync(localGitDir, { recursive: true });
         })
     } catch (err) {
-        throw new Error("RequireURLs: filesystem.js: file access error", err.toString());
+        throw new Error("[require-urls]: filesystem.js: file access error", err.toString());
     }
 }
 
@@ -68,16 +68,16 @@ function _createFolders(localGitDir) {
  */
 async function _writeFile(localPath, data) {
     try {
-        options.logger("RequireURLs: index.js: Writing fetched file to .jscache");
+        options.logger("[require-urls]: index.js: Writing fetched file to .jscache");
         await fs.promises.writeFile(localPath, data.toString());
-        options.logger("RequireURLs: index.js: Written fetched file to .jscache");
+        options.logger("[require-urls]: index.js: Written fetched file to .jscache");
         return true;
     } catch (e) {
         throw new Error(e.toString());
     }
 }
 
-function _registerNodeCache(gitFileCacheUrl, options) { } // ? Needed?
+function _registerNodeCache(localGitFileCacheUrl, options) { } // ? Needed?
 
 module.exports._createFolders = _createFolders;
 module.exports._writeFile = _writeFile;

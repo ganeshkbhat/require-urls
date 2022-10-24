@@ -36,10 +36,10 @@ const os = require("os");
 
 const { _getRequest, _fetch } = require("./src/request.js");
 const { _concurrency } = require("./src/concurrency.js");
-const { _getRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath } = require("./src/getroot.js");
+const { _getRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, _getRequirePaths } = require("./src/getroot.js");
 const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
 const { _getGitRoot, _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
-const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require, _getRequirePaths } = require("./src/require.js");
+const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
 const { threadId } = require('worker_threads');
 const { Console } = require('console');
 

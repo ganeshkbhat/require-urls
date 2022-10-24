@@ -18,7 +18,7 @@
 'use strict';
 
 const { _getGitCommitNumber, _getGitSHAHash, _getGitTagName, _getGitBranchName } = require("./git.js");
-const { _getRequirePaths } = require("./require.js");
+const { _getRequirePaths } = require("./filelock.js");
 
 function _writeFileLock(request, options) {
  

@@ -21,5 +21,7 @@ const { _getGitCommitNumber, _getGitSHAHash, _getGitTagName, _getGitBranchName }
 const { _getRequirePaths } = require("./require.js");
 
 function _writeFileLock(request, options) {
-
+ 
 }
+
+module.exports._writeFileLock = _writeFileLock;

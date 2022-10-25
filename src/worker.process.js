@@ -24,14 +24,14 @@ process.on('message', function (contents) {
 // setInterval(() => {
 //     process.send("Message from parent:");
 // }, 1000);
-// 
+//
 // process.on('exit', function (code) {
 //     setTimeout(function () {
 //         console.log("This will not run");
 //     }, 0);
 //     console.log('About to exit with code:', code);
 // });
-// 
+//
 //
 // // Printing to console
 // process.stdout.write("Hello World!" + "\n");

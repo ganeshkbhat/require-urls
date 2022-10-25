@@ -16,3 +16,6 @@
 /* eslint no-console: 0 */
 
 'use strict';
+
+const _filelock = require("../../src/filelock.js");
+

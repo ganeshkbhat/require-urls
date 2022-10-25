@@ -55,7 +55,7 @@ async function _getRemoteUrl(request, options) {
     // require.main.paths.push(requirePaths);
     options.logger("[require-urls] index.js: Get all paths: ", paths);
     try {
-        _createFolders(paths.localFullPath);
+        await _createFolders(paths.localFullPath);
     } catch (err) {
         throw new Error("[require-urls] index.js: file access error: ", err.toString());
     }

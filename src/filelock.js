@@ -19,6 +19,7 @@
 
 const { _writeFile } = require("./filesystem.js");
 const { _getGitCommitNumber, _getGitSHAHash, _getGitTagName, _getGitBranchName } = require("./git.js");
+const { _createFolders } = require("./filesystem.js");
 const { _getRequirePaths } = require("./getroot.js");
 const path = require("path");
 
@@ -29,16 +30,20 @@ const path = require("path");
  * @param {*} fileoptions
  * @return {*} 
  */
-function _createFileLockJson(filelockOptions, fileoptions) {
+function _createFileLockJson(filelockOptions, fileoptions, options) {
     if (!filelockOptions.name && !filelockOptions.localPath && (!filelockOptions.commit || !filelockOptions.sha || !filelockOptions.tag)) {
-        throw new Error("[require-urls]: filelock.js._createFileLockJson: ")
+        throw new Error("[require-urls]: filelock.js._createFileLockJson: ");
+    }
+    var readFilelock = {};
+    try {
+        readFilelock = _readFileLockJson(path.join(filelockOptions.localPath, "filelock.json"));
+    } catch (e) {
+        options.logger("[require-urls]: filelock.js._createFileLockJson: readFilelock assignation - filelockOptions: ");
     }
 
-    var readFilelock = _readFileLockJson(path.join(filelockOptions.localPath, "filelock.json"));
-
-    if (!readFilelock) {
-        if (!filelockOptions.username && !filelockOptions.repository && filelockOptions.localPath && (!filelockOptions.commit || !filelockOptions.sha || !filelockOptions.tag)) {
-            throw new Error("[require-urls]: filelock.js._createFileLockJson: ")
+    if (Object.keys(readFilelock).length === 0) {
+        if ((!(filelockOptions.username && filelockOptions.repository) && !filelockOptions.name) && filelockOptions.localPath && (!filelockOptions.commit && !filelockOptions.sha && !filelockOptions.tag)) {
+            throw new Error("[require-urls]: filelock.js._createFileLockJson: filelockOptions options check : ", filelockOptions);
         }
     }
 
@@ -50,11 +55,11 @@ function _createFileLockJson(filelockOptions, fileoptions) {
      * { name, local, repository, sha, commit, tag, dependencies, files }
      * 
      */
-    if (!readFilelock) {
+    if (Object.keys(readFilelock).length === 0) {
         readFilelock = {
             name: filelockOptions.username + "@" + filelockOptions.repository,
             localPath: filelockOptions.localPath,
-            repository: filelockOptions.repository,
+            repositoryPath: filelockOptions.repositoryPath,
             sha: filelockOptions.sha,
             commit: filelockOptions.commit,
             tag: filelockOptions.tag || "",
@@ -63,6 +68,9 @@ function _createFileLockJson(filelockOptions, fileoptions) {
         }
     }
 
+    options.logger("[require-urls]: filelock.js._createFileLockJson: readFilelock ", readFilelock);
+    let files = (!!readFilelock.files) ? { ...readFilelock.files } : {};
+
     /**
      * 
      * metadata:
@@ -70,8 +78,14 @@ function _createFileLockJson(filelockOptions, fileoptions) {
      * fileoptions
      * { name, local, remote, sha, digest, dependencies }
      */
-    readFilelock.files = { ...readFilelock.files, [fileoptions.name]: { ...fileoptions } };
-    return _writeFileLock(path.join(filelockOptions.localPath, "filelock.json", readFilelock));
+    readFilelock["files"] = { ...files };
+    let filename = (!!fileoptions.name) ? fileoptions.name : undefined;
+    if (!!filename) {
+        readFilelock["files"] = { ...readFilelock.files, [filename]: { ...fileoptions } };
+    }
+
+    options.logger("[require-urls]: filelock.js: filelock data to be written - ", readFilelock);
+    return _writeFileLock(filelockOptions.localPath, readFilelock, options);
 }
 
 /**
@@ -81,7 +95,7 @@ function _createFileLockJson(filelockOptions, fileoptions) {
  * @param {*} fileoptions
  * @return {*} 
  */
-function _updateFileLockJsonEntry(filelockOptions, fileoptions) {
+function _updateFileLockJsonEntry(filelockOptions, fileoptions, options) {
     var readFilelock = _readFileLockJson(path.join(filelockOptions.localPath, "filelock.json"));
 
     /**
@@ -99,7 +113,7 @@ function _updateFileLockJsonEntry(filelockOptions, fileoptions) {
         digest: fileoptions.digest,
         dependencies: { ...fileoptions.dependencies }
     }
-    return _writeFileLock(filelockOptions.localPath, data);
+    return _writeFileLock(filelockOptions.localPath, data, options);
 }
 
 /**
@@ -109,10 +123,10 @@ function _updateFileLockJsonEntry(filelockOptions, fileoptions) {
  * @param {*} fileoptions
  * @return {*} 
  */
-function _deleteFileLockJsonEntry(filelockOptions, fileoptions) {
+function _deleteFileLockJsonEntry(filelockOptions, fileoptions, options) {
     var readFilelock = _readFileLockJson(path.join(filelockOptions.localPath, "filelock.json"));
     delete readFilelock.files[fileoptions.name];
-    return _writeFileLock(filelockOptions.localPath, readFilelock);
+    return _writeFileLock(filelockOptions.localPath, readFilelock, options);
 }
 
 /**
@@ -122,7 +136,7 @@ function _deleteFileLockJsonEntry(filelockOptions, fileoptions) {
  * @return {*} 
  */
 function _readFileLockJson(filelockPath) {
-    return require(filelockPath);
+    return require(path.join(filelockPath, "filelock.json"));
 }
 
 /**
@@ -150,8 +164,15 @@ function _fileContentSHAHash(data, digest) {
  * @param {*} data
  * @return {*} 
  */
-function _writeFileLock(localPath, data) {
-    return _writeFile(localPath, data);
+async function _writeFileLock(localPath, data, options) {
+    try {
+        await _createFolders(localPath, options);
+        return _writeFile(path.join(localPath, "filelock.json"), JSON.stringify(data), options);
+    } catch (e) {
+        options.logger("[require-urls]: filelocks.js: _writeFileLock: Folder present");
+        return _writeFile(path.join(localPath, "filelock.json"), JSON.stringify(data), options);
+    }
+    
 }
 
 module.exports._writeFileLock = _writeFileLock;

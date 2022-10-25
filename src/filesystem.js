@@ -32,6 +32,7 @@ function _getRequireOrImport(module_name) {
 
 const path = require('path');
 const fs = require('fs');
+const { resolve } = require('path');
 
 /**
  *
@@ -50,13 +51,15 @@ function _isinbuilt(mod) {
  * @param {*} localGitDir
  */
 function _createFolders(localGitDir) {
-    try {
-        fs.access(path.join(localGitDir), (e) => {
-            fs.mkdirSync(localGitDir, { recursive: true });
-        })
-    } catch (err) {
-        throw new Error("[require-urls]: filesystem.js: file access error", err.toString());
-    }
+    return new Promise(function(resolve, reject) {
+        try {
+            return fs.access(path.join(localGitDir), (e) => {
+                resolve(fs.mkdirSync(localGitDir, { recursive: true }));
+            })
+        } catch (err) {
+            throw new Error("[require-urls]: filesystem.js: file access error", err.toString());
+        }
+    })
 }
 
 /**
@@ -66,14 +69,19 @@ function _createFolders(localGitDir) {
  * @param {*} data
  * @return {*} 
  */
-async function _writeFile(localPath, data) {
+async function _writeFile(localPath, data, options) {
     try {
-        options.logger("[require-urls]: index.js: Writing fetched file to .jscache");
+        options.logger("[require-urls]: filesystem.js: Writing fetched file to .jscache");
+        console.log(localPath);
+        if (!localPath) {
+            var createStream = fs.createWriteStream(localPath);
+            createStream.end();
+        }
         await fs.promises.writeFile(localPath, data.toString());
-        options.logger("[require-urls]: index.js: Written fetched file to .jscache");
+        options.logger("[require-urls]: filesystem.js: Written fetched file to .jscache");
         return true;
     } catch (e) {
-        throw new Error(e.toString());
+        throw new Error("[require-urls]: filesystem.js: ", e.toString());
     }
 }
 

@@ -36,7 +36,7 @@ const os = require("os");
 
 const { _getRequest, _fetch } = require("./src/request.js");
 const { _concurrency } = require("./src/concurrency.js");
-const { _getRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath } = require("./src/getroot.js");
+const { _getRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, _getRequirePaths } = require("./src/getroot.js");
 const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
 const { _getGitRoot, _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
 const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
@@ -53,69 +53,10 @@ const { Console } = require('console');
  * @param {*} options
  * @return {*} 
  */
-function _getRequirePaths(request, options) {
-    if (!!request.includes("https://github.com/") || !!request.includes("https://www.github.com/")) {
-        request = request.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
-    }
-
-    let urlFetch = request.split("https://")[1];
-    let git = _getGitRoot(process.cwd(), options);
-
-    let localGitRoot = path.join(git.split(".git")[0]);
-    let jsCacheUrl = path.join(localGitRoot, ".jscache");
-    let localGitFileCacheUrl;
-    let remoteGitRoot, remotePackagejsonRoot, remoteFullPath;
-
-    if (options.baseType === "git") {
-        let tmpUrl = urlFetch.replace("raw.githubusercontent.com", "github");
-        let arrUrl = tmpUrl.split("github");
-        let bArrUrl = arrUrl[1].split("/");
-
-        bArrUrl[0] = bArrUrl[1] + "@" + bArrUrl[2];
-        bArrUrl.splice(1, 2);
-
-        urlFetch = [...arrUrl[0], "github", ...bArrUrl].join("/");
-
-        options.logger("[require-urls]: index.js: Base directory", localGitRoot);
-        options.logger("[require-urls]: index.js: Fetch to URL: urlFetch:", urlFetch);
-
-        localGitFileCacheUrl = path.join(jsCacheUrl, urlFetch);
-        options.logger("[require-urls]: index.js: Local cache URL: localGitFileCacheUrl:", localGitFileCacheUrl);
-    } else if (options.baseType === "svn") {
-        // localGitFileCacheUrl = path.join(_getGitRoot(process.cwd().toString(), options).split(".svn")[0], ".jscache", urlFetch);
-    } else {
-        // localGitFileCacheUrl = path.join(_getGitRoot(process.cwd().toString(), options).split("node_modules")[0], ".jscache", urlFetch);
-    }
-
-    var localOrRemoteGitFilename = localGitFileCacheUrl.split("\\").pop();
-    var localFullPath = localGitFileCacheUrl.replace(localOrRemoteGitFilename, "");
-
-    var requireRemotePaths = request;
-    requireRemotePaths.split("/").pop();
-
-    return {
-        localOrRemoteGitFilename: localOrRemoteGitFilename,
-        localGitRoot: localGitRoot,
-        jsCacheUrl: jsCacheUrl,
-        localGitFileCacheUrl: localGitFileCacheUrl,
-        localFullPath, localFullPath,
-        remoteGitRoot: remoteGitRoot,
-        remotePackagejsonRoot: remotePackagejsonRoot,
-        requireRemotePaths: requireRemotePaths
-    };
-}
-
-/**
- *
- *
- * @param {*} request
- * @param {*} options
- * @return {*} 
- */
 async function _getRemoteUrl(request, options) {
     let paths = _getRequirePaths(request, options);
     // require.main.paths.push(requirePaths);
-    // options.logger("[require-urls] index.js: Get all paths: ", paths);
+    options.logger("[require-urls] index.js: Get all paths: ", paths);
     try {
         _createFolders(paths.localFullPath);
     } catch (err) {
@@ -184,7 +125,7 @@ function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
         let _import = _getRemoteUrl(request, options);
         let p = _getRequirePaths(request, options);
         try {
-            // options.logger("[require-urls] index.js: All paths :", p);
+            options.logger("[require-urls] index.js: All paths :", p);
             require(p.localGitFileCacheUrl);
         } catch (err) {
             if (err.message.includes("404 Error")) { options.logger("[require-urls] index.js: \n[ERROR]: 404 Error.\n[DETAILS]: The file or package does not exist in the repository.\nPlease check if any dependenecies were not available or installed in your project needed for the package.\nDependency File or Package path and name: " + request); }
@@ -198,7 +139,7 @@ function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
             let prepoTmpRequestUrl = tmpRequestUrl.splice(0, 3)
             let requestRecursiveURL = "https://" + prepoTmpRequestUrl[2] + "/" + path.join(tmpRequestUrl.join("/"), m);
             requestRecursiveURL = new URL(requestRecursiveURL).toString();
-            // console.log("requestRecursiveURL: ", requestRecursiveURL)
+            console.log("requestRecursiveURL: ", requestRecursiveURL)
             _getRemoteUrl(requestRecursiveURL, options);
             // TODO: Failing recursive
             // _getRecursiveRemoteUrl(requestRecursiveURL, options);

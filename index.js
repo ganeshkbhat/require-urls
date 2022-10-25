@@ -40,9 +40,6 @@ const { _getRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, 
 const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
 const { _getGitRoot, _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
 const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
-const { threadId } = require('worker_threads');
-const { Console } = require('console');
-
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 

@@ -23,7 +23,7 @@
  * @param {*} module_name
  * @return {*} 
  */
- function _getRequireOrImport(module_name) {
+function _getRequireOrImport(module_name) {
     if (process.versions.node.split('.')[0] > "14") {
         return import(module_name);
     }
@@ -130,7 +130,7 @@ function _getGitRoot(startdirectory, options) {
  * @param {*} options
  * @return {*} 
  */
- function _getSvnRoot(startdirectory, options) {
+function _getSvnRoot(startdirectory, options) {
     function cb(fullPath, options) {
         if ((options.baseType === ".svn" || options.baseType === "svn") && !fs.lstatSync(fullPath).isDirectory()) {
             var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
@@ -152,9 +152,9 @@ function _getGitRoot(startdirectory, options) {
  * @param {*} options
  * @return {*} 
  */
- function _getFtpRoot(startdirectory, options) {
+function _getFtpRoot(startdirectory, options) {
     function cb(fullPath, options) {
-        
+
         return path.normalize(fullPath);
     }
     options.baseType = "ftp";
@@ -184,7 +184,6 @@ function _getPackageJsonRoot(startdirectory, options) {
 
 function _createJscachePath(request, baseDirectory, options) { }
 
-
 /**
  *
  *
@@ -192,7 +191,7 @@ function _createJscachePath(request, baseDirectory, options) { }
  * @param {*} options
  * @return {*} 
  */
- function _getRequirePaths(request, options) {
+function _getRequirePaths(request, options) {
     if (!!request.includes("https://github.com/") || !!request.includes("https://www.github.com/")) {
         request = request.replace("https://github.com/", "https://raw.githubusercontent.com/").replace("blob/", "");
     }

@@ -237,10 +237,10 @@ function _getDirContentResultsModifier(results, options) {
     return contents;
 }
 
-function _getGitCommitNumber(request, options) {}
-function _getGitSHAHash(request, options) {}
-function _getGitTagName(request, options) {}
-function _getGitBranchName(request, options) {}
+function _getGitCommitNumber(request, options) { }
+function _getGitSHAHash(request, options) { }
+function _getGitTagName(request, options) { }
+function _getGitBranchName(request, options) { }
 
 module.exports._getGitRoot = _getGitRoot;
 module.exports._getRequireOrImport = _getRequireOrImport;

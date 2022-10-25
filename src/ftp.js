@@ -23,9 +23,9 @@
  * @param {*} module_name
  * @return {*} 
  */
- function _getRequireOrImport(module_name) {
+function _getRequireOrImport(module_name) {
   if (process.versions.node.split('.')[0] > "14") {
-      return import(module_name);
+    return import(module_name);
   }
   return require(module_name);
 }
@@ -66,7 +66,6 @@ function _getFtpPackageJsonRoot(startdirectory, options) {
   return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
 }
 
-
 function _findFtpRemoteFileUrl(remoteUrl, searchOptions, options) {
   // Implement _getRoot logic into remote url with concurrency
 }
@@ -78,7 +77,6 @@ function _findFtpRemoteRootUrl(remoteUrl, searchOptions, options) {
 function _findFtpRemotePackageJsonUrl(remoteUrl, options) {
   // Implement _getRoot logic and find the package.json url into remote package.json url with concurrency
 }
-
 
 /**
  *

@@ -23,7 +23,7 @@
  * @param {*} module_name
  * @return {*} 
  */
- function _getRequireOrImport(module_name) {
+function _getRequireOrImport(module_name) {
     if (process.versions.node.split('.')[0] > "14") {
         return import(module_name);
     }
@@ -55,6 +55,15 @@ function _getRequest(options, data, protocol) {
     });
 }
 
+/**
+ *
+ *
+ * @param {*} request
+ * @param {*} options
+ * @param {*} localGitFileCacheUrl
+ * @param {*} _requireWriteImport
+ * @return {*} 
+ */
 function _fetch(request, options, localGitFileCacheUrl, _requireWriteImport) {
     return fetch(request).then(response => response.text())
         .then(function (data) {

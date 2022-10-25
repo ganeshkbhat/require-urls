@@ -23,7 +23,7 @@
  * @param {*} module_name
  * @return {*} 
  */
- function _getRequireOrImport(module_name) {
+function _getRequireOrImport(module_name) {
     if (process.versions.node.split('.')[0] > "14") {
         return import(module_name);
     }
@@ -39,9 +39,10 @@ const fs = require('fs');
  * @param {*} data
  * @param {*} options
  */
-function _concurrency(data, options) {
+function _concurrencyThreads(filenameOrData, options) {
     const { Worker } = _getRequireOrImport('worker_threads');
-    const worker = new Worker('./worker.js');
+    // const worker = new Worker('./worker-threads.js');
+    const worker = new Worker(filename);
     if (!data.url) {
         throw new Error("[require-urls] index.js: URL not present in data for fetch.js");
     }
@@ -66,4 +67,9 @@ function _concurrency(data, options) {
     });
 }
 
-module.exports._concurrency = _concurrency;
+function _concurrencyProcesses(filenameOrData, options) {
+
+}
+
+module.exports._concurrencyThreads = _concurrencyThreads;
+module.exports._concurrencyProcesses = _concurrencyProcesses;

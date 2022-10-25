@@ -10,6 +10,8 @@
  * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * 
  * git-rest: https://www.softwaretestinghelp.com/github-rest-api-tutorial/#:~:text=Log%20in%20to%20your%20GitHub,and%20click%20on%20Create%20Token.
+ * https://webhookrelay.com/v1/functions/function-crypto-package.html
+ * 
  * 
 */
 
@@ -165,7 +167,7 @@ function _readFileLockJson(filelockPath, options) {
  * @param {*} digest
  * @return {*} 
  */
-function _fileContentSHAHash(data, digest) {
+function _fileContentSHAHash(data, digest, options = { logger: console.log }) {
     const crypto = require('crypto');
     var hash;
     if (digest === "base64") {
@@ -173,7 +175,20 @@ function _fileContentSHAHash(data, digest) {
     } else if (digest === "hex") {
         hash = crypto.createHash('sha256').update(data).digest('hex');
     }
+    options.logger("[require-urls]: filelock.js._fileContentSHAHash: Hash created is ", hash);
     return hash;
+}
+
+/**
+ *
+ *
+ * @param {*} hash
+ * @param {*} digest
+ * @param {*} [options={ logger: console.log }]
+ */
+function _fileContentSHADeHash(hash, digest, options = { logger: console.log }) {
+    const crypto = require('crypto');
+
 }
 
 /**
@@ -193,3 +208,4 @@ module.exports._readFileLockJson = _readFileLockJson;
 module.exports._createFileLockJson = _createFileLockJson;
 module.exports._updateFileLockJsonEntry = _updateFileLockJsonEntry;
 module.exports._deleteFileLockJsonEntry = _deleteFileLockJsonEntry;
+module.exports._fileContentSHADeHash = _fileContentSHADeHash;

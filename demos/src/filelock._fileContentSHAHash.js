@@ -26,3 +26,4 @@ let fileoptions = { name: "index.js", localPath: "C:\\Users\\GB\\Documents\\proj
 let fileHash = _filelock._fileContentSHAHash(JSON.stringify(require(path.join(filelockOptions.localPath, "filelock.json"))), "base64");
 
 console.log("[require-urls] demos/src/filelock._createFileLockJson.js: filelock - ", fileHash);
+

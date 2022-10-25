@@ -186,7 +186,19 @@ function _fileContentSHAHash(data, digest, options = { logger: console.log }) {
  * @param {*} digest
  * @param {*} [options={ logger: console.log }]
  */
-function _fileContentSHADeHash(hash, digest, options = { logger: console.log }) {
+function _fileContentDeHash(hash, digest, options = { logger: console.log }) {
+    const crypto = require('crypto');
+
+}
+
+/**
+ *
+ *
+ * @param {*} data
+ * @param {*} digest
+ * @param {*} [options={ logger: console.log }]
+ */
+function _fileContentHash(data, digest, options = { logger: console.log }) {
     const crypto = require('crypto');
 
 }

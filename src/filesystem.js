@@ -70,19 +70,34 @@ function _createFolders(localGitDir) {
  * @return {*} 
  */
 async function _writeFile(localPath, data, options) {
-    try {
-        options.logger("[require-urls]: filesystem.js: Writing fetched file to .jscache");
-        console.log(localPath);
-        if (!localPath) {
-            var createStream = fs.createWriteStream(localPath);
-            createStream.end();
+    return new Promise(async function(resolve, reject) {
+        try {
+            options.logger("[require-urls]: filesystem.js: Writing fetched file to .jscache");
+            console.log(localPath);
+            if (!localPath) {
+                var createStream = fs.createWriteStream(localPath);
+                createStream.end();
+            }
+            await fs.promises.writeFile(localPath, data.toString());
+            options.logger("[require-urls]: filesystem.js: Written fetched file to .jscache");
+            resolve(true);
+        } catch (e) {
+            throw new Error("[require-urls]: filesystem.js: ", e.toString());
         }
-        await fs.promises.writeFile(localPath, data.toString());
-        options.logger("[require-urls]: filesystem.js: Written fetched file to .jscache");
-        return true;
-    } catch (e) {
-        throw new Error("[require-urls]: filesystem.js: ", e.toString());
-    }
+    })
+    // try {
+    //     options.logger("[require-urls]: filesystem.js: Writing fetched file to .jscache", localPath);
+        
+    //     // if (!localPath) {
+    //     //     var createStream = fs.createWriteStream(localPath);
+    //     //     createStream.end();
+    //     // }
+    //     await fs.promises.writeFile(localPath, data.toString());
+    //     options.logger("[require-urls]: filesystem.js: Written fetched file to .jscache");
+    //     return true;
+    // } catch (e) {
+    //     throw new Error("[require-urls]: filesystem.js: ", e.toString());
+    // }
 }
 
 function _registerNodeCache(localGitFileCacheUrl, options) { } // ? Needed?

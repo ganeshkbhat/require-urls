@@ -25,8 +25,8 @@ let filelockOptions = { username: "cgi-js", repository: "cgi-js", repositoryPath
 let fileoptions = { name: "", local: "", remote: "", sha: "", digest: "base64", dependencies: {} };
 
 let write = _filelock._createFileLockJson(filelockOptions, fileoptions, { logger: console.log });
-// if (!!write) {
-//     filelock = _filelock._readFileLockJson(filelockOptions.localPath);
-// }
+if (!!write) {
+    filelock = _filelock._readFileLockJson(filelockOptions.localPath);
+}
 
 console.log("[require-urls] demos/src/filelock._createFileLockJson.js: filelock - ", filelock);

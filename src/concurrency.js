@@ -68,7 +68,12 @@ function _concurrencyThreads(filenameOrData, options) {
 }
 
 function _concurrencyProcesses(filenameOrData, options) {
-
+    const { fork } = require('child_process');
+    const child = fork(filenameOrData);
+    forked.on('message', (msg) => {
+        console.log('Message from child', msg);
+    });
+    forked.send({ hello: 'world' });
 }
 
 module.exports._concurrencyThreads = _concurrencyThreads;

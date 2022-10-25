@@ -16,3 +16,13 @@
 /* eslint no-console: 0 */
 
 'use strict';
+
+const _filelock = require("../../src/filelock.js");
+
+let filelock;
+let filelockOptions = { username: "cgi-js", repository: "cgi-js", repositoryPath: "https://www.github.com/cgi-js/cgi-js", localPath: "C:\\Users\\GB\\Documents\\projects\\requireurl\\.jscache\\github\\cgi-js@cgi-js\\4fd7793\\", commit: "4fd7793", sha: "", tag: "" };
+let fileoptions = { name: "", local: "", remote: "", sha: "", digest: "base64", dependencies: {} };
+
+filelock = _filelock._readFileLockJson(filelockOptions.localPath, { logger: console.log });
+
+console.log("[require-urls] demos/src/filelock._createFileLockJson.js: filelock - ", filelock);

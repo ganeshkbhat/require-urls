@@ -46,8 +46,8 @@ const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require }
 /**
  *
  *
- * @param {*} request
- * @param {*} options
+ * @param { Object } request
+ * @param { Object } options
  * @return {*} 
  */
 async function _getRemoteUrl(request, options) {
@@ -65,6 +65,14 @@ async function _getRemoteUrl(request, options) {
     return _require(paths.requireRemotePaths, paths.localGitFileCacheUrl, options);
 }
 
+/**
+ *
+ *
+ * @param { Object } request
+ * @param { Object } options
+ * @param {*} [_importRemoteUrl=null]
+ * @return {*} 
+ */
 function _concurrent_getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
     try {
         if (!!_importRemoteUrl) {
@@ -83,6 +91,14 @@ function _concurrent_getRecursiveRemoteUrl(request, options, _importRemoteUrl = 
     }
 }
 
+/**
+ *
+ *
+ * @param { Object } request
+ * @param { Object } options
+ * @param {*} [_importRemoteUrl=null]
+ * @return {*} 
+ */
 function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
     // 
     // Get all files that throw due to imports
@@ -149,6 +165,13 @@ function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
 
 }
 
+/**
+ *
+ *
+ * @param { Object } request
+ * @param { Object } options
+ * @return { Object } packagejson 
+ */
 function _getRecursiveRemotePackageJsonUrl(request, options) {
     // 
     // Get package.json
@@ -222,7 +245,6 @@ function _getRecursiveRemotePackageJsonUrl(request, options) {
 
     return packagejson;
 }
-
 
 /**
  *

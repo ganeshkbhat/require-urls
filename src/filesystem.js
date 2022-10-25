@@ -32,7 +32,6 @@ function _getRequireOrImport(module_name) {
 
 const path = require('path');
 const fs = require('fs');
-const { resolve } = require('path');
 
 /**
  *
@@ -102,6 +101,7 @@ async function _writeFile(localPath, data, options) {
 
 function _registerNodeCache(localGitFileCacheUrl, options) { } // ? Needed?
 
+module.exports._isinbuilt = _isinbuilt;
 module.exports._createFolders = _createFolders;
 module.exports._writeFile = _writeFile;
 module.exports._registerNodeCache = _registerNodeCache;

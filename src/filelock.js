@@ -105,9 +105,9 @@ async function _updateFileLockJsonEntry(filelockOptions, fileoptions, options) {
         readFilelock = _readFileLockJson(filelockOptions.localPath);
     } catch (e) {
         options.logger("[require-urls]: filelock.js: : filelock.json not created: ", e.message.toString());
-        return _createFileLockJson(filelockOptions, fileoptions, options);
+        return await _createFileLockJson(filelockOptions, fileoptions, options);
     }
-    
+
     fileoptions.sha = (!!fileoptions.sha) ? fileoptions.sha : (!!fileoptions.data) ? _fileContentSHAHash(fileoptions.data, fileoptions.digest) : "";
 
     /**
@@ -126,7 +126,7 @@ async function _updateFileLockJsonEntry(filelockOptions, fileoptions, options) {
         dependencies: { ...fileoptions.dependencies }
     }
 
-    return _writeFileLock(filelockOptions.localPath, readFilelock, options);
+    return await _writeFileLock(filelockOptions.localPath, readFilelock, options);
 }
 
 /**
@@ -136,10 +136,10 @@ async function _updateFileLockJsonEntry(filelockOptions, fileoptions, options) {
  * @param {*} fileoptions
  * @return {*} 
  */
-function _deleteFileLockJsonEntry(filelockOptions, fileoptions, options) {
-    var readFilelock = _readFileLockJson(path.join(filelockOptions.localPath, "filelock.json"));
+async function _deleteFileLockJsonEntry(filelockOptions, fileoptions, options) {
+    var readFilelock = _readFileLockJson(path.join(filelockOptions.localPath));
     delete readFilelock.files[fileoptions.name];
-    return _writeFileLock(filelockOptions.localPath, readFilelock, options);
+    return await _writeFileLock(filelockOptions.localPath, readFilelock, options);
 }
 
 /**

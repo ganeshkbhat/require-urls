@@ -220,4 +220,5 @@ module.exports._readFileLockJson = _readFileLockJson;
 module.exports._createFileLockJson = _createFileLockJson;
 module.exports._updateFileLockJsonEntry = _updateFileLockJsonEntry;
 module.exports._deleteFileLockJsonEntry = _deleteFileLockJsonEntry;
-module.exports._fileContentSHADeHash = _fileContentSHADeHash;
+module.exports._fileContentHash = _fileContentHash;
+module.exports._fileContentDeHash = _fileContentDeHash;

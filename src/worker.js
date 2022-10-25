@@ -17,21 +17,21 @@
 
 'use strict';
 
-process.on('message', (msg) => {
-    console.log("Message from parent:", msg);
-});
+process.on('message', function (contents) {
+    return contents.callback(contents);
+}.bind(contents, process));
 
-setInterval(() => {
-    process.send("Message from parent:");
-}, 1000);
-
-process.on('exit', function (code) {
-    setTimeout(function () {
-        console.log("This will not run");
-    }, 0);
-    console.log('About to exit with code:', code);
-});
-
+// setInterval(() => {
+//     process.send("Message from parent:");
+// }, 1000);
+// 
+// process.on('exit', function (code) {
+//     setTimeout(function () {
+//         console.log("This will not run");
+//     }, 0);
+//     console.log('About to exit with code:', code);
+// });
+// 
 //
 // // Printing to console
 // process.stdout.write("Hello World!" + "\n");

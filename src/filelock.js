@@ -30,7 +30,17 @@ const path = require("path");
  * @return {*} 
  */
 function _createFileLockJson(filelockOptions, fileoptions) {
-    var readFilelock = _readFileLockJson(path.join(filelockOptions.localRepositoryPath, "filelock.json"));
+    if (!filelockOptions.name && !filelockOptions.localPath && (!filelockOptions.commit || !filelockOptions.sha || !filelockOptions.tag)) {
+        throw new Error("[require-urls]: filelock.js._createFileLockJson: ")
+    }
+
+    var readFilelock = _readFileLockJson(path.join(filelockOptions.localPath, "filelock.json"));
+
+    if (!readFilelock) {
+        if (!filelockOptions.username && !filelockOptions.repository && filelockOptions.localPath && (!filelockOptions.commit || !filelockOptions.sha || !filelockOptions.tag)) {
+            throw new Error("[require-urls]: filelock.js._createFileLockJson: ")
+        }
+    }
 
     /** 
      * 
@@ -45,8 +55,8 @@ function _createFileLockJson(filelockOptions, fileoptions) {
             name: filelockOptions.username + "@" + filelockOptions.repository,
             localPath: filelockOptions.localPath,
             repository: filelockOptions.repository,
-            sha: filelockOptions.sha || "",
-            commit: filelockOptions.commit || "",
+            sha: filelockOptions.sha,
+            commit: filelockOptions.commit,
             tag: filelockOptions.tag || "",
             dependencies: filelockOptions.dependencies || {},
             files: {}

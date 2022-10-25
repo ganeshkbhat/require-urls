@@ -62,18 +62,35 @@ function _concurrencyThreads(filenameOrData, options) {
 
     worker.postMessage({ ...data });
     worker.on('message', function (result) {
-        // `result` from get response
         return result;
     });
 }
 
 function _concurrencyProcesses(filenameOrData, options) {
-    const { fork } = require('child_process');
+    const { fork } = _getRequireOrImport('child_process');
     const child = fork(filenameOrData);
-    forked.on('message', (msg) => {
-        console.log('Message from child', msg);
+
+    if (!data.url) {
+        // throw new Error("[require-urls] index.js: URL not present in data for fetch.js");
+    }
+
+    if (!data.callback) {
+        data.callback = function (contents, processFork) {
+            const { get } = (options.protocol === "https") ? require("https") : require("http");
+            get(contents.url, (res) => {
+                let result = '';
+                res.on('data', (chunk) => result += chunk);
+                res.on('end', () => {
+                    processFork.send(result);
+                });
+            }).on('error', (err) => processFork.send(err));
+        }.bind(null, null, null, data, options)
+    }
+
+    child.on('message', function (result) {
+        return result;
     });
-    forked.send({ hello: 'world' });
+    child.send({ ...data });
 }
 
 module.exports._concurrencyThreads = _concurrencyThreads;

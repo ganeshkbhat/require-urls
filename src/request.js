@@ -74,4 +74,3 @@ function _fetch(request, options, localGitFileCacheUrl, _requireWriteImport) {
 module.exports._getRequireOrImport = _getRequireOrImport;
 module.exports._getRequest = _getRequest;
 module.exports._fetch = _fetch;
-

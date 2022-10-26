@@ -10,7 +10,7 @@
  * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * 
  * git-rest: https://www.softwaretestinghelp.com/github-rest-api-tutorial/#:~:text=Log%20in%20to%20your%20GitHub,and%20click%20on%20Create%20Token.
- * 
+ * Consider moving to different package with more utils: https://github.com/eligrey/FileSaver.js
 */
 
 /* eslint no-console: 0 */
@@ -67,6 +67,11 @@ function _createFolders(localGitDir) {
  * @param {*} localPath
  * @param {*} data
  * @return {*} 
+ * 
+ * Consider: 
+ * streamsaver - https://www.npmjs.com/package/streamsaver
+ * file-saver - https://www.npmjs.com/package/file-saver
+ * 
  */
 async function _writeFile(localPath, data, options) {
     return new Promise(async function(resolve, reject) {

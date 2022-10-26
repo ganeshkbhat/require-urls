@@ -12,6 +12,9 @@
  * git-rest: https://www.softwaretestinghelp.com/github-rest-api-tutorial/#:~:text=Log%20in%20to%20your%20GitHub,and%20click%20on%20Create%20Token.
  * https://webhookrelay.com/v1/functions/function-crypto-package.html
  * 
+ * TODO:
+ * Consider checks and function additions for "low-level comparators between versions" and "working with ranges" and a few "functions for working with versions"
+ * https://github.com/npm/node-semver
  * 
 */
 
@@ -231,7 +234,7 @@ async function _writeFileLock(localPath, data, options) {
     return await _writeFile(path.join(localPath, "filelock.json"), JSON.stringify(data), options);
 }
 
-function _verifyFilelockFile(filename, remotePath, options) {}
+function _verifyFilelockFile(filename, remotePath, options) { }
 
 module.exports._writeFileLock = _writeFileLock;
 module.exports._fileContentSHAHash = _fileContentSHAHash;

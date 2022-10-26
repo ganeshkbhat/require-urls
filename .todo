@@ -1,4 +1,4 @@
-TODO 
+TODO
 
     - [D] Add support to fetch remote files using requireurls function
     - [D] Add support to fetch remote files using import() function in Commonjs using loader file
@@ -6,45 +6,80 @@ TODO
     - [D] Add support to fetch remote files using import() function in ES using loader file
     - [D] Add caching support for all remote url imports
     - [] Add `recursive` imports and cacheing for remote files. Minor changes needed
-    - [] Add support for package.json import 
+    - [] Add support for package.json import
             - [] options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository
     - [] Add support for .ts (typescript) files import with transpiling dynamically during import
     - [T] Add support for .coffee (coffeescript) files import with transpiling dynamically during import
     - [] Add changes to .jscache folder naming - use smaller name versions
         - [D] Add changes to .jscache folder naming - use smaller naming for git path store
-        - [] Add changes to .jscache folder naming - use commit numbers as folder names for repo instead of sha hash number, NEXT VERSION of indexnew.js 
+        - [] Add changes to .jscache folder naming - use commit numbers as folder names for repo instead of sha hash number, NEXT VERSION of indexnew.js
         - [T] Add changes to .jscache folder naming - when commit number not present then "store as-is" (for ftp support)
         - [] Add changes to .jscache folder naming - when "store as-is" (for ftp), never allow options.forceUpdate.
         - [] Add changes to .jscache folder naming - when "store as-is" options.forceUpdate use --update command for running file "node demo.js --update"
     - [] Add SVN support
     - [] Consider adding support for docker style naming (node:14.19.2-slim) to fetch remote urls
-        - [] requireurls("github:ganeshkbhat:requireurls:1c0mm1t1:index.js")
-        - [] requireurls("github:ganeshkbhat:requireurls:1c0mm1t1")
-        - [] requireurls("git-gitdomain:ganeshkbhat:requireurls:1c0mm1t1")
-        - [] requireurls("svn-svndomain:ganeshkbhat:requireurls:1c0mm1t1")
-        - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1")
-        - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:src/index.js")
-
+        - Use URL in URL Fetch
+            - [] requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/index.js")
+            - [] requireurls("https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/index.js")
+            - [] requireurls("https://raw.githubusercontent.com/npm/lock-verify/latest/cli.js)
+        - Use SHA URL in URL Fetch
+            - [] requireurls("https://github.com/ganeshkbhat/requireurl/blob/a34a222d761bb70d51ff3267c8530f40918db53e/index.js")
+            - [] requireurls("https://raw.githubusercontent.com/ganeshkbhat/requireurl/8d8681c4a28d64f23fb473064fa86880a0b930ff/index.js")
+        - Use SHA in URL Fetch
+            - [] requireurls("github:ganeshkbhat@requireurls:sha")
+            - [] requireurls("github:ganeshkbhat@requireurls:sha:src/index.js")
+        - Use commit in URL fetch
+            - [] requireurls("{git|svn|mercurial|ftp}-{domain}:{username}@{repository}:{commit|tag|sha|release}:{path})
+            - [] commit examples
+                - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:index.js")
+                - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1")
+                - [] requireurls("gitlab:ganeshkbhat@requireurls:1c0mm1t1")
+            - commit with domain examples
+                - [] requireurls("git-gitdomain:ganeshkbhat@requireurls:1c0mm1t1")
+                - [] requireurls("svn-svndomain:ganeshkbhat@requireurls:1c0mm1t1")
+                - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1")
+                - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:src/index.js")
+            - commit with default as github examples
+                - [] requireurls(":ganeshkbhat@requireurls:1c0mm1t1")
+                        will be default github:...@...:1c0mm1t1:{index.js|main.js}
+                - [] requireurls(":ganeshkbhat@requireurls:1c0mm1t1:src/index.js")
+                        will be default github:...@...:1c0mm1t1:src/index.js
+            - commit with username and repository with default as github and latest (commit/tag/sha) examples
+                - [] requireurls(":ganeshkbhat@requireurls")
+                        will be default github:...@...:latest:{index.js|main.js}
+                - [] requireurls(":ganeshkbhat@requireurls::src/index.js")
+                        will be default github:...@...:latest:src/index.js
+        - Use tags in URL fetch
+            - [] requireurls("github:ganeshkbhat@requireurls:tag")
+            - [] requireurls("github:ganeshkbhat@requireurls:tag:src/index.js")
+        - Use releases in URL fetch
+            - [] requireurls("github:ganeshkbhat@requireurls:release")
+            - [] requireurls("github:ganeshkbhat@requireurls:release:src/index.js")
 
 // // // Strategies:
 
 // // requireurl - url (single file)
- - require.resolve("urlpath"), requireurls("urlpath"), import("urlpath"), import { default as x } from "urlpath", 
+
+- require.resolve("urlpath"), requireurls("urlpath"), import("urlpath"), import { default as x } from "urlpath",
 
 // // requireurl - url (recursive)
 // // Concurrent Fetch support
+
 - require.resolve("urlpath"), ...
 
 // // requireurl - github package url (recursive)
-// // Concurrent Fetch support 
+// // Concurrent Fetch support
+
 - require.resolve("packageurl"), ...
 
 // // requireurl - github package.json url (recursive)
 // // Concurrent Fetch support
+
 - require.resolve("packagejsonurl"), ...
 
 // // requireurl - url to require entire package using package.json fetch (recursive)
 // // Concurrent Fetch support
+
 - require.resolve("urlpath"), ...
 
 // Consider exports syntax

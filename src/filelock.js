@@ -234,7 +234,21 @@ async function _writeFileLock(localPath, data, options) {
     return await _writeFile(path.join(localPath, "filelock.json"), JSON.stringify(data), options);
 }
 
-function _verifyFilelockFile(filename, remotePath, options) { }
+/**
+ *
+ *
+ * @param {*} remotePath
+ * @param {*} options
+ */
+function _verifyFilelockFile(remotePath, options) { }
+
+/**
+ *
+ *
+ * @param {*} remotePath
+ * @param {*} options
+ */
+function _verifyFilelock(remotePath, options) { }
 
 module.exports._writeFileLock = _writeFileLock;
 module.exports._fileContentSHAHash = _fileContentSHAHash;
@@ -245,3 +259,4 @@ module.exports._deleteFileLockEntry = _deleteFileLockEntry;
 module.exports._fileContentHash = _fileContentHash;
 module.exports._fileContentDeHash = _fileContentDeHash;
 module.exports._verifyFilelockFile = _verifyFilelockFile;
+module.exports._verifyFilelock = _verifyFilelock;

@@ -39,6 +39,10 @@ const { _getRequest, _fetch } = require("./request.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
+function _isParentModule() {
+    return ((require.main === module) || (require.main === module.parent));
+}
+
 /**
  *
  *
@@ -116,4 +120,5 @@ module.exports._requireImportNodeCache = _requireImportNodeCache;
 module.exports._requireImport = _requireImport;
 module.exports._requireWriteImport = _requireWriteImport;
 module.exports._require = _require;
+module.exports._isParentModule = _isParentModule;
 

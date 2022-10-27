@@ -17,18 +17,6 @@
 
 'use strict';
 
-/**
- *
- *
- * @param {*} module_name
- * @return {*} 
- */
-function _getRequireOrImport(module_name) {
-    if (process.versions.node.split('.')[0] > "14") {
-        return import(module_name);
-    }
-    return require(module_name);
-}
 
 const path = require('path');
 const fs = require('fs');
@@ -36,10 +24,14 @@ const os = require("os");
 
 const { _getRequest, _fetch } = require("./src/request.js");
 const { _concurrency } = require("./src/concurrency.js");
-const { _getRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, _getRequirePaths } = require("./src/getroot.js");
+const { _getRoot, _getGitRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, _getRequirePaths } = require("./src/getroot.js");
 const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
-const { _getGitRoot, _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
-const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
+const { _getRequireOrImport, _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
+const { _checkModuleImports, _requiresObject, _requireRegex, _importRegex, _importRegexExtended, _importESRegex } = require("./src/parser.js");
+const { _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
+// const {  } = require("./src/svn.js");
+// const {  } = require("./src/ftp.js");
+// const {  } = require("./src/mercurial.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
@@ -100,13 +92,10 @@ function _concurrent_getRecursiveRemoteUrl(request, options, _importRemoteUrl = 
  * @return {*} 
  */
 function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
-
     let _import = _getRemoteUrl(request, options);
     let paths = _getRequirePaths(request, options);
-    let required = _checkRequire(paths.localGitFileCacheUrl);
-    if (!required) {
-
-    }
+    let required = _checkModuleImports(paths.localGitFileCacheUrl);
+    if (!required) {}
 }
 
 /**

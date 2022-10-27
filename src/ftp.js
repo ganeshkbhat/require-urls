@@ -17,77 +17,9 @@
 
 'use strict';
 
-/**
- *
- *
- * @param {*} module_name
- * @return {*} 
- */
-function _getRequireOrImport(module_name) {
-  if (process.versions.node.split('.')[0] > "14") {
-    return import(module_name);
-  }
-  return require(module_name);
-}
 
 const path = require('path');
 const fs = require('fs');
-
-/**
-*
-*
-* @param {*} startdirectory
-* @param {*} options
-* @return {*} 
-*/
-function _getFtpRoot(startdirectory, options) {
-  function cb(fullPath, options) {
-    if ((options.baseType === "ftp") && !fs.lstatSync(fullPath).isDirectory()) {
-      // var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
-      // var match = /^gitdir: (.*)\s*$/.exec(content);
-      // if (match) {
-      //   return path.normalize(match[1]);
-      // }
-    }
-    return path.normalize(fullPath);
-  }
-  options.baseType = "ftp";
-  return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
-}
-
-function _getFtpPackageJsonRoot(startdirectory, options) {
-  function cb(fullPath, options) {
-    if ((options.baseType === "package.json")) {
-
-    }
-    return path.normalize(fullPath);
-  }
-  options.baseType = "package.json";
-  return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
-}
-
-function _findFtpRemoteFileUrl(remoteUrl, searchOptions, options) {
-  // Implement _getRoot logic into remote url with concurrency
-}
-
-function _findFtpRemoteRootUrl(remoteUrl, searchOptions, options) {
-  // Implement _getRoot logic into remote url with concurrency
-}
-
-function _findFtpRemotePackageJsonUrl(remoteUrl, options) {
-  // Implement _getRoot logic and find the package.json url into remote package.json url with concurrency
-}
-
-/**
- *
- *
- * @param {*} options
- * @param {*} data
- * @param {*} protocol
- */
-function _getFtpRequest(options, data, protocol) {
-  // Implement _getFtpRequest logic into remote url
-}
 
 function _ftpConnect(request, options) {
   var net = require('net');
@@ -232,11 +164,5 @@ function _ftpConnect(request, options) {
 
 function _getFtpRequest() { }
 
-module.exports._getFtpRoot = _getFtpRoot;
-module.exports._getFtpPackageJsonRoot = _getFtpPackageJsonRoot;
-module.exports._findFtpRemoteFileUrl = _findFtpRemoteFileUrl;
-module.exports._findFtpRemoteRootUrl = _findFtpRemoteRootUrl;
-module.exports._findFtpRemotePackageJsonUrl = _findFtpRemotePackageJsonUrl;
-module.exports._getFtpRequest = _getFtpRequest;
 module.exports._ftpConnect = _ftpConnect;
 module.exports._getFtpRequest = _getFtpRequest;

@@ -17,18 +17,6 @@
 
 'use strict';
 
-/**
- *
- *
- * @param {*} module_name
- * @return {*} 
- */
-function _getRequireOrImport(module_name) {
-    if (process.versions.node.split('.')[0] > "14") {
-        return import(module_name);
-    }
-    return require(module_name);
-}
 
 const path = require('path');
 const fs = require('fs');
@@ -168,6 +156,28 @@ function _getFtpRoot(startdirectory, options) {
  * @param {*} options
  * @return {*} 
  */
+function _getMercurialRoot(startdirectory, options) {
+    function cb(fullPath, options) {
+        if ((options.baseType === ".svn" || options.baseType === "svn") && !fs.lstatSync(fullPath).isDirectory()) {
+            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
+            var match = /^svndir: (.*)\s*$/.exec(content);
+            if (match) {
+                return path.normalize(match[1]);
+            }
+        }
+        return path.normalize(fullPath);
+    }
+    options.baseType = "";
+    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
+}
+
+/**
+ *
+ *
+ * @param {*} startdirectory
+ * @param {*} options
+ * @return {*} 
+ */
 function _getPackageJsonRoot(startdirectory, options) {
     function cb(fullPath, options) {
         if (!fs.lstatSync(fullPath).isDirectory()) {
@@ -242,7 +252,6 @@ function _getRequirePaths(request, options) {
         requireRemotePaths: requireRemotePaths
     };
 }
-
 
 module.exports._getRoot = _getRoot;
 module.exports._getGitRoot = _getGitRoot;

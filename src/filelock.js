@@ -22,6 +22,7 @@
 
 'use strict';
 
+
 const { _writeFile } = require("./filesystem.js");
 const { _getGitCommitNumber, _getGitSHAHash, _getGitTagName, _getGitBranchName } = require("./git.js");
 const { _createFolders } = require("./filesystem.js");

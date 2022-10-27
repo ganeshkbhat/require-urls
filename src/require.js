@@ -17,6 +17,12 @@
 
 'use strict';
 
+
+const path = require('path');
+const fs = require('fs');
+const os = require("os");
+const { _getRequest, _fetch } = require("./request.js");
+
 /**
  *
  *
@@ -29,13 +35,6 @@ function _getRequireOrImport(module_name) {
     }
     return require(module_name);
 }
-
-
-const path = require('path');
-const fs = require('fs');
-const os = require("os");
-
-const { _getRequest, _fetch } = require("./request.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
@@ -116,6 +115,7 @@ function _require(request, localGitFileCacheUrl, options) {
         }.bind(_requireWriteImport));
 }
 
+module.exports._getRequireOrImport = _getRequireOrImport;
 module.exports._requireImportNodeCache = _requireImportNodeCache;
 module.exports._requireImport = _requireImport;
 module.exports._requireWriteImport = _requireWriteImport;

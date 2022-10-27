@@ -40,17 +40,14 @@ const { _getRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, 
 const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
 const { _getGitRoot, _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
 const { _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
-const { threadId } = require('worker_threads');
-const { Console } = require('console');
-
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
 /**
  *
  *
- * @param {*} request
- * @param {*} options
+ * @param { Object } request
+ * @param { Object } options
  * @return {*} 
  */
 async function _getRemoteUrl(request, options) {
@@ -58,7 +55,7 @@ async function _getRemoteUrl(request, options) {
     // require.main.paths.push(requirePaths);
     options.logger("[require-urls] index.js: Get all paths: ", paths);
     try {
-        _createFolders(paths.localFullPath);
+        await _createFolders(paths.localFullPath);
     } catch (err) {
         throw new Error("[require-urls] index.js: file access error: ", err.toString());
     }
@@ -68,6 +65,14 @@ async function _getRemoteUrl(request, options) {
     return _require(paths.requireRemotePaths, paths.localGitFileCacheUrl, options);
 }
 
+/**
+ *
+ *
+ * @param { Object } request
+ * @param { Object } options
+ * @param {*} [_importRemoteUrl=null]
+ * @return {*} 
+ */
 function _concurrent_getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
     try {
         if (!!_importRemoteUrl) {
@@ -86,72 +91,31 @@ function _concurrent_getRecursiveRemoteUrl(request, options, _importRemoteUrl = 
     }
 }
 
+/**
+ *
+ *
+ * @param { Object } request
+ * @param { Object } options
+ * @param {*} [_importRemoteUrl=null]
+ * @return {*} 
+ */
 function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
-    // 
-    // Get all files that throw due to imports
-    // check if import files present in git
-    //      if file present => fetch all needed files
-    //      if options.fetchPackage => fetch package.json url and install
-    //      if options.fetchPackage not there => throw error saying dependency missing
-    // Add .jscache/path/to/git/repo folder to path
-    // npm install production packages
-    // 
-    // 
-    // try {
-    // 
-    //     if (!!_importRemoteUrl) {
-    //         _getRecursiveRemoteUrl(_importRemoteUrl, options, _importRemoteUrl)
-    //     }
-    //     let _import = _getRemoteUrl(request, options);
-    //     console.log("MODULE", _import);
-    //     try {
-    //      
-    //     } catch(err) {
-    //         throw new Error(err);
-    //     }
-    //     if (!!_import) { return _import; }
-    // } catch (e) {
-    //     throw new Error("[require-urls] index.js: ", e.toString());
-    // }
-    // 
 
-    try {
+    let _import = _getRemoteUrl(request, options);
+    let paths = _getRequirePaths(request, options);
+    let required = _checkRequire(paths.localGitFileCacheUrl);
+    if (!required) {
 
-        if (!!_importRemoteUrl) {
-            options.logger("[require-urls] index.js: _importRemoteUrl", _importRemoteUrl);
-            // TODO: Failing recursive
-            // _getRecursiveRemoteUrl(_importRemoteUrl, options);
-        }
-        let _import = _getRemoteUrl(request, options);
-        let p = _getRequirePaths(request, options);
-        try {
-            options.logger("[require-urls] index.js: All paths :", p);
-            require(p.localGitFileCacheUrl);
-        } catch (err) {
-            if (err.message.includes("404 Error")) { options.logger("[require-urls] index.js: \n[ERROR]: 404 Error.\n[DETAILS]: The file or package does not exist in the repository.\nPlease check if any dependenecies were not available or installed in your project needed for the package.\nDependency File or Package path and name: " + request); }
-            let m = err.message.split("\n")[0].replace("Cannot find module '", "").replace("'", "");
-            if (!m.endsWith(".js") || !m.endsWith(".mjs") || !m.endsWith(".cjs") || !m.endsWith(".wasm") || !m.endsWith(".wasm")) {
-                m = m + ".js";
-            }
-
-            let tmpRequestUrl = request.split("/");
-            tmpRequestUrl.pop();
-            let prepoTmpRequestUrl = tmpRequestUrl.splice(0, 3)
-            let requestRecursiveURL = "https://" + prepoTmpRequestUrl[2] + "/" + path.join(tmpRequestUrl.join("/"), m);
-            requestRecursiveURL = new URL(requestRecursiveURL).toString();
-            console.log("requestRecursiveURL: ", requestRecursiveURL)
-            _getRemoteUrl(requestRecursiveURL, options);
-            // TODO: Failing recursive
-            // _getRecursiveRemoteUrl(requestRecursiveURL, options);
-        }
-        if (!!_import) { return _import; }
-    } catch (e) {
-        if (e.message.includes("404 Error")) { options.logger("[require-urls] index.js: 404 Error.\n", e.message.toString()); }
-        throw new Error("[require-urls] index.js: ", e.toString());
     }
-
 }
 
+/**
+ *
+ *
+ * @param { Object } request
+ * @param { Object } options
+ * @return { Object } packagejson 
+ */
 function _getRecursiveRemotePackageJsonUrl(request, options) {
     // 
     // Get package.json
@@ -225,7 +189,6 @@ function _getRecursiveRemotePackageJsonUrl(request, options) {
 
     return packagejson;
 }
-
 
 /**
  *

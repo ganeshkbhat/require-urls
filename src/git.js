@@ -17,18 +17,6 @@
 
 'use strict';
 
-/**
- *
- *
- * @param {*} module_name
- * @return {*} 
- */
-function _getRequireOrImport(module_name) {
-    if (process.versions.node.split('.')[0] > "14") {
-        return import(module_name);
-    }
-    return require(module_name);
-}
 
 const path = require('path');
 const fs = require('fs');
@@ -36,27 +24,6 @@ const { _getRoot } = require("./getroot.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
-/**
- *
- *
- * @param {*} startdirectory
- * @param {*} options
- * @return {*} 
- */
-function _getGitRoot(startdirectory, options) {
-    function cb(fullPath, options) {
-        if ((options.baseType === "git" || options.baseType === "gitlab" || options.baseType === "bitbucket") && !fs.lstatSync(fullPath).isDirectory()) {
-            var content = fs.readFileSync(fullPath, { encoding: 'utf-8' });
-            var match = /^gitdir: (.*)\s*$/.exec(content);
-            if (match) {
-                return path.normalize(match[1]);
-            }
-        }
-        return path.normalize(fullPath);
-    }
-    options.baseType = "git";
-    return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
-}
 
 function _getPackageJsonRoot(startdirectory, options) {
     function cb(fullPath, options) {
@@ -69,50 +36,6 @@ function _getPackageJsonRoot(startdirectory, options) {
     return _getRoot(startdirectory, { ...options, baseType: options.baseType, getRootCallback: cb });
 }
 
-// 
-//
-// STRUCTURE WITH AUTHORIZATION
-//
-// GET REQUEST WITH CURL
-// 
-// curl \
-// -u <USERNAME>:<TOKEN>
-// -H "User-Agent": <USERNAME>
-// -H "Accept: application/vnd.github+json" \
-// -H "Authorization: Bearer <YOUR-TOKEN>" \
-// https://api.github.com/repos/OWNER/REPO/contents/PATH
-// 
-// GET REQUEST WITHOUT CURL
-// 
-// let s = search(
-//     { hostname: "https://api.github.com/repos/ganeshkbhat/requireurl/contents/test/test-require.js", port: 80, path: "", method: "GET" },
-//     { "User-Agent": "${username}", "Accept": "application/vnd.github+json", 'Authorization': 'Basic ' + btoa('${username}:${token}') },
-//     null,
-//     "git"
-// );
-//
-// 
-//
-// STRUCTURE WITHOUT AUTHORIZATION
-//
-// GET REQUEST WITH CURL
-// 
-// curl \
-// -H "User-Agent": <USERNAME>
-// -H "Accept: application/vnd.github+json" \
-// https://api.github.com/repos/OWNER/REPO/contents/PATH
-//
-// GET REQUEST WITHOUT CURL
-// 
-// let s = search(
-//     { hostname: "https://api.github.com/repos/ganeshkbhat/requireurl/contents/test/test-require.js", port: 80, path: "", method: "GET" },
-//     { "User-Agent": "${username}", "Accept": "application/vnd.github+json" },
-//     null,
-//     "git"
-// );
-//
-//
-
 /**
  *
  *
@@ -120,6 +43,52 @@ function _getPackageJsonRoot(startdirectory, options) {
  * @param {*} [data=null]
  * @param {*} options
  * @return {*} 
+ * 
+ * 
+        // 
+        //
+        // STRUCTURE WITH AUTHORIZATION
+        //
+        // GET REQUEST WITH CURL
+        // 
+        // curl \
+        // -u <USERNAME>:<TOKEN>
+        // -H "User-Agent": <USERNAME>
+        // -H "Accept: application/vnd.github+json" \
+        // -H "Authorization: Bearer <YOUR-TOKEN>" \
+        // https://api.github.com/repos/OWNER/REPO/contents/PATH
+        // 
+        // GET REQUEST WITHOUT CURL
+        // 
+        // let s = search(
+        //     { hostname: "https://api.github.com/repos/ganeshkbhat/requireurl/contents/test/test-require.js", port: 80, path: "", method: "GET" },
+        //     { "User-Agent": "${username}", "Accept": "application/vnd.github+json", 'Authorization': 'Basic ' + btoa('${username}:${token}') },
+        //     null,
+        //     "git"
+        // );
+        //
+        // 
+        //
+        // STRUCTURE WITHOUT AUTHORIZATION
+        //
+        // GET REQUEST WITH CURL
+        // 
+        // curl \
+        // -H "User-Agent": <USERNAME>
+        // -H "Accept: application/vnd.github+json" \
+        // https://api.github.com/repos/OWNER/REPO/contents/PATH
+        //
+        // GET REQUEST WITHOUT CURL
+        // 
+        // let s = search(
+        //     { hostname: "https://api.github.com/repos/ganeshkbhat/requireurl/contents/test/test-require.js", port: 80, path: "", method: "GET" },
+        //     { "User-Agent": "${username}", "Accept": "application/vnd.github+json" },
+        //     null,
+        //     "git"
+        // );
+        //
+        //
+ * 
  */
 function _searchGit(requestOptions, data = null, options) {
     requestOptions["Accept"] = requestOptions["Accept"] || requestOptions["accept"] || "application/vnd.github+json";
@@ -237,13 +206,47 @@ function _getDirContentResultsModifier(results, options) {
     return contents;
 }
 
+function _getGitURLs() {
+    return {
+        git: {
+            github: {
+                tags: "",
+                commit: "",
+                sha: "",
+                file: "",
+                search: ""
+            },
+            gitlab: {
+                tags: "",
+                commit: "",
+                sha: "",
+                file: "",
+                search: ""
+            },
+            bitbucket: {
+                tags: "",
+                commit: "",
+                sha: "",
+                file: "",
+                search: ""
+            },
+            template: {
+                tags: "",
+                commit: "",
+                sha: "",
+                file: "",
+                search: ""
+            }
+        }
+    }
+}
+
 function _getGitCommitNumber(request, options) { }
 function _getGitSHAHash(request, options) { }
 function _getGitTagName(request, options) { }
 function _getGitBranchName(request, options) { }
 
-module.exports._getGitRoot = _getGitRoot;
-module.exports._getRequireOrImport = _getRequireOrImport;
+
 module.exports._getPackageJsonRoot = _getPackageJsonRoot;
 module.exports._searchGit = _searchGit;
 module.exports._findGitRemoteFileUrl = _findGitRemoteFileUrl;
@@ -251,6 +254,7 @@ module.exports._findGitRemoteRootUrl = _findGitRemoteRootUrl;
 module.exports._findGitRemotePackageJsonUrl = _findGitRemotePackageJsonUrl;
 module.exports._searchGitFilesResultsModifier = _searchGitFilesResultsModifier;
 module.exports._getDirContentResultsModifier = _getDirContentResultsModifier;
+module.exports._getGitURLs = _getGitURLs;
 module.exports._getGitCommitNumber = _getGitCommitNumber;
 module.exports._getGitSHAHash = _getGitSHAHash;
 module.exports._getGitTagName = _getGitTagName;

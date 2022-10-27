@@ -17,25 +17,12 @@
 
 'use strict';
 
-/**
- *
- *
- * @param {*} module_name
- * @return {*} 
- */
-function _getRequireOrImport(module_name) {
-    if (process.versions.node.split('.')[0] > "14") {
-        return import(module_name);
-    }
-    return require(module_name);
-}
 
 const path = require('path');
 const fs = require('fs');
 const { _getRequirePaths } = require("./git.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
-
 
 /**
  *
@@ -71,6 +58,6 @@ function _fetch(request, options, localGitFileCacheUrl, _requireWriteImport) {
         }.bind(_requireWriteImport));
 }
 
-module.exports._getRequireOrImport = _getRequireOrImport;
+
 module.exports._getRequest = _getRequest;
 module.exports._fetch = _fetch;

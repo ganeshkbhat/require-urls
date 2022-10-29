@@ -52,6 +52,7 @@
     "cache remote require files"
   ],
   "dependencies": {
-    "get-imported": "^0.0.2"
+    "get-imported": "^0.0.2",
+    "root-dirs": "^0.0.1"
   }
 }

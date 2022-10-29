@@ -17,3 +17,14 @@
 
 'use strict';
 
+
+const { _getRoot, _getGitRoot, _getSvnRoot, _getFtpRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath } = require("root-dirs");
+
+module.exports._getRoot = _getRoot;
+module.exports._getGitRoot = _getGitRoot;
+module.exports._getSvnRoot = _getSvnRoot;
+module.exports._getFtpRoot = _getFtpRoot;
+module.exports._getNodeModulesRoot = _getNodeModulesRoot;
+module.exports._getPackageJsonRoot = _getPackageJsonRoot;
+module.exports._createJscachePath = _createJscachePath;
+

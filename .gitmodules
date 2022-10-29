@@ -1,3 +1,6 @@
 [submodule "get-imports"]
 	path = get-imports
 	url = https://github.com/ganeshkbhat/get-imports.git
+[submodule "get-root"]
+	path = get-root
+	url = https://github.com/ganeshkbhat/get-root.git

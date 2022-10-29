@@ -29,9 +29,12 @@ const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesy
 const { _getRequireOrImport, _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
 const { _checkModuleImports, _requiresObject, _requireRegex, _importRegex, _importRegexExtended, _importESRegex } = require("./src/parser.js");
 const { _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
+
+
 // const {  } = require("./src/svn.js");
-// const {  } = require("./src/ftp.js");
 // const {  } = require("./src/mercurial.js");
+// const {  } = require("./src/ftp.js");
+
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
@@ -94,8 +97,31 @@ function _concurrent_getRecursiveRemoteUrl(request, options, _importRemoteUrl = 
 function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
     let _import = _getRemoteUrl(request, options);
     let paths = _getRequirePaths(request, options);
-    let required = _checkModuleImports(paths.localGitFileCacheUrl);
-    if (!required) {}
+    let required, recursiveRequires;
+    try {
+        let required = _checkModuleImports(paths.localGitFileCacheUrl);
+        if (!required) {
+            return _import;
+        }
+    } catch (err) {
+        let cjs = [".js", ".cjs"];
+        let mjs = [".mjs"];
+        if (paths.localGitFileCacheUrl) {
+            recursiveRequires = _importESRegex()
+        } else {
+            recursiveRequires = _requireRegex();
+            recursiveRequires = { ...recursiveRequires, ..._importRegex() };
+        }
+
+        try {
+            for (let i = 0; i < recursiveRequires.length; i++) {
+                _getRecursiveRemoteUrl(recursiveRequires[i], options);
+            }
+        } catch (e) {
+            return e;
+        }
+        return _import;
+    }
 }
 
 /**
@@ -200,6 +226,7 @@ function requireurls(remoteUrl, options = { baseType: "git", recursive: false, f
         return _getRecursiveRemotePackageJsonUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: console.log });
     }
 }
+
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 

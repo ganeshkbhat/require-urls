@@ -6,8 +6,7 @@
 //  * Install: npm i require-urls --save
 //  * Github: https://github.com/ganeshkbhat/requireurl
 //  * npmjs Link: https://www.npmjs.com/package/require-urls
-//  * File: test/test-require-mjs.js
-//  * Test for File: loader.mjs + index.mjs (+ wrapper.mjs)
+//  * File: test/test-require-cjs.cjs
 //  * File Description: 
 //  * 
 // */

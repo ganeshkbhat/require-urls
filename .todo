@@ -82,5 +82,3 @@ TODO
 
 - require.resolve("urlpath"), ...
 
-// Consider exports syntax
-// https://nodejs.org/api/packages.html#introduction

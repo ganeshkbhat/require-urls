@@ -27,7 +27,11 @@
   "devDependencies": {
     "@types/node": "^18.11.3",
     "chai": "^4.3.6",
+    "hpp": "^0.2.3",
     "mocha": "^10.0.0",
+    "nsp": "^3.2.1",
+    "nsp-api": "^1.0.3",
+    "safe-regex": "^2.1.1",
     "sinon": "^14.0.0",
     "unimported": "^1.22.0"
   },
@@ -46,5 +50,8 @@
     "deno style require",
     "golang style require",
     "cache remote require files"
-  ]
+  ],
+  "dependencies": {
+    "get-imported": "^0.0.2"
+  }
 }

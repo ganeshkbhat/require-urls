@@ -1,0 +1,45 @@
+REFERENCES AND CONSIDERATIONS AND USER README
+
+
+// Consider exports syntax
+// https://nodejs.org/api/packages.html#introduction
+
+// https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution.html
+// const hpp = require('hpp');
+
+// https://www.npmjs.com/package/nsp-api
+// nsp, nsp-api - node security project 
+
+// https://owasp.org/www-pdf-archive/AppSecIL2016_NodeJS-Security_LiranTal.pdf
+// safe-regex for unit tests for requireurl import/require syntax regex tests
+// https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository
+
+
+// https://www.npmjs.com/package/validator.js
+// Check if validator.js is needed for sanitizing strings or needed for tests
+
+// https://www.npmjs.com/package/safe-regex
+// safe-regex for self regex unit tests and checks
+// consider based on functions https://www.npmjs.com/package/safe-regex-test
+
+
+// CONSIDER
+// https://verdaccio.org/
+
+// CONSIDER SAFE-regex For URL CHECKING
+// https://www.npmjs.com/package/url-regex-safe
+// dependency for ur-regex-safe
+// regex JS alternative
+// CHECK API - https://www.npmjs.com/package/re2
+// reference read - https://www.npmjs.com/package/url-regex-unsafe
+// reference read backtrack - https://www.npmjs.com/package/@nfq/safe-validation-regex
+
+
+// IMPORTANT RAISE NPM AUDIT ON REPOS
+// https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html
+// https://owasp.org/www-community/Component_Analysis
+
+
+// https://youtu.be/9aPvS4ibdmA
+// https://resources.hacware.com/owasp-scan-nodejs-for-cybersecurity-issues/
+// https://www.freecodecamp.org/news/6-tools-you-can-use-to-check-for-vulnerabilities-in-node-js/

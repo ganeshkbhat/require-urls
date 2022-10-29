@@ -24,6 +24,65 @@ const { _getRequirePaths } = require("./git.js");
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
+
+/**
+ *
+ *
+ * @param {*} url
+ * @return {*} 
+ */
+function _checkHttpsProtocol(url) {
+    let givenURL;
+    try {
+        givenURL = new URL(url);
+    } catch (error) {
+        return false;
+    }
+    return givenURL.protocol === "https:";
+}
+
+/**
+ *
+ *
+ * @param {*} url
+ * @return {*} 
+ */
+function _getProtocol(url) {
+    let givenURL;
+    try {
+        givenURL = new URL(url);
+    } catch (error) {
+        return false;
+    }
+    return givenURL.protocol === "http:" || givenURL.protocol === "https:";
+}
+
+// // Avoid 
+// function isValidURL(string) {
+//     var res =
+//         string.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-
+//             ]+[a - zA - Z0 - 9]\.[^\s]{ 2,}| www\.[a - zA - Z0 - 9][a - zA - Z0 - 9 -] + [a - zA - Z0 - 9]
+//     \.[^\s]{ 2,}| https ?: \/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|w
+//     ww\.[a - zA - Z0 - 9] +\.[^\s]{ 2,}) /gi);
+//     return (res !== null);
+// };
+
+/**
+ *
+ *
+ * @param {*} url
+ * @return {*} 
+ */
+function _isValidURL(url) {
+    let givenURL;
+    try {
+        givenURL = new URL(url);
+    } catch (error) {
+        return false;
+    }
+    return true;
+}
+
 /**
  *
  *
@@ -58,6 +117,8 @@ function _fetch(request, options, localGitFileCacheUrl, _requireWriteImport) {
         }.bind(_requireWriteImport));
 }
 
-
+module.exports._isValidURL = _isValidURL;
+module.exports._getProtocol = _getProtocol;
+module.exports._checkHttpsProtocol = _checkHttpsProtocol;
 module.exports._getRequest = _getRequest;
 module.exports._fetch = _fetch;

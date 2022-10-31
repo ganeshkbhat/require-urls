@@ -16,3 +16,6 @@
 [submodule "concurrency"]
 	path = concurrency
 	url = https://github.com/ganeshkbhat/concurrency.git
+[submodule "apis-hasher"]
+	path = apis-hasher
+	url = https://github.com/ganeshkbhat/apis-hasher.git

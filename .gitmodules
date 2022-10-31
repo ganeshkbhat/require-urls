@@ -4,3 +4,12 @@
 [submodule "get-root"]
 	path = get-root
 	url = https://github.com/ganeshkbhat/get-root.git
+[submodule "apis-git"]
+	path = apis-git
+	url = https://github.com/ganeshkbhat/apis-git.git
+[submodule "apis-mercurial"]
+	path = apis-mercurial
+	url = https://github.com/ganeshkbhat/apis-mercurial.git
+[submodule "apis-svn"]
+	path = apis-svn
+	url = https://github.com/ganeshkbhat/apis-svn.git

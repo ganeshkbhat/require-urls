@@ -210,32 +210,72 @@ function _getGitURLs() {
     return {
         git: {
             github: {
-                tags: "",
-                commit: "",
-                sha: "",
-                file: "",
-                search: ""
+                docs: "https://docs.github.com/en/rest/search",
+                repo: "https://api.github.com/repos/${owner}/${repo}",
+                tree: "https://api.github.com/repos/${owner}/${repo}/git/trees/${sha}",
+                treeRecursive: "https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1",
+                searchTags: "https://api.github.com/repos/${owner}/${repo}/tags",
+                searchCommits: "https://api.github.com/repos/${owner}/${repo}/commits?q=${querystring}",
+                searchCommitSha: "https://api.github.com/repos/${owner}/${repo}/commits/${sha}",
+                searchContents: "https://api.github.com/repos/${owner}/${repo}/contents/${path}",
+                searchCode: "https://api.github.com/search/code?q=${querystring}",
+                searchIssues: "https://api.github.com/search/issues?q=${querystring}",
+                searchLabels: "https://api.github.com/search/labels?q=${querystring}",
+                searchRepositories: "https://api.github.com/search/repositories?q=${querystring}",
+                searchTopics: "https://api.github.com/search/topics?q=${querystring}",
+                searchUsers: "https://api.github.com/search/users?q=${querystring}",
+                listUserRepos: "https://api.github.com/users/${owner}/repos?q=${querystring}"
             },
             gitlab: {
-                tags: "",
-                commit: "",
-                sha: "",
-                file: "",
-                search: ""
+                docs: "",
+                repo: "",
+                tree: "",
+                treeRecursive: "",
+                searchTags: "",
+                searchCommits: "",
+                searchCommitSha: "",
+                searchContents: "",
+                searchCode: "",
+                searchIssues: "",
+                searchLabels: "",
+                searchRepositories: "",
+                searchTopics: "",
+                searchUsers: "",
+                listUserRepos: ""
             },
             bitbucket: {
-                tags: "",
-                commit: "",
-                sha: "",
-                file: "",
-                search: ""
+                docs: "",
+                repo: "",
+                tree: "",
+                treeRecursive: "",
+                searchTags: "",
+                searchCommits: "",
+                searchCommitSha: "",
+                searchContents: "",
+                searchCode: "",
+                searchIssues: "",
+                searchLabels: "",
+                searchRepositories: "",
+                searchTopics: "",
+                searchUsers: "",
+                listUserRepos: ""
             },
             template: {
-                tags: "",
-                commit: "",
-                sha: "",
-                file: "",
-                search: ""
+                docs: "",
+                repo: "",
+                tree: "",
+                treeRecursive: "",
+                searchTags: "",
+                searchCommits: "",
+                searchCommitSha: "",
+                searchContents: "",
+                searchCode: "",
+                searchIssues: "",
+                searchLabels: "",
+                searchRepositories: "",
+                searchTopics: "",
+                searchUsers: "",
+                listUserRepos: ""
             }
         }
     }

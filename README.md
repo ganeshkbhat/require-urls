@@ -143,6 +143,12 @@ console.log("[require-urls] demo.mjs ", cgijsd);
 ```
 
 
+# ERRORS DOCUMENTATION
+
+Documented Errors [errors](./docs/errors.md)
+
+
+
 ### TODO
 
 - Add `recursive` imports and cacheing for remote files. Minor changes needed.

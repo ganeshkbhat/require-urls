@@ -81,6 +81,7 @@ function _getRequirePaths(request, options) {
     };
 }
 
+
 module.exports._getRoot = _getRoot;
 module.exports._getGitRoot = _getGitRoot;
 module.exports._getSvnRoot = _getSvnRoot;

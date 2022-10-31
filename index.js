@@ -98,29 +98,15 @@ function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
     let _import = _getRemoteUrl(request, options);
     let paths = _getRequirePaths(request, options);
     let required, recursiveRequires;
+
     try {
         let required = _checkModuleImports(paths.localGitFileCacheUrl);
-        if (!required) {
-            return _import;
+        // let required = require(paths.localGitFileCacheUrl);
+        if (!!required) {
+            return required;
         }
     } catch (err) {
-        let cjs = [".js", ".cjs"];
-        let mjs = [".mjs"];
-        if (paths.localGitFileCacheUrl) {
-            recursiveRequires = _importESRegex()
-        } else {
-            recursiveRequires = _requireRegex();
-            recursiveRequires = { ...recursiveRequires, ..._importRegex() };
-        }
-
-        try {
-            for (let i = 0; i < recursiveRequires.length; i++) {
-                _getRecursiveRemoteUrl(recursiveRequires[i], options);
-            }
-        } catch (e) {
-            return e;
-        }
-        return _import;
+        console.log(err.toString());
     }
 }
 

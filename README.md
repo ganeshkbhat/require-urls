@@ -143,7 +143,9 @@ console.log("[require-urls] demo.mjs ", cgijsd);
 ```
 
 
-# ERRORS DOCUMENTATION
+
+# Errors Documentation
+
 
 Documented Errors [errors](./docs/errors.md)
 

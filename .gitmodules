@@ -13,3 +13,6 @@
 [submodule "apis-svn"]
 	path = apis-svn
 	url = https://github.com/ganeshkbhat/apis-svn.git
+[submodule "concurrency"]
+	path = concurrency
+	url = https://github.com/ganeshkbhat/concurrency.git

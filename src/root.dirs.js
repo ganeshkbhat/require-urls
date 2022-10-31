@@ -19,7 +19,11 @@
 
 const path = require('path');
 const fs = require('fs');
-const { _getRoot, _getGitRoot, _getSvnRoot, _getFtpRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath } = require("root-dirs");
+const {
+    _getRoot, _getGitRoot, _getSvnRoot, _getFtpRoot,
+    _getNodeModulesRoot, _getPackageJsonRoot,
+    _createJscachePath
+} = require("root-dirs");
 
 
 /**

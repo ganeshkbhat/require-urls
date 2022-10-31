@@ -24,10 +24,10 @@ const os = require("os");
 
 const { _getRequest, _fetch } = require("./src/request.js");
 const { _concurrency } = require("./src/concurrency.js");
-const { _getRoot, _getGitRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, _getRequirePaths } = require("./src/getroot.js");
+const { _getRoot, _getGitRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, _getRequirePaths } = require("./src/root.dirs.js");
 const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
 const { _getRequireOrImport, _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
-const { _checkModuleImports, _requiresObject, _requireRegex, _importRegex, _importRegexExtended, _importESRegex } = require("./src/parser.js");
+const { _checkModuleImports, _requiresObject, _requireRegex, _importRegex, _importRegexExtended, _importESRegex, _isESCode, _checkRequireModuleImports } = require("./src/parser.js");
 const { _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
 
 
@@ -100,13 +100,40 @@ function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null) {
     let required, recursiveRequires;
 
     try {
-        let required = _checkModuleImports(paths.localGitFileCacheUrl);
-        // let required = require(paths.localGitFileCacheUrl);
+        let required = _checkRequireModuleImports(paths.localGitFileCacheUrl);
+        if (required instanceof Error) {
+            throw new Error(required.toString());
+        }
         if (!!required) {
             return required;
         }
     } catch (err) {
-        console.log(err.toString());
+        let isesm = _isESCode(paths.localGitFileCacheUrl);
+        let requires, imports, importses, importsdynamic;
+        if (!!isesm) {
+            importses = _importESRegex(paths.localGitFileCacheUrl);
+            options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all imports from the file ", paths.localGitFileCacheUrl, " are ", importses);
+            importsdynamic = _importRegex(paths.localGitFileCacheUrl);
+            options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all imports from the file ", paths.localGitFileCacheUrl, " are ", importsdynamic);
+            imports = { ...importses, ...importsdynamic };
+        } else {
+            requires = _requireRegex(paths.localGitFileCacheUrl);
+            options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all imports from the file ", paths.localGitFileCacheUrl, " are ", requires);
+            importsdynamic = _importRegex(paths.localGitFileCacheUrl);
+            options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all imports from the file ", paths.localGitFileCacheUrl, " are ", importsdynamic);
+            imports = { ...requires, ...importsdynamic };
+        }
+
+        options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all imports from the file ", paths.localGitFileCacheUrl, " are ", imports);
+
+        let importskeys = Object.keys(imports);
+        let importskeyslen = importskeys.length;
+
+        // Import files in the list
+        for (let i = 0; i < importskeyslen; i++) {
+            // importskeys[i]
+            console.log(importskeys[i].split("/"));
+        }
     }
 }
 

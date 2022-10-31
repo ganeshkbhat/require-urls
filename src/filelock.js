@@ -26,7 +26,7 @@
 const { _writeFile } = require("./filesystem.js");
 const { _getGitCommitNumber, _getGitSHAHash, _getGitTagName, _getGitBranchName } = require("./git.js");
 const { _createFolders } = require("./filesystem.js");
-const { _getRequirePaths } = require("./getroot.js");
+const { _getRequirePaths } = require("./root.dirs.js");
 const path = require("path");
 
 /**

@@ -17,7 +17,13 @@
 'use strict';
 
 
-const { _checkModuleImports, _requiresObject, _requireRegex, _importRegex, _importESRegex, _importRegexExtended, _isESMFileExtension, _isESMCodeBase, _isCJSCodeBase, _isESCode, _isModuleInPackageJson } = require("get-imported");
+const {
+    _checkModuleImports, _requiresObject, _requireRegex,
+    _importRegex, _importESRegex, _importRegexExtended,
+    _isESMFileExtension, _isESMCodeBase, _isCJSCodeBase,
+    _isModuleInPackageJson, _checkRequireModuleImports,
+    _isESCode
+} = require("get-imported");
 
 
 module.exports._checkModuleImports = _checkModuleImports;
@@ -29,5 +35,7 @@ module.exports._importRegexExtended = _importRegexExtended;
 module.exports._isESMFileExtension = _isESMFileExtension;
 module.exports._isESMCodeBase = _isESMCodeBase;
 module.exports._isCJSCodeBase = _isCJSCodeBase;
-module.exports._isESCode = _isESCode;
 module.exports._isModuleInPackageJson = _isModuleInPackageJson;
+module.exports._checkRequireModuleImports = _checkRequireModuleImports;
+module.exports._isESCode = _isESCode;
+

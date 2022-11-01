@@ -23,9 +23,8 @@
 'use strict';
 
 
-const { _writeFile } = require("./filesystem.js");
 const { _getGitCommitNumber, _getGitSHAHash, _getGitTagName, _getGitBranchName } = require("./git.js");
-const { _createFolders } = require("./filesystem.js");
+const { _createFolders, _writeFile } = require("./filesystem.js");
 const { _getRequirePaths } = require("./root.dirs.js");
 const path = require("path");
 
@@ -172,10 +171,10 @@ async function _deleteFileLockEntry(filelockOptions, fileoptions, options) {
  * @param {*} digest
  * @return {*} 
  */
-function _fileContentSHAHash(algorithm = "sha256", data, digest, options = { logger: console.log }) {
+function _createSHAHash(algorithm = "sha256", data, digest, options = { logger: console.log }) {
     const crypto = require('crypto');
     var hash = crypto.createHash(algorithm).update(JSON.stringify(data)).digest(digest);
-    options.logger("[require-urls]: filelock.js._fileContentSHAHash: Hash created is ", hash);
+    options.logger("[require-urls]: filelock.js._createSHAHash: Hash created is ", hash);
     return hash;
 }
 
@@ -251,8 +250,26 @@ function _verifyFilelockFile(remotePath, options) { }
  */
 function _verifyFilelock(remotePath, options) { }
 
+
+/**
+ *
+ *
+ * @param {*} remotePath
+ * @param {*} options
+ */
+ function _verifySHAHash(remotePath, options) { }
+
+ /**
+  *
+  *
+  * @param {*} remotePath
+  * @param {*} options
+  */
+ function _verifyFileContentHash(remotePath, options) { }
+ 
+
 module.exports._writeFileLock = _writeFileLock;
-module.exports._fileContentSHAHash = _fileContentSHAHash;
+module.exports._createSHAHash = _createSHAHash;
 module.exports._readFileLock = _readFileLock;
 module.exports._createFileLock = _createFileLock;
 module.exports._updateFileLockEntry = _updateFileLockEntry;
@@ -261,3 +278,5 @@ module.exports._fileContentHash = _fileContentHash;
 module.exports._fileContentDeHash = _fileContentDeHash;
 module.exports._verifyFilelockFile = _verifyFilelockFile;
 module.exports._verifyFilelock = _verifyFilelock;
+module.exports._verifySHAHash = _verifySHAHash;
+module.exports._verifyFileContentHash = _verifyFileContentHash;

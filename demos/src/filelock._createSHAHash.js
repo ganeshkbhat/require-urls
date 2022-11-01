@@ -23,7 +23,7 @@ const _filelock = require("../../src/filelock.js");
 let filelockOptions = { username: "cgi-js", repository: "cgi-js", repositoryPath: "https://www.github.com/cgi-js/cgi-js", localPath: "C:\\Users\\GB\\Documents\\projects\\requireurl\\.jscache\\github\\cgi-js@cgi-js\\4fd7793\\", commit: "4fd7793", sha: "", tag: "" };
 let fileoptions = { name: "index.js", localPath: "C:\\Users\\GB\\Documents\\projects\\requireurl\\.jscache\\github\\cgi-js@cgi-js\\4fd7793\\index.js", remote: "", sha: "", digest: "base64", dependencies: {} };
 
-let fileHash = _filelock._fileContentSHAHash("sha256", JSON.stringify(require(path.join(filelockOptions.localPath, "filelock.json"))), "base64");
+let fileHash = _filelock._createSHAHash("sha256", JSON.stringify(require(path.join(filelockOptions.localPath, "filelock.json"))), "base64");
 
 console.log("[require-urls] demos/src/filelock._createFileLockJson.js: filelock - ", fileHash);
 

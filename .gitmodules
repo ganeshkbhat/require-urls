@@ -19,3 +19,6 @@
 [submodule "apis-hasher"]
 	path = apis-hasher
 	url = https://github.com/ganeshkbhat/apis-hasher.git
+[submodule "filelock.json"]
+	path = filelock.json
+	url = https://github.com/ganeshkbhat/filelock.json.git

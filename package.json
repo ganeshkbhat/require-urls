@@ -53,6 +53,7 @@
   ],
   "dependencies": {
     "get-imported": "^0.0.5",
+    "hasher-apis": "^0.0.1",
     "root-dirs": "^0.0.2"
   }
 }

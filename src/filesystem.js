@@ -20,80 +20,81 @@
 
 const path = require('path');
 const fs = require('fs');
-const { _getRequireOrImport } = require("./require.js");
+const { _isinbuilt, _createFolders, _writeFile, _registerNodeCache } = require("fssys").fsutils;
 
-/**
- *
- *
- * @param {*} mod
- * @return {*} 
- */
-function _isinbuilt(mod) {
-    const { isBuiltin } = _getRequireOrImport("module");
-    return isBuiltin(mod);
-}
 
-/**
- *
- *
- * @param {*} localGitDir
- */
-function _createFolders(localGitDir) {
-    return new Promise(function(resolve, reject) {
-        try {
-            return fs.access(path.join(localGitDir), (e) => {
-                resolve(fs.mkdirSync(localGitDir, { recursive: true }));
-            })
-        } catch (err) {
-            throw new Error("[require-urls]: filesystem.js: file access error", err.toString());
-        }
-    })
-}
+// /**
+//  *
+//  *
+//  * @param {*} mod
+//  * @return {*} 
+//  */
+// function _isinbuilt(mod) {
+//     const { isBuiltin } = _getRequireOrImport("module");
+//     return isBuiltin(mod);
+// }
 
-/**
- *
- *
- * @param {*} localPath
- * @param {*} data
- * @return {*} 
- * 
- * Consider: 
- * streamsaver - https://www.npmjs.com/package/streamsaver
- * file-saver - https://www.npmjs.com/package/file-saver
- * 
- */
-async function _writeFile(localPath, data, options) {
-    return new Promise(async function(resolve, reject) {
-        try {
-            options.logger("[require-urls]: filesystem.js: Writing fetched file to .jscache");
-            console.log(localPath);
-            if (!localPath) {
-                var createStream = fs.createWriteStream(localPath);
-                createStream.end();
-            }
-            await fs.promises.writeFile(localPath, data.toString());
-            options.logger("[require-urls]: filesystem.js: Written fetched file to .jscache");
-            resolve(true);
-        } catch (e) {
-            throw new Error("[require-urls]: filesystem.js: ", e.toString());
-        }
-    })
-    // try {
-    //     options.logger("[require-urls]: filesystem.js: Writing fetched file to .jscache", localPath);
-        
-    //     // if (!localPath) {
-    //     //     var createStream = fs.createWriteStream(localPath);
-    //     //     createStream.end();
-    //     // }
-    //     await fs.promises.writeFile(localPath, data.toString());
-    //     options.logger("[require-urls]: filesystem.js: Written fetched file to .jscache");
-    //     return true;
-    // } catch (e) {
-    //     throw new Error("[require-urls]: filesystem.js: ", e.toString());
-    // }
-}
+// /**
+//  *
+//  *
+//  * @param {*} localGitDir
+//  */
+// function _createFolders(localGitDir) {
+//     return new Promise(function (resolve, reject) {
+//         try {
+//             return fs.access(path.join(localGitDir), (e) => {
+//                 resolve(fs.mkdirSync(localGitDir, { recursive: true }));
+//             })
+//         } catch (err) {
+//             throw new Error("[require-urls]: filesystem.js: file access error", err.toString());
+//         }
+//     })
+// }
 
-function _registerNodeCache(localGitFileCacheUrl, options) { } // ? Needed?
+// /**
+//  *
+//  *
+//  * @param {*} localPath
+//  * @param {*} data
+//  * @return {*} 
+//  * 
+//  * Consider: 
+//  * streamsaver - https://www.npmjs.com/package/streamsaver
+//  * file-saver - https://www.npmjs.com/package/file-saver
+//  * 
+//  */
+// async function _writeFile(localPath, data, options) {
+//     return new Promise(async function (resolve, reject) {
+//         try {
+//             options.logger("[require-urls]: filesystem.js: Writing fetched file to .jscache");
+//             console.log(localPath);
+//             if (!localPath) {
+//                 var createStream = fs.createWriteStream(localPath);
+//                 createStream.end();
+//             }
+//             await fs.promises.writeFile(localPath, data.toString());
+//             options.logger("[require-urls]: filesystem.js: Written fetched file to .jscache");
+//             resolve(true);
+//         } catch (e) {
+//             throw new Error("[require-urls]: filesystem.js: ", e.toString());
+//         }
+//     })
+//     // try {
+//     //     options.logger("[require-urls]: filesystem.js: Writing fetched file to .jscache", localPath);
+
+//     //     // if (!localPath) {
+//     //     //     var createStream = fs.createWriteStream(localPath);
+//     //     //     createStream.end();
+//     //     // }
+//     //     await fs.promises.writeFile(localPath, data.toString());
+//     //     options.logger("[require-urls]: filesystem.js: Written fetched file to .jscache");
+//     //     return true;
+//     // } catch (e) {
+//     //     throw new Error("[require-urls]: filesystem.js: ", e.toString());
+//     // }
+// }
+
+// function _registerNodeCache(localGitFileCacheUrl, options) { } // ? Needed?
 
 module.exports._isinbuilt = _isinbuilt;
 module.exports._createFolders = _createFolders;

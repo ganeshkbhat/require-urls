@@ -116,6 +116,7 @@ function _require(request, localGitFileCacheUrl, options) {
         }.bind(_requireWriteImport));
 }
 
+
 module.exports._getRequireOrImport = _getRequireOrImport;
 module.exports._requireImportNodeCache = _requireImportNodeCache;
 module.exports._requireImport = _requireImport;

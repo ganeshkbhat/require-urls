@@ -25,3 +25,6 @@
 [submodule "fssys"]
 	path = fssys
 	url = https://github.com/traverse-fs/fssys.git
+[submodule "apis-request"]
+	path = apis-request
+	url = https://github.com/ganeshkbhat/apis-request.git

@@ -299,3 +299,5 @@ module.exports._getGitCommitNumber = _getGitCommitNumber;
 module.exports._getGitSHAHash = _getGitSHAHash;
 module.exports._getGitTagName = _getGitTagName;
 module.exports._getGitBranchName = _getGitBranchName;
+
+

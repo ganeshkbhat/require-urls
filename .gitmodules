@@ -22,3 +22,6 @@
 [submodule "filelock.json"]
 	path = filelock.json
 	url = https://github.com/ganeshkbhat/filelock.json.git
+[submodule "fssys"]
+	path = fssys
+	url = https://github.com/traverse-fs/fssys.git

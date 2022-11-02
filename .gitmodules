@@ -28,3 +28,6 @@
 [submodule "apis-request"]
 	path = apis-request
 	url = https://github.com/ganeshkbhat/apis-request.git
+[submodule "get-isesm"]
+	path = get-isesm
+	url = https://github.com/ganeshkbhat/get-isesm.git

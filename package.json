@@ -53,7 +53,7 @@
   ],
   "dependencies": {
     "concurrency.js": "^0.0.2",
-    "filelock.json": "^0.0.2",
+    "filelock.json": "^0.0.21-beta",
     "fssys": "^1.0.1",
     "get-imported": "^0.0.5",
     "git-apis": "^0.0.21-beta",

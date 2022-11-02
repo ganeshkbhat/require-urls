@@ -29,7 +29,7 @@
     "chai": "^4.3.6",
     "hpp": "^0.2.3",
     "mocha": "^10.0.0",
-    "nsp": "^3.2.1",
+    "nsp": "^2.8.1",
     "nsp-api": "^1.0.3",
     "safe-regex": "^2.1.1",
     "sinon": "^14.0.0",
@@ -52,15 +52,15 @@
     "cache remote require files"
   ],
   "dependencies": {
-    "concurrency.js": "^0.0.2",
+    "concurrency.js": "^0.0.22-beta",
     "filelock.json": "^0.0.21-beta",
     "fssys": "^1.0.1",
     "get-imported": "^0.0.5",
-    "git-apis": "^0.0.21-beta",
-    "hasher-apis": "^0.0.1",
-    "mercurial-apis": "^0.0.1",
-    "request-apis": "^0.0.1",
+    "git-apis": "^0.0.22-beta",
+    "hasher-apis": "^0.0.11-beta",
+    "mercurial-apis": "^0.0.11-beta",
+    "request-apis": "^0.0.22-beta",
     "root-dirs": "^0.0.2",
-    "svn-apis": "^0.0.11-beta"
+    "svn-apis": "^0.0.12-beta"
   }
 }

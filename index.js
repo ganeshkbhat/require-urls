@@ -22,18 +22,85 @@ const path = require('path');
 const fs = require('fs');
 const os = require("os");
 
-const { _getRequest, _fetch } = require("./src/request.js");
-const { _concurrency } = require("./src/concurrency.js");
-const { _getRoot, _getGitRoot, _getNodeModulesRoot, _getPackageJsonRoot, _createJscachePath, _getRequirePaths } = require("./src/root.dirs.js");
-const { _createFolders, _writeFile, _registerNodeCache } = require("./src/filesystem.js");
-const { _getRequireOrImport, _requireImportNodeCache, _requireImport, _requireWriteImport, _require } = require("./src/require.js");
-const { _checkModuleImports, _requiresObject, _requireRegex, _importRegex, _importRegexExtended, _importESRegex, _isESCode, _checkRequireModuleImports } = require("./src/parser.js");
-const { _searchGit, _findGitRemoteFileUrl, _findGitRemoteRootUrl, _findGitRemotePackageJsonUrl, _searchGitFilesResultsModifier, _getDirContentResultsModifier } = require("./src/git.js");
+const {
+    _isValidURL, _getProtocol,
+    _checkHttpsProtocol, _fetch,
+    _deleteRequest, _getRequest,
+    _postRequest, _putRequest,
+    _patchRequest, _request
+} = require("./src/request.js");
+
+const {
+    _concurrencyThreads,
+    _concurrencyProcesses
+} = require("./src/concurrency.js");
+
+const {
+    _getRoot, _getGitRoot, _getSvnRoot, _getFtpRoot,
+    _getNodeModulesRoot, _getPackageJsonRoot,
+    _createJscachePath, _getRequirePaths
+} = require("./src/root.dirs.js");
+
+const {
+    _isinbuilt, _createFolders,
+    _writeFile, _registerNodeCache
+} = require("./src/filesystem.js");
+
+const {
+    _writeFileLock, _createSHAHash, _readFileLock,
+    _createFileLock, _updateFileLockEntry, _deleteFileLockEntry,
+    _fileContentHash, _fileContentDeHash,
+    _verifyFilelockFile, _verifyFilelock,
+    _verifySHAHash, _verifyFileContentHash
+} = require("./src/filelock.js");
+
+const {
+    _getRequireOrImport,
+    _requireImportNodeCache,
+    _requireImport,
+    _requireWriteImport,
+    _require,
+    _isParentModule
+} = require("./src/require.js");
+
+const {
+    _checkModuleImports, _requiresObject, _requireRegex,
+    _importRegex, _importESRegex, _importRegexExtended,
+    _isESMFileExtension, _isESMCodeBase, _isCJSCodeBase,
+    _isModuleInPackageJson, _checkRequireModuleImports,
+    _isESCode
+} = require("./src/parser.js");
+
+const {
+    _searchGit,
+    _findGitRemoteFileUrl,
+    _findGitRemoteRootUrl,
+    _findGitRemotePackageJsonUrl,
+    _searchGitFilesResultsModifier,
+    _getDirContentResultsModifier,
+    _getGitURLs,
+    _getGitCommit,
+    _getGitSHAHash,
+    _getGitTagName,
+    _getGitBranchName,
+    _getGitContentFile,
+    _getGitContentDir,
+    _getGitContentDirRecursive,
+    _getGitTree,
+    _getGitTreeRecursive,
+    _getGitRepositories,
+    _getGitIssues,
+    _getGitLabels,
+    _getGitTopics,
+    _getGitUsers,
+    _getGitUserRepositories,
+    _getGitRepository
+} = require("./src/git.js");
 
 
-// const {  } = require("./src/svn.js");
-// const {  } = require("./src/mercurial.js");
-// const {  } = require("./src/ftp.js");
+const { _getSvnRequest } = require("./src/svn.js");
+const { _getMercurialRequest } = require("./src/mercurial.js");
+const { _ftpConnect, _getFtpRequest } = require("./src/ftp.js");
 
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
@@ -261,4 +328,106 @@ function requireurls(remoteUrl, options = { baseType: "git", recursive: false, f
 
 /** New Structure for Revamped version of index.js with better isolation, and independent functions */
 
-module.exports = requireurls;
+module.exports.default = requireurls;
+
+
+module.exports._concurrencyProcesses = _concurrencyProcesses;
+module.exports._concurrencyThreads = _concurrencyThreads;
+
+
+module.exports._writeFileLock = _writeFileLock;
+module.exports._createSHAHash = _createSHAHash
+module.exports._readFileLock = _readFileLock
+module.exports._createFileLock = _createFileLock
+module.exports._updateFileLockEntry = _updateFileLockEntry
+module.exports._deleteFileLockEntry = _deleteFileLockEntry
+module.exports._fileContentHash = _fileContentHash
+module.exports._fileContentDeHash = _fileContentDeHash;
+module.exports._verifyFilelockFile = _verifyFilelockFile
+module.exports._verifyFilelock = _verifyFilelock
+module.exports._verifySHAHash = _verifySHAHash
+module.exports._verifyFileContentHash = _verifyFileContentHash
+
+
+module.exports._isinbuilt = _isinbuilt
+module.exports._createFolders = _createFolders
+module.exports._writeFile = _writeFile
+module.exports._registerNodeCache = _registerNodeCache
+
+
+module.exports._ftpConnect = _ftpConnect
+module.exports._getFtpRequest = _getFtpRequest
+
+
+module.exports._searchGit = _searchGit
+module.exports._findGitRemoteFileUrl = _findGitRemoteFileUrl
+module.exports._findGitRemoteRootUrl = _findGitRemoteRootUrl
+module.exports._findGitRemotePackageJsonUrl = _findGitRemotePackageJsonUrl
+module.exports._searchGitFilesResultsModifier = _searchGitFilesResultsModifier
+module.exports._getDirContentResultsModifier = _getDirContentResultsModifier
+module.exports._getGitURLs = _getGitURLs
+module.exports._getGitCommit = _getGitCommit
+module.exports._getGitSHAHash = _getGitSHAHash
+module.exports._getGitTagName = _getGitTagName
+module.exports._getGitBranchName = _getGitBranchName
+module.exports._getGitContentFile = _getGitContentFile
+module.exports._getGitContentDir = _getGitContentDir
+module.exports._getGitContentDirRecursive = _getGitContentDirRecursive
+module.exports._getGitTree = _getGitTree
+module.exports._getGitTreeRecursive = _getGitTreeRecursive
+module.exports._getGitRepositories = _getGitRepositories
+module.exports._getGitIssues = _getGitIssues
+module.exports._getGitLabels = _getGitLabels
+module.exports._getGitTopics = _getGitTopics
+module.exports._getGitUsers = _getGitUsers
+module.exports._getGitUserRepositories = _getGitUserRepositories
+module.exports._getGitRepository = _getGitRepository
+
+
+module.exports._getMercurialRequest = _getMercurialRequest
+
+
+module.exports._checkModuleImports = _checkModuleImports
+module.exports._requiresObject = _requiresObject
+module.exports._requireRegex = _requireRegex
+module.exports._importRegex = _importRegex
+module.exports._importESRegex = _importESRegex
+module.exports._importRegexExtended = _importRegexExtended
+module.exports._isESMFileExtension = _isESMFileExtension
+module.exports._isESMCodeBase = _isESMCodeBase
+module.exports._isCJSCodeBase = _isCJSCodeBase
+module.exports._isModuleInPackageJson = _isModuleInPackageJson
+module.exports._checkRequireModuleImports = _checkRequireModuleImports
+module.exports._isESCode = _isESCode
+
+
+module.exports._isValidURL = _isValidURL
+module.exports._getProtocol = _getProtocol
+module.exports._checkHttpsProtocol = _checkHttpsProtocol
+module.exports._getRequest = _getRequest
+module.exports._fetch = _fetch
+module.exports._deleteRequest = _deleteRequest
+module.exports._postRequest = _postRequest
+module.exports._putRequest = _putRequest
+module.exports._patchRequest = _patchRequest
+module.exports._request = _request
+
+
+module.exports._getRequireOrImport = _getRequireOrImport
+module.exports._requireImportNodeCache = _requireImportNodeCache
+module.exports._requireImport = _requireImport
+module.exports._requireWriteImport = _requireWriteImport
+module.exports._require = _require
+module.exports._isParentModule = _isParentModule
+
+
+module.exports._getRoot = _getRoot
+module.exports._getGitRoot = _getGitRoot
+module.exports._getSvnRoot = _getSvnRoot
+module.exports._getFtpRoot = _getFtpRoot
+module.exports._getNodeModulesRoot = _getNodeModulesRoot
+module.exports._getPackageJsonRoot = _getPackageJsonRoot
+module.exports._createJscachePath = _createJscachePath
+module.exports._getRequirePaths = _getRequirePaths
+
+module.exports._getSvnRequest = _getSvnRequest

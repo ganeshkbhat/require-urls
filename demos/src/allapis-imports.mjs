@@ -6,7 +6,7 @@
  * Install: npm i require-urls --save
  * Github: https://github.com/ganeshkbhat/requireurl
  * npmjs Link: https://www.npmjs.com/package/require-urls
- * File: index.mjs
+ * File: demos/src/allapis-imports.js
  * File Description: Using require-urls instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
  * 
  * git-rest: https://www.softwaretestinghelp.com/github-rest-api-tutorial/#:~:text=Log%20in%20to%20your%20GitHub,and%20click%20on%20Create%20Token.
@@ -17,7 +17,7 @@
 
 'use strict';
 
-import { 
+import {
     
     _concurrencyProcesses,
     _concurrencyThreads,
@@ -107,19 +107,13 @@ import {
 
     
     _getSvnRequest
-} from './index.js';
-// process.env.NODE_OPTIONS = '--experimental-modules --loader ./custom-loader.mjs';
+} from "../../index.mjs";
 
-import { default as requireurls } from "./index.js";
-
-export default requireurls;
-
-export { 
-    
+console.log(
     _concurrencyProcesses,
     _concurrencyThreads,
 
-     _writeFileLock,
+    _writeFileLock,
     _createSHAHash,
     _readFileLock,
     _createFileLock,
@@ -132,15 +126,13 @@ export {
     _verifySHAHash,
     _verifyFileContentHash,
 
-     _isinbuilt,
+    _isinbuilt,
     _createFolders,
     _writeFile,
     _registerNodeCache,
-
-     _ftpConnect,
+    _ftpConnect,
     _getFtpRequest,
 
-    
     _searchGit,
     _findGitRemoteFileUrl,
     _findGitRemoteRootUrl,
@@ -165,10 +157,8 @@ export {
     _getGitUserRepositories,
     _getGitRepository,
 
-    
     _getMercurialRequest,
-
-     _checkModuleImports,
+    _checkModuleImports,
     _requiresObject,
     _requireRegex,
     _importRegex,
@@ -181,19 +171,25 @@ export {
     _checkRequireModuleImports,
     _isESCode,
 
-    
-    _isValidURL, _getProtocol, _checkHttpsProtocol,
-    _getRequest, _fetch, _deleteRequest,
-    _postRequest, _putRequest, _patchRequest, _request,
+    _isValidURL,
+    _getProtocol,
+    _checkHttpsProtocol,
+    _getRequest,
+    _fetch,
+    _deleteRequest,
+    _postRequest,
+    _putRequest,
+    _patchRequest,
+    _request,
 
-     _getRequireOrImport,
+    _getRequireOrImport,
     _requireImportNodeCache,
     _requireImport,
     _requireWriteImport,
     _require,
     _isParentModule,
 
-     _getRoot,
+    _getRoot,
     _getGitRoot,
     _getSvnRoot,
     _getFtpRoot,
@@ -202,7 +198,5 @@ export {
     _createJscachePath,
     _getRequirePaths,
 
-    
     _getSvnRequest
-}
-
+)

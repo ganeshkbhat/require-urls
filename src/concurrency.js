@@ -22,7 +22,7 @@ const path = require('path');
 const fs = require('fs');
 const { _getRequireOrImport } = require("./require.js");
 
-const { _concurrencyThreads, _concurrencyProcesses } = "concurrency.js";
+const { _concurrencyThreads, _concurrencyProcesses } = require("concurrency.js");
 
 module.exports._concurrencyThreads = _concurrencyThreads;
 module.exports._concurrencyProcesses = _concurrencyProcesses;

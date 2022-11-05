@@ -52,15 +52,15 @@
     "cache remote require files"
   ],
   "dependencies": {
-    "concurrency.js": "^0.0.23-beta",
-    "filelock.json": "^0.0.21-beta",
-    "fssys": "^1.0.1",
-    "get-imported": "^0.0.5",
-    "git-apis": "^0.0.24-beta",
-    "hasher-apis": "^0.0.11-beta",
-    "mercurial-apis": "^0.0.11-beta",
-    "request-apis": "^0.0.23-beta",
-    "root-dirs": "^0.0.2",
-    "svn-apis": "^0.0.12-beta"
+    "concurrency.js": "0.0.23-beta",
+    "filelock.json": "0.0.21-beta",
+    "fssys": "1.0.1",
+    "get-imported": "0.0.51",
+    "git-apis": "0.0.24-beta",
+    "hasher-apis": "0.0.11-beta",
+    "mercurial-apis": "0.0.11-beta",
+    "request-apis": "0.0.23-beta",
+    "root-dirs": "0.0.2",
+    "svn-apis": "0.0.12-beta"
   }
 }

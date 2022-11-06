@@ -66,7 +66,8 @@ const {
 const {
     _checkModuleImports, _requiresObject, _requireRegex,
     _importRegex, _importESRegex, _importRegexExtended,
-    _isESMFileExtension, _isESMCodeBase, _isCJSCodeBase,
+    _isESMFileExtension, _isNodeCompatibleFileExtension, 
+    _isESMCodeBase, _isCJSCodeBase,
     _isModuleInPackageJson, _checkRequireModuleImports,
     _isESCode
 } = require("./src/parser.js");
@@ -466,6 +467,7 @@ module.exports._importRegex = _importRegex
 module.exports._importESRegex = _importESRegex
 module.exports._importRegexExtended = _importRegexExtended
 module.exports._isESMFileExtension = _isESMFileExtension
+module.exports._isNodeCompatibleFileExtension = _isNodeCompatibleFileExtension
 module.exports._isESMCodeBase = _isESMCodeBase
 module.exports._isCJSCodeBase = _isCJSCodeBase
 module.exports._isModuleInPackageJson = _isModuleInPackageJson

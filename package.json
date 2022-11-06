@@ -55,11 +55,11 @@
     "concurrency.js": "0.0.23-beta",
     "filelock.json": "0.0.21-beta",
     "fssys": "1.0.1",
-    "get-imported": "0.0.6",
+    "get-imported": "0.0.61",
     "git-apis": "0.0.25-beta",
     "hasher-apis": "0.0.11-beta",
     "mercurial-apis": "0.0.11-beta",
-    "request-apis": "0.0.25-beta",
+    "request-apis": "0.0.26-beta",
     "root-dirs": "0.0.2",
     "svn-apis": "0.0.12-beta"
   }

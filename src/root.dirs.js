@@ -47,6 +47,7 @@ function _getRequirePaths(request, options) {
     let remoteGitRoot, remotePackagejsonRoot, remoteFullPath;
 
     if (options.baseType === "git") {
+        options.logger("[require-urls]: index.js: URL to Fetch: urlFetch:", urlFetch)
         let tmpUrl = urlFetch.replace("raw.githubusercontent.com", "github");
         let arrUrl = tmpUrl.split("github");
         let bArrUrl = arrUrl[1].split("/");

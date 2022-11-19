@@ -87,3 +87,6 @@ let requireurls = require("../index");
 let Clatest = requireurls("https://github.com/cgi-js/cgi-js/blob/main/src/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
 console.log("[Clatestcommit] index.js: ", Clatest);
 
+// let Clatest = requireurls("https://raw.githubusercontent.com/traverse-fs/fssys/main/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
+// console.log("[Clatestcommit] index.js: ", Clatest);
+

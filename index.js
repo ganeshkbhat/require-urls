@@ -201,7 +201,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                 console.log(requires, paths.localGitFileCacheUrl);
                 // Add basepath for the function as an argument
                 requires = _requireRegex(paths.localGitFileCacheUrl);
-                
+
                 // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all imports (requires) from the file ", paths.localGitFileCacheUrl, " are ", requires);
                 // Add basepath for the function as an argument
                 importsdynamic = _importRegex(paths.localGitFileCacheUrl);
@@ -244,12 +244,12 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
 
                 let filearr = file.split(".")
                 let ext = (filearr.length > 1) ? filearr.pop() : "";
-                
+
                 if (ext === "") {
                     const extMatch = /\.(c|m)?js|node|wasm|ts|coffee|$/.exec(file);
                     if (!!extMatch) { ext = extMatch[0]; }
                 }
-                
+
                 if (ext === "" && !!remoteFileExtension) {
                     ext = remoteFileExtension;
                 }
@@ -262,9 +262,9 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                     if (c === "..") {
                         tmpPath.pop();
                     } else if (c !== ".") {
-                        tmpPath.push((ext !== "") ? file + "." +  ext : file);
+                        tmpPath.push((ext !== "") ? file + "." + ext : file);
                     } else {
-                        tmpPath.push((ext !== "") ? file + "." +  ext : file);
+                        tmpPath.push((ext !== "") ? file + "." + ext : file);
                     }
                     tmpPath = tmpPath.join("/");
                     options.logger("[require-urls] index.js: _getRecursiveRemoteUrl:  import file url ", tmpPath);
@@ -297,6 +297,18 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
     return _import;
 }
 
+async function _installPackageDeps(rootDir, production = true) {
+    const util = require('util');
+    const exec = util.promisify(require('child_process').exec);
+    try {
+        let prod = (!!production) ? "--prod" : "";
+        const { stdout, stderr } = await exec(`cd ${rootDir} && npm install ${prod}`);
+        return { stderr: stderr, stdout: stdout }
+    } catch (err) {
+        return { err: err };
+    }
+}
+
 /**
  *
  *
@@ -304,7 +316,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
  * @param { Object } options
  * @return { Object } packagejson 
  */
-function _getRecursiveRemotePackageJsonUrl(request, options) {
+async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // 
     // Get package.json
     // Get all files starting from (package.json).main 
@@ -317,63 +329,80 @@ function _getRecursiveRemotePackageJsonUrl(request, options) {
     if (!request.includes("package.json")) return false;
 
     let packagejson = _getRemoteUrl(request, options);
-    let remoteRoot = _findRemoteRootUrl(request, options);
+    let remotePackageRoot = _getRequirePaths(request, options);
 
-    // if packagejson.main => get packagejson.main file recursively
-    // install all npm deps for production mode
-    if (!!packagejson.main) {
-        try {
-            if (!!packagejson.exports) {
-                let k = Object.keys(packagejson.exports);
-                k.map((i) => { _getRecursiveRemoteUrl(packagejson.exports[i]); return i; });
-            }
-            let pjmain = _getRecursiveRemoteUrl(packagejson.main);
-            let npmi = _npminstall(packagejson.dependencies);
-            if (!npmi) {
-                return pjmain;
-            }
-            throw new Error("[require-urls] index.js: Unable to install npm packages.");
-        } catch (pjmError) {
-            throw new Error("[require-urls] index.js: Unable to fetch package.json.main file and package.json.export files correctly.", pjmError.toString());
-        }
-    }
+    // 
+    // Get contents of a Git repository
+    // Get contents of a Git directory
+    // Get all files
+    // 
 
-    let remoteRootArrayFiles, remoteSrcArrayFiles;
+    // 
+    // "main", "module", "exports", "files", ==> Recursive[Array]
+    // "repository"["test", "src", "dist"] ==> Recursive[Array]
+    // options.package["directory"]  ==> Recursive[Array]
+    // options.package["files"], ==> Recursive[Array]
+    // npm install options.package["production"] ==> Recursive[Dev_Array], Recursive[DevDeps_Array]
+    // 
 
-    // get all the in the root folder index.js/index.mjs/index.cjs `./[*.*[js|mjs|cjs|json|node|wasm]]`
-    let username = options.packagejson.username;
-    let repository = options.packagejson.repository;
-    let repo = `${username}` + "/" + `${repository}`
-    let filename = options.packagejson.filename; // filename:${filename} , file:${filename} , 
-    let pathtofile = (typeof options.packagejson.path === "string") ? options.packagejson.path || (Array.isArray(options.packagejson.path)) ? options.packagejson.path.join("+or+") : "" : ""; // path:${pathtofile}
-    let infile = options.packagejson.infile;
-    let inpath = options.packagejson.inpath;
-    let extension = options.packagejson.extension || ["js", "mjs", "cjs", "json", "node", "wasm"].join("+extension:");  // extension:${extension}
-    let token = options.packagejson.token;
+    let npmInstallResult = await _installPackageDeps(remotePackageRoot.localFullPath, options.production);
 
-    try {
-        let requestOptions = {
-            hostname: "api.github.com",
-            path: `/search/${searchtype}?q=user:${username}+repo:${repo}+extension:${extension}`,
-            headers: { "User-Agent": "${username}", "Accept": "application/vnd.github+json", "Authorization": "Basic " + "${username}:${token}" }
-        }
-        remoteRootArrayFiles = _searchGit(requestOptions, null, options = { protocol: "https", ...options });
-        remoteRootArrayFiles = _mapGitSearchResult(remoteRootArrayFiles.items, options);
-    } catch (rrafError) {
-        throw new Error("[require-urls] index.js: Unable to install npm packages.", rrafError.toString());
-    }
 
-    try {
-        let requestOptions = {
-            hostname: "api.github.com",
-            path: `/search/${searchtype}?q=user:${username}+repo:${repo}+extension:${extension}`,
-            headers: { "User-Agent": "${username}", "Accept": "application/vnd.github+json", "Authorization": "Basic " + "${username}:${token}" }
-        }
-        remoteSrcArrayFiles = _searchGit(requestOptions, null, options = { protocol: "https", ...options });
-        remoteSrcArrayFiles = _mapGitSearchResult(remoteSrcArrayFiles.items, options);
-    } catch (rsafError) {
-        throw new Error("[require-urls] index.js: Unable to install npm packages.", rsafError.toString());
-    }
+    // // if packagejson.main => get packagejson.main file recursively
+    // // install all npm deps for production mode
+    // if (!!packagejson.main) {
+    //     try {
+    //         if (!!packagejson.exports) {
+    //             let k = Object.keys(packagejson.exports);
+    //             k.map((i) => { _getRecursiveRemoteUrl(packagejson.exports[i]); return i; });
+    //         }
+    //         let pjmain = _getRecursiveRemoteUrl(packagejson.main);
+    //         let npmi = _npminstall(packagejson.dependencies);
+    //         if (!npmi) {
+    //             return pjmain;
+    //         }
+    //         throw new Error("[require-urls] index.js: Unable to install npm packages.");
+    //     } catch (pjmError) {
+    //         throw new Error("[require-urls] index.js: Unable to fetch package.json.main file and package.json.export files correctly.", pjmError.toString());
+    //     }
+    // }
+
+    // let remoteRootArrayFiles, remoteSrcArrayFiles;
+
+    // // get all the in the root folder index.js/index.mjs/index.cjs `./[*.*[js|mjs|cjs|json|node|wasm]]`
+    // let username = options.packagejson.username;
+    // let repository = options.packagejson.repository;
+    // let repo = `${username}` + "/" + `${repository}`
+    // let filename = options.packagejson.filename; // filename:${filename} , file:${filename} , 
+    // let pathtofile = (typeof options.packagejson.path === "string") ? options.packagejson.path || (Array.isArray(options.packagejson.path)) ? options.packagejson.path.join("+or+") : "" : ""; // path:${pathtofile}
+    // let infile = options.packagejson.infile;
+    // let inpath = options.packagejson.inpath;
+    // let extension = options.packagejson.extension || ["js", "mjs", "cjs", "json", "node", "wasm"].join("+extension:");  // extension:${extension}
+    // let token = options.packagejson.token;
+
+    // try {
+    //     let requestOptions = {
+    //         hostname: "api.github.com",
+    //         path: `/search/${searchtype}?q=user:${username}+repo:${repo}+extension:${extension}`,
+    //         headers: { "User-Agent": "${username}", "Accept": "application/vnd.github+json", "Authorization": "Basic " + "${username}:${token}" }
+    //     }
+    //     remoteRootArrayFiles = _searchGit(requestOptions, null, options = { protocol: "https", ...options });
+    //     remoteRootArrayFiles = _mapGitSearchResult(remoteRootArrayFiles.items, options);
+    // } catch (rrafError) {
+    //     throw new Error("[require-urls] index.js: Unable to install npm packages.", rrafError.toString());
+    // }
+
+    // try {
+    //     let requestOptions = {
+    //         hostname: "api.github.com",
+    //         path: `/search/${searchtype}?q=user:${username}+repo:${repo}+extension:${extension}`,
+    //         headers: { "User-Agent": "${username}", "Accept": "application/vnd.github+json", "Authorization": "Basic " + "${username}:${token}" }
+    //     }
+    //     remoteSrcArrayFiles = _searchGit(requestOptions, null, options = { protocol: "https", ...options });
+    //     remoteSrcArrayFiles = _mapGitSearchResult(remoteSrcArrayFiles.items, options);
+    // } catch (rsafError) {
+    //     throw new Error("[require-urls] index.js: Unable to install npm packages.", rsafError.toString());
+    // }
 
     return packagejson;
 }
@@ -382,21 +411,21 @@ function _getRecursiveRemotePackageJsonUrl(request, options) {
  *
  *
  * @param {*} remoteUrl
- * @param {string} [options={ baseType: "git", recursive: false, forceUpdate: false, logger: console.log, cacheFetch: true, getMethods: false, noRequire: false }]
+ * @param {string} [options={ baseType: "git", recursive: false, forceUpdate: false, package: { production: false, directories: [], files: [] }, logger: console.log, cacheFetch: true, getMethods: false, noRequire: false }]
  * @return {*} 
  */
-function requireurls(remoteUrl, options = { baseType: "git", recursive: false, forceUpdate: false, logger: console.log, cacheFetch: true, getMethods: false, noRequire: false }) {
+function requireurls(remoteUrl, options = { baseType: "git", recursive: false, forceUpdate: false, package: { production: false, directories: [], files: [] }, logger: console.log, cacheFetch: true, getMethods: false, noRequire: false }) {
     if (options.getMethods === true) { return { remoteUrl: _getRemoteUrl, recursiveUrl: _getRecursiveRemoteUrl, packageJson: _getRecursiveRemotePackageJsonUrl } };
 
     if (!remoteUrl.includes("package.json")) {
 
         if (!!options.recursive) {
-            return _getRecursiveRemoteUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: console.log });
+            return _getRecursiveRemoteUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: options.logger });
         } else {
-            return _getRemoteUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: console.log })
+            return _getRemoteUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: options.logger })
         }
     } else {
-        return _getRecursiveRemotePackageJsonUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: console.log });
+        return _getRecursiveRemotePackageJsonUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, package: { production: options.package.production, directories: package.directories, files: package.files }, logger: options.logger });
     }
 }
 
@@ -508,3 +537,4 @@ module.exports._createJscachePath = _createJscachePath
 module.exports._getRequirePaths = _getRequirePaths
 
 module.exports._getSvnRequest = _getSvnRequest
+

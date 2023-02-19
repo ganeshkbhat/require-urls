@@ -32,6 +32,9 @@ const { _getRequest, _fetch } = require("./request.js");
  */
 function _getRequireOrImport(module_name) {
     if (process.versions.node.split('.')[0] > "14") {
+        if (!!module_name.includes("package.json")) {
+            return import(module_name, { assert: { type: "json" } })
+        }
         return import(module_name);
     }
     return require(module_name);

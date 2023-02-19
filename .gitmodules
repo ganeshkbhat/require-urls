@@ -31,3 +31,6 @@
 [submodule "get-isesm"]
 	path = get-isesm
 	url = https://github.com/ganeshkbhat/get-isesm.git
+[submodule "concurrency.js.extended"]
+	path = concurrency.js.extended
+	url = https://github.com/ganeshkbhat/concurrency.js.extended.git

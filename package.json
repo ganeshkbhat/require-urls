@@ -8,7 +8,7 @@
     "demojs": "node ./demos/demo.js",
     "demomjs": "node ./demos/demo.mjs",
     "test": "mocha --reporter spec --recursive --experimental-loader=./loader.mjs",
-    "testconfig": "mocha --reporter spec --recursive --config ./mocha.test.config.js --experimental-loader=./loader.mjs"
+    "testconfig": "mocha --reporter spec --recursive --config ./mocha.test.config.js --experimental-loader=./loader.mjs --timeout 60000"
   },
   "exports": {
     "require": "./index.js",
@@ -28,6 +28,7 @@
     "@types/node": "^18.11.3",
     "chai": "^4.3.6",
     "hpp": "^0.2.3",
+    "loadtest": "^5.2.0",
     "mocha": "^10.0.0",
     "nsp": "^2.8.1",
     "nsp-api": "^1.0.3",

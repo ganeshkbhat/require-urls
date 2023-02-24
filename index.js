@@ -240,7 +240,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                 // [ 'file', 'mjs' ]
                 // fileblob, 
                 // [ 'fileblob' ]
-                //
+                // 
 
                 let filearr = file.split(".")
                 let ext = (filearr.length > 1) ? filearr.pop() : "";
@@ -297,6 +297,13 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
     return _import;
 }
 
+/**
+ *
+ *
+ * @param {*} rootDir
+ * @param {boolean} [production=true]
+ * @return {*} 
+ */
 async function _installPackageDeps(rootDir, production = true) {
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
@@ -312,11 +319,52 @@ async function _installPackageDeps(rootDir, production = true) {
 /**
  *
  *
+ * @param {*} packagejson
+ * @return {*} 
+ */
+function packageJsonParser(packagejson) {
+    let pjson = packagejson;
+    let pjsonFilesArray = [];
+
+    function getObjectValues(obj, objArr) {
+        let k = Object.keys(obj).length;
+        for (let i = 0; i < k; i++) {
+            if (!!obj[k[i]] && typeof obj[k[i]] === "string") {
+                objArr.push(obj[k[i]]);
+            } else if (!!obj[k[i]] && typeof obj[k[i]] === "object") {
+                objArr = getObjectValues(obj[k[i]], objArr);
+            }
+        }
+        return objArr;
+    }
+
+    function pjsonFiller(o, k, oArr) {
+        if (!!o[k] && typeof o[k] === "object") {
+            oArr.push(...getObjectValues(o[k], oArr));
+        } else if (!!o[k] && typeof o[k] === "string") {
+            oArr.push(o[k]);
+        }
+        return oArr;
+    }
+
+    pjsonFilesArray.push(...pjsonFiller(pjson, "main", pjsonFilesArray));
+    pjsonFilesArray.push(...pjsonFiller(pjson, "module", pjsonFilesArray));
+    pjsonFilesArray.push(...pjsonFiller(pjson, "exports", pjsonFilesArray));
+
+    let pjsonfiles = (!!pjson.files && Array.isArray(pjson)) ? pjson.files : [];
+    pjsonFilesArray.push(...pjsonfiles);
+    return pjsonFilesArray;
+}
+
+/**
+ *
+ *
  * @param { Object } request
  * @param { Object } options
  * @return { Object } packagejson 
  */
 async function _getRecursiveRemotePackageJsonUrl(request, options) {
+
     // 
     // Get package.json
     // Get all files starting from (package.json).main 
@@ -345,27 +393,8 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // npm install options.package["production"] ==> Recursive[Dev_Array], Recursive[DevDeps_Array]
     // 
 
+    let pjsonFilesArray = packageJsonParser(packagejson);
     let npmInstallResult = await _installPackageDeps(remotePackageRoot.localFullPath, options.production);
-
-
-    // // if packagejson.main => get packagejson.main file recursively
-    // // install all npm deps for production mode
-    // if (!!packagejson.main) {
-    //     try {
-    //         if (!!packagejson.exports) {
-    //             let k = Object.keys(packagejson.exports);
-    //             k.map((i) => { _getRecursiveRemoteUrl(packagejson.exports[i]); return i; });
-    //         }
-    //         let pjmain = _getRecursiveRemoteUrl(packagejson.main);
-    //         let npmi = _npminstall(packagejson.dependencies);
-    //         if (!npmi) {
-    //             return pjmain;
-    //         }
-    //         throw new Error("[require-urls] index.js: Unable to install npm packages.");
-    //     } catch (pjmError) {
-    //         throw new Error("[require-urls] index.js: Unable to fetch package.json.main file and package.json.export files correctly.", pjmError.toString());
-    //     }
-    // }
 
     // let remoteRootArrayFiles, remoteSrcArrayFiles;
 
@@ -425,7 +454,7 @@ function requireurls(remoteUrl, options = { baseType: "git", recursive: false, f
             return _getRemoteUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: options.logger })
         }
     } else {
-        return _getRecursiveRemotePackageJsonUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, package: { production: options.package.production, directories: package.directories, files: package.files }, logger: options.logger });
+        return _getRecursiveRemotePackageJsonUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, package: { production: options.package.production, directories: options.package.directories, files: options.package.files }, logger: options.logger });
     }
 }
 
@@ -441,100 +470,102 @@ module.exports._concurrencyThreads = _concurrencyThreads;
 
 
 module.exports._writeFileLock = _writeFileLock;
-module.exports._createSHAHash = _createSHAHash
-module.exports._readFileLock = _readFileLock
-module.exports._createFileLock = _createFileLock
-module.exports._updateFileLockEntry = _updateFileLockEntry
-module.exports._deleteFileLockEntry = _deleteFileLockEntry
-module.exports._fileContentHash = _fileContentHash
+module.exports._createSHAHash = _createSHAHash;
+module.exports._readFileLock = _readFileLock;
+module.exports._createFileLock = _createFileLock;
+module.exports._updateFileLockEntry = _updateFileLockEntry;
+module.exports._deleteFileLockEntry = _deleteFileLockEntry;
+module.exports._fileContentHash = _fileContentHash;
 module.exports._fileContentDeHash = _fileContentDeHash;
-module.exports._verifyFilelockFile = _verifyFilelockFile
-module.exports._verifyFilelock = _verifyFilelock
-module.exports._verifySHAHash = _verifySHAHash
-module.exports._verifyFileContentHash = _verifyFileContentHash
+module.exports._verifyFilelockFile = _verifyFilelockFile;
+module.exports._verifyFilelock = _verifyFilelock;
+module.exports._verifySHAHash = _verifySHAHash;
+module.exports._verifyFileContentHash = _verifyFileContentHash;
 
 
-module.exports._isinbuilt = _isinbuilt
-module.exports._createFolders = _createFolders
-module.exports._writeFile = _writeFile
-module.exports._registerNodeCache = _registerNodeCache
+module.exports._isinbuilt = _isinbuilt;
+module.exports._createFolders = _createFolders;
+module.exports._writeFile = _writeFile;
+module.exports._registerNodeCache = _registerNodeCache;
 
 
-module.exports._ftpConnect = _ftpConnect
-module.exports._getFtpRequest = _getFtpRequest
+module.exports._ftpConnect = _ftpConnect;
+module.exports._getFtpRequest = _getFtpRequest;
 
 
-module.exports._searchGit = _searchGit
-module.exports._findGitRemoteFileUrl = _findGitRemoteFileUrl
-module.exports._findGitRemoteRootUrl = _findGitRemoteRootUrl
-module.exports._findGitRemotePackageJsonUrl = _findGitRemotePackageJsonUrl
-module.exports._searchGitFilesResultsModifier = _searchGitFilesResultsModifier
-module.exports._getDirContentResultsModifier = _getDirContentResultsModifier
-module.exports._getGitURLs = _getGitURLs
-module.exports._getGitCommit = _getGitCommit
-module.exports._getGitSHAHash = _getGitSHAHash
-module.exports._getGitTagName = _getGitTagName
-module.exports._getGitBranchName = _getGitBranchName
-module.exports._getGitContentFile = _getGitContentFile
-module.exports._getGitContentDir = _getGitContentDir
-module.exports._getGitContentDirRecursive = _getGitContentDirRecursive
-module.exports._getGitTree = _getGitTree
-module.exports._getGitTreeRecursive = _getGitTreeRecursive
-module.exports._getGitRepositories = _getGitRepositories
-module.exports._getGitIssues = _getGitIssues
-module.exports._getGitLabels = _getGitLabels
-module.exports._getGitTopics = _getGitTopics
-module.exports._getGitUsers = _getGitUsers
-module.exports._getGitUserRepositories = _getGitUserRepositories
-module.exports._getGitRepository = _getGitRepository
+module.exports._searchGit = _searchGit;
+module.exports._findGitRemoteFileUrl = _findGitRemoteFileUrl;
+module.exports._findGitRemoteRootUrl = _findGitRemoteRootUrl;
+module.exports._findGitRemotePackageJsonUrl = _findGitRemotePackageJsonUrl;
+module.exports._searchGitFilesResultsModifier = _searchGitFilesResultsModifier;
+module.exports._getDirContentResultsModifier = _getDirContentResultsModifier;
+module.exports._getGitURLs = _getGitURLs;
+module.exports._getGitCommit = _getGitCommit;
+module.exports._getGitSHAHash = _getGitSHAHash;
+module.exports._getGitTagName = _getGitTagName;
+module.exports._getGitBranchName = _getGitBranchName;
+module.exports._getGitContentFile = _getGitContentFile;
+module.exports._getGitContentDir = _getGitContentDir;
+module.exports._getGitContentDirRecursive = _getGitContentDirRecursive;
+module.exports._getGitTree = _getGitTree;
+module.exports._getGitTreeRecursive = _getGitTreeRecursive;
+module.exports._getGitRepositories = _getGitRepositories;
+module.exports._getGitIssues = _getGitIssues;
+module.exports._getGitLabels = _getGitLabels;
+module.exports._getGitTopics = _getGitTopics;
+module.exports._getGitUsers = _getGitUsers;
+module.exports._getGitUserRepositories = _getGitUserRepositories;
+module.exports._getGitRepository = _getGitRepository;
 
 
-module.exports._getMercurialRequest = _getMercurialRequest
+module.exports._getMercurialRequest = _getMercurialRequest;
 
 
-module.exports._checkModuleImports = _checkModuleImports
-module.exports._requiresObject = _requiresObject
-module.exports._requireRegex = _requireRegex
-module.exports._importRegex = _importRegex
-module.exports._importESRegex = _importESRegex
-module.exports._importRegexExtended = _importRegexExtended
-module.exports._isESMFileExtension = _isESMFileExtension
-module.exports._isNodeCompatibleFileExtension = _isNodeCompatibleFileExtension
-module.exports._isESMCodeBase = _isESMCodeBase
-module.exports._isCJSCodeBase = _isCJSCodeBase
-module.exports._isModuleInPackageJson = _isModuleInPackageJson
-module.exports._checkRequireModuleImports = _checkRequireModuleImports
-module.exports._isESCode = _isESCode
+module.exports._checkModuleImports = _checkModuleImports;
+module.exports._requiresObject = _requiresObject;
+module.exports._requireRegex = _requireRegex;
+module.exports._importRegex = _importRegex;
+module.exports._importESRegex = _importESRegex;
+module.exports._importRegexExtended = _importRegexExtended;
+module.exports._isESMFileExtension = _isESMFileExtension;
+module.exports._isNodeCompatibleFileExtension = _isNodeCompatibleFileExtension;
+module.exports._isESMCodeBase = _isESMCodeBase;
+module.exports._isCJSCodeBase = _isCJSCodeBase;
+module.exports._isModuleInPackageJson = _isModuleInPackageJson;
+module.exports._checkRequireModuleImports = _checkRequireModuleImports;
+module.exports._isESCode = _isESCode;
 
 
-module.exports._isValidURL = _isValidURL
-module.exports._getProtocol = _getProtocol
-module.exports._checkHttpsProtocol = _checkHttpsProtocol
-module.exports._getRequest = _getRequest
-module.exports._fetch = _fetch
-module.exports._deleteRequest = _deleteRequest
-module.exports._postRequest = _postRequest
-module.exports._putRequest = _putRequest
-module.exports._patchRequest = _patchRequest
-module.exports._request = _request
+module.exports._isValidURL = _isValidURL;
+module.exports._getProtocol = _getProtocol;
+module.exports._checkHttpsProtocol = _checkHttpsProtocol;
+module.exports._getRequest = _getRequest;
+module.exports._fetch = _fetch;
+module.exports._deleteRequest = _deleteRequest;
+module.exports._postRequest = _postRequest;
+module.exports._putRequest = _putRequest;
+module.exports._patchRequest = _patchRequest;
+module.exports._request = _request;
 
 
-module.exports._getRequireOrImport = _getRequireOrImport
-module.exports._requireImportNodeCache = _requireImportNodeCache
-module.exports._requireImport = _requireImport
-module.exports._requireWriteImport = _requireWriteImport
-module.exports._require = _require
-module.exports._isParentModule = _isParentModule
+module.exports._getRequireOrImport = _getRequireOrImport;
+module.exports._requireImportNodeCache = _requireImportNodeCache;
+module.exports._requireImport = _requireImport;
+module.exports._requireWriteImport = _requireWriteImport;
+module.exports._require = _require;
+module.exports._isParentModule = _isParentModule;
 
 
-module.exports._getRoot = _getRoot
-module.exports._getGitRoot = _getGitRoot
-module.exports._getSvnRoot = _getSvnRoot
-module.exports._getFtpRoot = _getFtpRoot
-module.exports._getNodeModulesRoot = _getNodeModulesRoot
-module.exports._getPackageJsonRoot = _getPackageJsonRoot
-module.exports._createJscachePath = _createJscachePath
-module.exports._getRequirePaths = _getRequirePaths
+module.exports._getRoot = _getRoot;
+module.exports._getGitRoot = _getGitRoot;
+module.exports._getSvnRoot = _getSvnRoot;
+module.exports._getFtpRoot = _getFtpRoot;
+module.exports._getNodeModulesRoot = _getNodeModulesRoot;
+module.exports._getPackageJsonRoot = _getPackageJsonRoot;
+module.exports._createJscachePath = _createJscachePath;
+module.exports._getRequirePaths = _getRequirePaths;
 
-module.exports._getSvnRequest = _getSvnRequest
+module.exports._getSvnRequest = _getSvnRequest;
+
+module.exports.packageJsonParser = packageJsonParser;
 

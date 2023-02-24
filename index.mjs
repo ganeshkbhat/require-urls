@@ -106,7 +106,9 @@ import {
     _getRequirePaths,
 
     
-    _getSvnRequest
+    _getSvnRequest,
+
+    packageJsonParser
 } from './index.js';
 // process.env.NODE_OPTIONS = '--experimental-modules --loader ./custom-loader.mjs';
 
@@ -203,6 +205,8 @@ export {
     _getRequirePaths,
 
     
-    _getSvnRequest
+    _getSvnRequest,
+
+    packageJsonParser
 }
 

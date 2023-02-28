@@ -327,8 +327,9 @@ function packageJsonParser(packagejson) {
     let pjsonFilesArray = [];
 
     function getObjectValues(obj, objArr) {
-        let k = Object.keys(obj).length;
-        for (let i = 0; i < k; i++) {
+        let k = Object.keys(obj)
+        let klen = k.length;
+        for (let i = 0; i < klen; i++) {
             if (!!obj[k[i]] && typeof obj[k[i]] === "string") {
                 objArr.push(obj[k[i]]);
             } else if (!!obj[k[i]] && typeof obj[k[i]] === "object") {
@@ -353,6 +354,7 @@ function packageJsonParser(packagejson) {
 
     let pjsonfiles = (!!pjson.files && Array.isArray(pjson)) ? pjson.files : [];
     pjsonFilesArray.push(...pjsonfiles);
+    pjsonFilesArray = new Array(...new Set(pjsonFilesArray));
     return pjsonFilesArray;
 }
 

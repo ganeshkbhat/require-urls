@@ -242,10 +242,11 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                 // [ 'fileblob' ]
                 // 
 
-                let filearr = file.split(".")
+                let filearr = file.split(".");
                 let ext = (filearr.length > 1) ? filearr.pop() : "";
+                file = filearr.join(".");
 
-                if (ext === "") {
+                if (ext !== "") {
                     const extMatch = /\.(c|m)?js|node|wasm|ts|coffee|$/.exec(file);
                     if (!!extMatch) { ext = extMatch[0]; }
                 }
@@ -253,8 +254,8 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                 if (ext === "" && !!remoteFileExtension) {
                     ext = remoteFileExtension;
                 }
-                console.log(ext, remoteFileExtension);
-                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl:  imported file extension ", file, ext);
+
+                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl:  imported file extension remoteFileExtension : ", file, ext, remoteFileExtension);
 
                 let returnedImportedFilesArray = [];
                 for (let i = 0; i < importedFile.length; i++) {
@@ -267,28 +268,35 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                         tmpPath.push((ext !== "") ? file + "." + ext : file);
                     }
                     tmpPath = tmpPath.join("/");
-                    options.logger("[require-urls] index.js: _getRecursiveRemoteUrl:  import file url ", tmpPath);
-                    returnedImportedFilesArray[i] = _getRecursiveRemoteUrl(tmpPath, options);
-                }
-
-                for (let i = 0; i < returnedImportedFilesArray.length; i++) {
-                    if (returnedImportedFilesArray[i] instanceof Error) {
-                        throw Error("[require-urls] index.js: _getRecursiveRemoteUrl: Files cannot be fetched. URL Path of imported modulename or remoteurl", importskeys, tmpPath)
+                    options.logger("[require-urls] index.js: _getRecursiveRemoteUrl:  import file url: ", tmpPath);
+                    try {
+                        returnedImportedFilesArray[i] = _getRecursiveRemoteUrl(tmpPath, options);
+                    } catch(e) {
+                        options.logger("[require-urls] index.js: _getRecursiveRemoteUrl Error: ", e);
+                        returnedImportedFilesArray[i] = _getRecursiveRemoteUrl(tmpPath, options);
                     }
                 }
 
-                console.log(4);
-                // Retry import once again else err out. [TODO] Consolidate this function into a common function
-                let errHandlerrequired = _checkRequireModuleImports(paths.localGitFileCacheUrl);
-                if (errHandlerrequired instanceof Error) {
-                    throw new Error(errHandlerrequired.toString());
-                }
+                // for (let i = 0; i < returnedImportedFilesArray.length; i++) {
+                //     if (returnedImportedFilesArray[i] instanceof Error) {
+                //         throw Error("[require-urls] index.js: _getRecursiveRemoteUrl: Files cannot be fetched. URL Path of imported modulename or remoteurl", importskeys, tmpPath)
+                //     }
+                // }
 
-                if (!!errHandlerrequired) {
-                    return errHandlerrequired;
-                }
+                console.log(4, returnedImportedFilesArray);
+                // // Retry import once again else err out. [TODO] Consolidate this function into a common function
+                // let errHandlerrequired = _checkRequireModuleImports(paths.localGitFileCacheUrl);
+                // if (errHandlerrequired instanceof Error) {
+                //     throw new Error(errHandlerrequired.toString());
+                // }
+
                 console.log(5);
-                throw new Error("[require-urls] index.js: _getRecursiveRemoteUrl: Cannot be required due to unhandlable error ", err.toString());
+                // if (!!errHandlerrequired) {
+                //     return errHandlerrequired;
+                // }
+                
+                console.log(6);
+                // throw new Error("[require-urls] index.js: _getRecursiveRemoteUrl: Cannot be required due to unhandlable error ", err.toString());
             }
         }
     }).catch(function (error) {

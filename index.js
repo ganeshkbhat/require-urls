@@ -534,15 +534,15 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
 
     let packagejson;
 
-    if (request.includes("package.json") && (request.split("//").includes("http:") || request.split("//").includes("https:"))) {
+    if (request.includes("package.json") && (request.split("//")[0].includes("http:") || request.split("//")[0].includes("https:"))) {
         // // Importing remote package.json from http/s github
         options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote HTTP/s package.json: ", packagejson);
         packagejson = _getRemoteUrl(request, options);
-    } else if (request.includes("package.json") && (request.split("//").includes("ftp:") || request.split("//").includes("ftps:"))) {
+    } else if (request.includes("package.json") && (request.split("//")[0].includes("ftp:") || request.split("//")[0].includes("ftps:"))) {
         // // Importing remote package.json from ftp/s github
         options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote FTP package.json: ", packagejson);
         // packagejson = _getRemoteUrl(request, options);
-    } else if (request.includes("package.json") && (request.split("//").includes("svn:") || request.split("//").includes("svn:"))) {
+    } else if (request.includes("package.json") && (request.split("//")[0].includes("svn:") || request.split("//")[0].includes("svn:"))) {
         // // Importing remote package.json from ftp/s github
         options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote SVN package.json: ", packagejson);
         // packagejson = _getRemoteUrl(request, options);

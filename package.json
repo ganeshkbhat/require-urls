@@ -12,7 +12,9 @@
     "setupcoffeescript": "npm install --save-dev coffeescript",
     "setupcoffee": "npm install --save-dev coffeescript",
     "setuptsc": "npm install --save-dev typescript",
-    "setuptypescript": "npm install --save-dev typescript"
+    "setuptypescript": "npm install --save-dev typescript",
+    "setuptscglobal": "npm install -g typescript",
+    "setupcoffeeglobal": "npm install -g coffeescript"
   },
   "exports": {
     "require": "./index.js",
@@ -38,8 +40,6 @@
     "hpp": "^0.2.3",
     "loadtest": "^5.2.0",
     "mocha": "^10.0.0",
-    "nsp": "^2.8.1",
-    "nsp-api": "^1.0.3",
     "safe-regex": "^2.1.1",
     "sinon": "^14.0.0",
     "unimported": "^1.22.0"

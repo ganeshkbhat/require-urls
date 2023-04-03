@@ -126,3 +126,6 @@ docs/
 # loader.todo.remote.any.mjs
 # loader.todo.remote.packagejson.mjs
 # loader.todo.remote.packageroot.mjs
+
+.jscache
+.github

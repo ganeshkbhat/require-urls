@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/ganeshkbhat/requireurl.git"
   },
-  "author": "Ganesh Bhat",
+  "author": "Ganesh Bhat <ganeshsurfs@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ganeshkbhat/requireurl/issues",

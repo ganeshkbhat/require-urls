@@ -14,8 +14,14 @@
 
 'use strict';
 
+/**
+ * 
+ * ERRONEOUS CODEBASE FOR HTML REQUIRES
+ * TODO: TESTING
+ * 
+ */
 let requireurls = require("../index");
-let c = requireurls("https://stackoverflow.com/questions/5612787/converting-an-object-to-a-string", { noRequire: true });
+let c = requireurls("https://stackoverflow.com/questions/5612787/converting-an-object-to-a-string", { noRequire: true, logger: console.log });
 
 c.then(d => console.log("Testing returns", d));
 

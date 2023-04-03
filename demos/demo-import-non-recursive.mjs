@@ -15,15 +15,22 @@
 
 'use strict';
 
-// // Following needs recursive url import
-
 import { default as requireurls } from "../index.mjs";
 
-let d = requireurls("https://github.com/cgi-js/cgi-js/blob/main/src/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
-console.log("[require-urls] demo-recursive.js: Getting cgi-js file: ", d.then(r => console.log(r)));
+let c = import("https://github.com/cgi-js/cgi-js/blob/main/src/configs.js");
+// console.log("[REQUIREURLS] demo-import.mjs ", c.then((d) => {
+//     console.log(d)
+// }));
 
-
+// /**
+//  * 
+//  * ERRONEOUS CODEBASE FOR import()
+//  * TODO: TESTING
+//  * 
+//  */
 // let d = import("https://github.com/cgi-js/cgi-js/blob/main/src/index.js");
-// console.log(d.then(r => console.log(r.source)));
+// console.log("[REQUIREURLS] demo-import.mjs ", d);
+
 
 // requireurls.then(d => console.log("Testing returns", d));
+

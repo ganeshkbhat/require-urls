@@ -117,3 +117,12 @@ get-isesm/
 get-root/
 references/
 docs/
+
+.travis.yml
+loader-coffeescript.mjs
+loader-http.mjs
+loader-typescript.mjs
+loader.mjs 
+loader.todo.remote.any.mjs
+loader.todo.remote.packagejson.mjs
+loader.todo.remote.packageroot.mjs

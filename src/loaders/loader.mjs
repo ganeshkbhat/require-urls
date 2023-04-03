@@ -17,7 +17,7 @@
 
 'use strict';
 
-import requireurls from "./index.mjs";
+import requireurls from "../../index.mjs";
 
 
 // CoffeeScript files end in .coffee, .litcoffee, or .coffee.md.

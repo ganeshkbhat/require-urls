@@ -543,7 +543,7 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
         options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote FTP package.json: ", packagejson);
         // packagejson = _getRemoteUrl(request, options);
     } else if (request.includes("package.json") && (request.split("//")[0].includes("svn:") || request.split("//")[0].includes("svn:"))) {
-        // // Importing remote package.json from ftp/s github
+        // // Importing remote package.json from svn/s github
         options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote SVN package.json: ", packagejson);
         // packagejson = _getRemoteUrl(request, options);
     } else {

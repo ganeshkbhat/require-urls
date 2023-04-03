@@ -6,17 +6,38 @@ This module has a single simple function `requireurls` for URL (git raw file) re
 
 It also, by default, allows for cacheing (rather storing) files in a temporary working folder/repository. The files are stored in `.jscache` temporary folder. The file can be pulled from the cache, if already cached. You can force update the cache file if needed. The `.jscache` looks like the folder in the repository saved. You have an option to cache the files into node cache using the [require.cache](https://nodejs.org/api/modules.html#requirecache) option by specifying `cacheFetch` option. Do have a look at it.
 
-### Installation
+
+
+### INSTALLATION
 
 `npm install require-urls --save`
 
 npm Package: [require-urls](https://www.npmjs.com/package/require-urls)
 
-### Usage
 
-`let requireurls = require("require-urls"); requireurls(request, options);`
 
-#### options Object
+### USAGE
+
+```
+
+let requireurls = require("require-urls");
+let request = "https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/index.js";
+let options = {};
+requireurls(request, options);
+
+```
+
+
+### FEATURES
+
+
+* Import `remote file` from a remote URL (Github support)
+* Import `remote file and its dependencies recursively` from from a remote URL (Github support)
+* Import files are `cached` in `.jscache` folder in the project
+
+
+
+#### `options` OBJECT
 
 ```
 /* You can add all inbuilt default options of require's resolve function */
@@ -77,7 +98,10 @@ getMethods: false
 noRequire: false
 ```
 
-#### Demo Usage Code
+
+
+#### DEMO USAGE CODE
+
 
 ```
 
@@ -144,7 +168,7 @@ console.log("[require-urls] demo.mjs ", cgijsd);
 
 
 
-# Errors Documentation
+# ERRORS DOCUMENTATION
 
 
 Documented Errors [errors](./docs/errors.md)
@@ -153,16 +177,44 @@ Documented Errors [errors](./docs/errors.md)
 
 ### TODO
 
-- Add `recursive` imports and cacheing for remote files. Minor changes needed.
-- Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository.
-- Add support for `.ts` (typescript) and `.coffee` (coffeescript) files import with transpiling dynamically during import
-- Add support for SVN, FTP.
+
+- [D] Github support for remote files import
+    - [D] single file import.
+    - [D] file import and dependency file imports recursively.
+    - [D] importing project using package.json.
+- [T] Gitlab support for remote files import
+    - [T] single file import.
+    - [T] file import and dependency file imports recursively.
+    - [T] importing project using package.json.
+- [T] Bitbucket support for remote files import and testing for
+    - [T] single file import.
+    - [T] file import and dependency file imports recursively.
+    - [T] importing project using package.json.
+- [P] Naming of folders based on
+    - [P] `domain > user@repo > SHA`
+    - [D] `domain > user@repo > commit`
+    - [P] `domain > user@repo > tag`
+    - [D] `domain > user@repo > branch`
+- [P] Add options to import a remote published or unpublished package using `https://remoteurl/.../package.json` pack of repository.
+- [P] Files imported are documented in `filelock.json` file with their content one-way cryptographic hash.
+- [P] Add verify command for files in `.jscache`.
+- [P] Add support for `.ts` (typescript) files import with transpiling dynamically during import.
+- [P] Add support for `.coffee` (coffeescript) files import with transpiling dynamically during import.
+- [T] Add support for FTP.
+- [T] Add support for SVN.
+- [T] Add support for Mercurial.
+- [T] Consider support for S3.
+- [T] Consider support for Google Cloud.
+- [T] Consider support for Google Drive.
 
 
-### Contributions
+
+### CONTRIBUTIONS
 
 Contributions, Feature Improvements, Bugs, and Issues are invited. [raising an issue](https://github.com/ganeshkbhat/requireurl/issues)
 
-# License
+
+
+# LICENSE
 
 [MIT License](./LICENSE)

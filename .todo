@@ -123,22 +123,20 @@ TODO
 
         - [] JS File
             - [] requireurls("github:ganeshkbhat@requireurls:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
-            - [] requireurls("github:ganeshkbhat/requireurls:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
-            
-            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
-            - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
-            
             - [] requireurls("github:ganeshkbhat@requireurls:sha:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT)
+
+            - [] requireurls("github:ganeshkbhat/requireurls:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
             - [] requireurls("github:ganeshkbhat/requireurls:sha:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
 
         - [] PACKAGE.JSON File
             - [] requireurls("github:ganeshkbhat@requireurls:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
-            - [] requireurls("github:ganeshkbhat/requireurls:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
-
-            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
-            - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
-            
             - [] requireurls("github:ganeshkbhat@requireurls:sha:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
+            
+            - [] requireurls("github:ganeshkbhat/requireurls:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT)
+            - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
             - [] requireurls("github:ganeshkbhat/requireurls:sha:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
 
 // // // Strategies:

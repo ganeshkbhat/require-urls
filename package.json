@@ -1,6 +1,6 @@
 {
   "name": "require-urls",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "Deno like and GoLang like Mode in ES and commonjs: Replace nodejs require function with `requireurls` function or `use loader functionality using loader.mjs` replacing import functionality that can fetch remote urls. `require-urls` helps you require remote files (individually or recursively) from `git`, `svn`, `mercurial`, `ftp`, `remote cloud stores` using the `requireurls function",
   "main": "index.js",
   "scripts": {
@@ -8,11 +8,18 @@
     "demojs": "node ./demos/demo.js",
     "demomjs": "node ./demos/demo.mjs",
     "test": "mocha --reporter spec --recursive --experimental-loader=./loader.mjs",
-    "testconfig": "mocha --reporter spec --recursive --config ./mocha.test.config.js --experimental-loader=./loader.mjs --timeout 60000"
+    "testconfig": "mocha --reporter spec --recursive --config ./mocha.test.config.js --experimental-loader=./loader.mjs --timeout 60000",
+    "setupcoffeescript": "npm install --save-dev coffeescript",
+    "setupcoffee": "npm install --save-dev coffeescript",
+    "setuptsc": "npm install --save-dev typescript",
+    "setuptypescript": "npm install --save-dev typescript"
   },
   "exports": {
     "require": "./index.js",
     "import": "./index.mjs"
+  },
+  "directories": {
+    "lib": "./src"
   },
   "repository": {
     "type": "git",

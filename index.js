@@ -561,8 +561,7 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // 
 
     // 
-    // // "main", "module", "exports", "files", ==> Recursive[Array]
-    // // "repository"["test", "src", "dist"] ==> Recursive[Array]
+    // // "main", "module", "exports", "remoteurls.files" ==> Recursive[Array], "remoteurls.directories" ==> "repository"["test", "src", "dist"] ==> Recursive[Array]
     // // options.package["directory"]  ==> Recursive[Array]
     // // options.package["files"], ==> Recursive[Array]
     // // npm install options.package["production"] ==> Recursive[Dev_Array], Recursive[DevDeps_Array]

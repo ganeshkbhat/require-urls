@@ -19,42 +19,127 @@ TODO
     - [] Add SVN support
     - [] Consider adding support for docker style naming (node:14.19.2-slim) to fetch remote urls
         - Use URL in URL Fetch
+            - [] requireurls("https://github.com/ganeshkbhat/requireurl/")
+            
             - [] requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/index.js")
-            - [] requireurls("https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/index.js")
+            - [] requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/package.json")
+            - [] requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/")
             - [] requireurls("https://raw.githubusercontent.com/npm/lock-verify/latest/cli.js)
+            
+            - [] requireurls("https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/index.js")
+            - [] requireurls("https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/package.json")
+            - [] requireurls("https://raw.githubusercontent.com/ganeshkbhat/requireurl/main/")
+            
         - Use SHA URL in URL Fetch
             - [] requireurls("https://github.com/ganeshkbhat/requireurl/blob/a34a222d761bb70d51ff3267c8530f40918db53e/index.js")
+            - [] requireurls("https://github.com/ganeshkbhat/requireurl/blob/a34a222d761bb70d51ff3267c8530f40918db53e/package.json")
             - [] requireurls("https://raw.githubusercontent.com/ganeshkbhat/requireurl/8d8681c4a28d64f23fb473064fa86880a0b930ff/index.js")
+            - [] requireurls("https://raw.githubusercontent.com/ganeshkbhat/requireurl/8d8681c4a28d64f23fb473064fa86880a0b930ff/package.json")
+
         - Use SHA in URL Fetch
+            - [] (NEW NPM SUPPORT) requireurls("github:ganeshkbhat/requireurls")
+            - [] requireurls("github:ganeshkbhat@requireurls")
+            
             - [] requireurls("github:ganeshkbhat@requireurls:sha")
+            - [] requireurls("github:ganeshkbhat/requireurls:sha") (AFTER NPM SUPPORT OF SHORT) 
+            
+            - [] requireurls("github:ganeshkbhat@requireurls:packages/my-subfolder")
+            - [] requireurls("github:ganeshkbhat@requireurls:src/index.js")
+            - [] requireurls("github:ganeshkbhat@requireurls:src/package.json")
+
+            - [] requireurls("github:ganeshkbhat/requireurls:packages/my-subfolder") (AFTER NPM SUPPORT OF SHORT)
+            - [] requireurls("github:ganeshkbhat/requireurls:src/index.js") (AFTER NPM SUPPORT OF SHORT)
+            - [] requireurls("github:ganeshkbhat/requireurls:src/package.json") (AFTER NPM SUPPORT OF SHORT)
+            
+            - [] requireurls("github:ganeshkbhat/requireurls:sha:packages/my-subfolder") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:sha:src/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:sha:src/package.json") (AFTER NPM SUPPORT OF SHORT) 
+
+            - [] requireurls("github:ganeshkbhat@requireurls:sha:packages/my-subfolder")
             - [] requireurls("github:ganeshkbhat@requireurls:sha:src/index.js")
-        - Use commit in URL fetch
+            - [] requireurls("github:ganeshkbhat@requireurls:sha:src/package.json")
+
+        - Use Branch in URL Fetch
+            - [] (NEW NPM SUPPORT) requireurls("github:ganeshkbhat/requireurls")
+            - [] requireurls("github:ganeshkbhat@requireurls")
+
+            - [] requireurls("github:ganeshkbhat@requireurls:main")
+            - [] requireurls("github:ganeshkbhat/requireurls:main") (AFTER NPM SUPPORT OF SHORT) 
+
+            - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:main:src/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:main:src/package.json") (AFTER NPM SUPPORT OF SHORT) 
+
+            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder")            
+            - [] requireurls("github:ganeshkbhat@requireurls:main:src/index.js")
+            - [] requireurls("github:ganeshkbhat@requireurls:main:src/package.json")
+            
+        - Use commit in URL fetch (ADD NPM SHORT SUPPORT - NEW)
             - [] requireurls("{git|svn|mercurial|ftp}-{domain}:{username}@{repository}:{commit|tag|sha|release}:{path})
+            - [] (NEW NPM SUPPORT) requireurls("{github|gitlab|bitbucket|gist|{git|svn|mercurial|ftp}-{domain}}:{username}/{repository}:{commit|tag|sha|release}:{path})
+            
             - [] commit examples
-                - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:index.js")
                 - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1")
                 - [] requireurls("gitlab:ganeshkbhat@requireurls:1c0mm1t1")
+                - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:index.js")
+                - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:package.json")
+                
             - commit with domain examples
                 - [] requireurls("git-gitdomain:ganeshkbhat@requireurls:1c0mm1t1")
                 - [] requireurls("svn-svndomain:ganeshkbhat@requireurls:1c0mm1t1")
                 - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1")
                 - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:src/index.js")
+                - [] requireurls("github:ganeshkbhat@requireurls:1c0mm1t1:src/package.json")
+
             - commit with default as github examples
                 - [] requireurls(":ganeshkbhat@requireurls:1c0mm1t1")
                         will be default github:...@...:1c0mm1t1:{index.js|main.js}
                 - [] requireurls(":ganeshkbhat@requireurls:1c0mm1t1:src/index.js")
                         will be default github:...@...:1c0mm1t1:src/index.js
+            
             - commit with username and repository with default as github and latest (commit/tag/sha) examples
                 - [] requireurls(":ganeshkbhat@requireurls")
                         will be default github:...@...:latest:{index.js|main.js}
                 - [] requireurls(":ganeshkbhat@requireurls::src/index.js")
                         will be default github:...@...:latest:src/index.js
-        - Use tags in URL fetch
+        
+        - Use tags in URL fetch (ADD NPM SHORT SUPPORT - NEW)
             - [] requireurls("github:ganeshkbhat@requireurls:tag")
             - [] requireurls("github:ganeshkbhat@requireurls:tag:src/index.js")
-        - Use releases in URL fetch
+            - [] requireurls("github:ganeshkbhat@requireurls:tag:src/package.json")
+
+            - [] requireurls("github:ganeshkbhat/requireurls:tag") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:tag:src/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:tag:src/package.json") (AFTER NPM SUPPORT OF SHORT) 
+        
+        - Use releases in URL fetch (ADD NPM SHORT SUPPORT - NEW)
             - [] requireurls("github:ganeshkbhat@requireurls:release")
             - [] requireurls("github:ganeshkbhat@requireurls:release:src/index.js")
+            - [] requireurls("github:ganeshkbhat@requireurls:release:src/package.json")
+
+            - [] requireurls("github:ganeshkbhat/requireurls:release") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:release:src/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:release:src/package.json") (AFTER NPM SUPPORT OF SHORT) 
+
+        - [] JS File
+            - [] requireurls("github:ganeshkbhat@requireurls:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            
+            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            
+            - [] requireurls("github:ganeshkbhat@requireurls:sha:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:sha:packages/my-subfolder/index.js") (AFTER NPM SUPPORT OF SHORT) 
+
+        - [] PACKAGE.JSON File
+            - [] requireurls("github:ganeshkbhat@requireurls:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
+
+            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
+            
+            - [] requireurls("github:ganeshkbhat@requireurls:sha:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:sha:packages/my-subfolder/package.json") (AFTER NPM SUPPORT OF SHORT) 
 
 // // // Strategies:
 

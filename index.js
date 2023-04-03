@@ -186,9 +186,8 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
             }
 
         } catch (err) {
-            options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: err from _checkRequireModuleImports: ", err);
+            options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: err from _checkRequireModuleImports: ", err.toString());
 
-            // console.log(3, err.toString());
             let isesm = _isESCode(paths.localGitFileCacheUrl);
             options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: isesm: ", isesm);
 
@@ -332,7 +331,6 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                     options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all extensions to be optionally imported for no extension files: ", exts);
 
                     for (let i = 0; i < exts.length; i++) {
-
                         let addPath = tmpPath.split("/");
                         addPath.pop();
                         addPath = addPath.join("/");
@@ -343,7 +341,6 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
 
                         imports = { ...imports, [file + ((!!exts[i]) ? "." : "") + exts[i]]: (exts !== "") ? addPath + "/" + file + ((!!exts[i]) ? "." : "") + exts[i] : file };
                         importskeys.push(file + ((!!exts[i]) ? "." : "") + exts[i]);
-
                     }
 
                     options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: modified imports: ", imports);
@@ -428,7 +425,7 @@ async function _installPackageDeps(rootDir, production = true, options = { logge
 function packageJsonParser(packagejson) {
     let pjson = packagejson;
     options.logger("[require-urls] index.js: packageJsonParser: Parsing package.json file");
-    options.logger("[require-urls] index.js: packageJsonParser: packagejson file: ", packagejson);
+    options.logger("[require-urls] index.js: packageJsonParser: package.json file: ", packagejson);
 
     let pjsonFilesArray = [];
 
@@ -490,14 +487,14 @@ function packageJsonParser(packagejson) {
     options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `exports` key ");
     pjsonFilesArray.push(...pjsonFiller(pjson, "exports", pjsonFilesArray));
 
-    // // Add files from the `files` key in package.json file
-    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `files` key ");
-    let pjsonfiles = (!!pjson.files && Array.isArray(pjson.files)) ? pjson.files : (typeof pjson.files === "string") ? [pjson.files] : [];
+    // // Add files from the `remoteurls.files` key in package.json file
+    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `remoteurls.files` key ");
+    let pjsonfiles = (!!pjson.remoteurls?.files && Array.isArray(pjson.remoteurls?.files)) ? pjson.remoteurls?.files : (typeof pjson.remoteurls?.files === "string") ? [pjson.remoteurls?.files] : [];
     pjsonFilesArray.push(...pjsonfiles);
 
-    // // Add folders from the `directories` key in package.json file
-    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `directories` key ");
-    let pjsondirectories = (!!pjson.directories && Array.isArray(pjson.directories)) ? pjson.files : (typeof pjson.directories === "string") ? [pjson.directories] : [];
+    // // Add folders from the `remoteurls.directories` key in package.json file
+    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `remoteurls.directories` key ");
+    let pjsondirectories = (!!pjson.remoteurls?.directories && Array.isArray(pjson.remoteurls?.directories)) ? pjson.remoteurls?.files : (typeof pjson.remoturls?.directories === "string") ? [pjson.remoteurl?.directories] : [];
     pjsondirectories = pjsondirectories.map((v) => { if (v[v.length - 1] === "/") { return v + "**"; } else { return v + "/" + "**"; } })
     pjsonFilesArray.push(...pjsondirectories);
 
@@ -521,7 +518,7 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // 
     // // Get package.json
     // // Get all files starting from (package.json).main 
-    // //          or index.*[js|mjs|cjs|json|node|wasm] 
+    // //          or index.*[js|mjs|cjs|json|node|wasm|coffee] 
     // //          or all files in root folder `./[*.*[js|mjs|cjs|json|node|wasm|coffee]]` and folder `src/[*.*[js|mjs|cjs|json|node|wasm|coffee]]`
     // // Add .jscache/path/to/git/repo folder to path
     // // npm install production packages

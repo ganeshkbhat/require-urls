@@ -1,10 +1,18 @@
 # require-urls
 
-`Deno and GoLang Mode in commonjs import (require) and ES import syntax`: Replace nodejs require function with requireurls function or use loader.mjs replacing import functionality that can fetch remote urls.
+#### `Deno and GoLang Mode in commonjs import (require) and ES import syntax`
+
+Replace nodejs require function with `requireurls` function or `use loader functionality using loader.mjs` replacing import functionality that can fetch remote urls. `require-urls` helps you require remote files (individually or recursively) from `git`, `svn`, `mercurial`, `ftp`, `remote cloud stores` using the `requireurls function. Please check the features section for currently available features.
 
 This module has a single simple function `requireurls` for URL (git raw file) resolution and parsing meant to have feature parity with node.js core url module.
 
 It also, by default, allows for cacheing (rather storing) files in a temporary working folder/repository. The files are stored in `.jscache` temporary folder. The file can be pulled from the cache, if already cached. You can force update the cache file if needed. The `.jscache` looks like the folder in the repository saved. You have an option to cache the files into node cache using the [require.cache](https://nodejs.org/api/modules.html#requirecache) option by specifying `cacheFetch` option. Do have a look at it.
+
+
+
+### DEMOS
+
+Find the demos in the [demo folder](./demos/)
 
 
 
@@ -30,6 +38,8 @@ requireurls(request, options);
 
 ### FEATURES
 
+
+ Currently, the project is in development and support the following features:
 
 * Import `remote file` from a remote URL (Github support)
 * Import `remote file and its dependencies recursively` from from a remote URL (Github support)

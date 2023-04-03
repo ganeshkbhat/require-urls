@@ -40,9 +40,6 @@ TODO
             - [] (NEW NPM SUPPORT) requireurls("github:ganeshkbhat/requireurls")
             - [] requireurls("github:ganeshkbhat@requireurls")
             
-            - [] requireurls("github:ganeshkbhat@requireurls:sha")
-            - [] requireurls("github:ganeshkbhat/requireurls:sha") (AFTER NPM SUPPORT OF SHORT) 
-            
             - [] requireurls("github:ganeshkbhat@requireurls:packages/my-subfolder")
             - [] requireurls("github:ganeshkbhat@requireurls:src/index.js")
             - [] requireurls("github:ganeshkbhat@requireurls:src/package.json")
@@ -51,28 +48,31 @@ TODO
             - [] requireurls("github:ganeshkbhat/requireurls:src/index.js") (AFTER NPM SUPPORT OF SHORT)
             - [] requireurls("github:ganeshkbhat/requireurls:src/package.json") (AFTER NPM SUPPORT OF SHORT)
             
-            - [] requireurls("github:ganeshkbhat/requireurls:sha:packages/my-subfolder") (AFTER NPM SUPPORT OF SHORT) 
-            - [] requireurls("github:ganeshkbhat/requireurls:sha:src/index.js") (AFTER NPM SUPPORT OF SHORT) 
-            - [] requireurls("github:ganeshkbhat/requireurls:sha:src/package.json") (AFTER NPM SUPPORT OF SHORT) 
-
+            - [] requireurls("github:ganeshkbhat@requireurls:sha")
             - [] requireurls("github:ganeshkbhat@requireurls:sha:packages/my-subfolder")
             - [] requireurls("github:ganeshkbhat@requireurls:sha:src/index.js")
             - [] requireurls("github:ganeshkbhat@requireurls:sha:src/package.json")
+
+            - [] requireurls("github:ganeshkbhat/requireurls:sha") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:sha:packages/my-subfolder") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:sha:src/index.js") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat/requireurls:sha:src/package.json") (AFTER NPM SUPPORT OF SHORT) 
 
         - Use Branch in URL Fetch
             - [] (NEW NPM SUPPORT) requireurls("github:ganeshkbhat/requireurls")
             - [] requireurls("github:ganeshkbhat@requireurls")
 
             - [] requireurls("github:ganeshkbhat@requireurls:main")
-            - [] requireurls("github:ganeshkbhat/requireurls:main") (AFTER NPM SUPPORT OF SHORT) 
+            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder")            
+            - [] requireurls("github:ganeshkbhat@requireurls:main:src/index.js")
+            - [] requireurls("github:ganeshkbhat@requireurls:main:src/package.json")
 
+            - [] requireurls("github:ganeshkbhat/requireurls:main") (AFTER NPM SUPPORT OF SHORT) 
             - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder") (AFTER NPM SUPPORT OF SHORT) 
             - [] requireurls("github:ganeshkbhat/requireurls:main:src/index.js") (AFTER NPM SUPPORT OF SHORT) 
             - [] requireurls("github:ganeshkbhat/requireurls:main:src/package.json") (AFTER NPM SUPPORT OF SHORT) 
 
-            - [] requireurls("github:ganeshkbhat@requireurls:main:packages/my-subfolder")            
-            - [] requireurls("github:ganeshkbhat@requireurls:main:src/index.js")
-            - [] requireurls("github:ganeshkbhat@requireurls:main:src/package.json")
+            
             
         - Use commit in URL fetch (ADD NPM SHORT SUPPORT - NEW)
             - [] requireurls("{git|svn|mercurial|ftp}-{domain}:{username}@{repository}:{commit|tag|sha|release}:{path})

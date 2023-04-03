@@ -118,3 +118,19 @@ const ESC_2e5181793d_2 = import("https://github.com/ganeshkbhat/requireurl/blob/
 //  let ESCJSC_2e5181793d = import("https://github.com/ganeshkbhat/requireurl/blob/2e5181793dd8c076aafd46f3330c59e4abd70908/index.js");
 //  console.log("[ESCJSC_2e5181793d] Testing returns: ", ESCJSC_2e5181793d);
 
+
+// /** 
+//  * Commit:
+//  * Clatestcommit
+//  * 
+//  * @type {*}
+//  * 
+//  */
+// let Clatestcommit = requireurls("https://github.com/ganeshkbhat/requireurl/blob/main/index.js", { baseType: "git", recursive: false, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
+// console.log("[Clatestcommit] index.js: ", Clatestcommit);
+
+// let Clatest = requireurls("https://github.com/cgi-js/cgi-js/blob/main/src/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
+// console.log("[Clatestcommit] index.js: ", Clatest);
+
+// let Clatest = requireurls("https://raw.githubusercontent.com/traverse-fs/fssys/main/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
+// console.log("[Clatestcommit] index.js: ", Clatest);

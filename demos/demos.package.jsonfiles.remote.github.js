@@ -15,6 +15,7 @@
 
 'use strict';
 
-let V00_00_7 = require("https://github.com/ganeshkbhat/requireurl/blob/a34a222d761bb70d51ff3267c8530f40918db53e/index.js");
-console.log("[V00_00_7] Testing returns: ", V00_00_7);
+var { packageJsonParser } = require("../index.js");
 
+let pkgjson = packageJsonParser(require("github:cgi-js/cgi-js:ganesh:package.json"));
+console.log(pkgjson);

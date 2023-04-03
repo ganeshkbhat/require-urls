@@ -522,28 +522,37 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // // Get package.json
     // // Get all files starting from (package.json).main 
     // //          or index.*[js|mjs|cjs|json|node|wasm] 
-    // //          or all files in root folder `./[*.*[js|mjs|cjs|json|node|wasm]]` and folder `src/[*.*[js|mjs|cjs|json|node|wasm]]`
+    // //          or all files in root folder `./[*.*[js|mjs|cjs|json|node|wasm|coffee]]` and folder `src/[*.*[js|mjs|cjs|json|node|wasm|coffee]]`
     // // Add .jscache/path/to/git/repo folder to path
     // // npm install production packages
     // 
 
     if (!request.includes("package.json")) {
-        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: packagejson file not in the URL: ", packagejson);
+        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: package.json file not in the URL: ", packagejson);
         return false;
     }
 
     let packagejson;
+
     if (request.includes("package.json") && (request.split("//").includes("http:") || request.split("//").includes("https:"))) {
+        // // Importing remote package.json from http/s github
         options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote HTTP/s package.json: ", packagejson);
         packagejson = _getRemoteUrl(request, options);
     } else if (request.includes("package.json") && (request.split("//").includes("ftp:") || request.split("//").includes("ftps:"))) {
+        // // Importing remote package.json from ftp/s github
         options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote FTP package.json: ", packagejson);
         // packagejson = _getRemoteUrl(request, options);
+    } else if (request.includes("package.json") && (request.split("//").includes("svn:") || request.split("//").includes("svn:"))) {
+        // // Importing remote package.json from ftp/s github
+        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote SVN package.json: ", packagejson);
+        // packagejson = _getRemoteUrl(request, options);
     } else {
-        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching local package.json: ", packagejson);
-        packagejson = require(request);
+        // // Importing remote package.json from local
+        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching local folder package.json: ", packagejson);
+        packagejson = (!!require) ? require(request) : import(request);
     }
-    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: packagejson: ", packagejson);
+
+    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: package.json: ", packagejson);
 
     let remotePackageRoot = _getRequirePaths(request, options);
     options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: remotePackageRoot: ", remotePackageRoot);

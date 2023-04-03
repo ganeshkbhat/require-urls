@@ -71,8 +71,6 @@ TODO
             - [] requireurls("github:ganeshkbhat/requireurls:main:packages/my-subfolder") (AFTER NPM SUPPORT OF SHORT) 
             - [] requireurls("github:ganeshkbhat/requireurls:main:src/index.js") (AFTER NPM SUPPORT OF SHORT) 
             - [] requireurls("github:ganeshkbhat/requireurls:main:src/package.json") (AFTER NPM SUPPORT OF SHORT) 
-
-            
             
         - Use commit in URL fetch (ADD NPM SHORT SUPPORT - NEW)
             - [] requireurls("{git|svn|mercurial|ftp}-{domain}:{username}@{repository}:{commit|tag|sha|release}:{path})

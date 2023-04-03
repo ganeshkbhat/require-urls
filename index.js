@@ -176,12 +176,12 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
 
             let required = _checkRequireModuleImports(paths.localGitFileCacheUrl);
 
-            // console.log(2, required);
             if (required instanceof Error) {
                 throw new Error(required.toString());
             }
 
             if (!!required) {
+                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: required: ", required);
                 return required;
             }
 
@@ -247,10 +247,10 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
 
                 let tmpPath = request.split("/");
                 tmpPath.pop();
-                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: modified tmpPath: ", tmpPath.join("/"));
+                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: modified folder path tmpPath: ", tmpPath.join("/"));
 
                 let file = importedFile.pop();
-                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: file: ", file);
+                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: modified file path file: ", file);
 
                 // 
                 // File Extension Methods to be Addressed:
@@ -335,11 +335,11 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                         let addPath = tmpPath.split("/");
                         addPath.pop();
                         addPath = addPath.join("/");
-                        
+
                         options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: folder addOptionalFolderPath for all extension imports: ", addPath);
                         options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: file: ", file);
                         options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: extension: ", exts[i]);
-                        
+
                         imports = { ...imports, [file + ((!!exts[i]) ? "." : "") + exts[i]]: (exts !== "") ? addPath + "/" + file + ((!!exts[i]) ? "." : "") + exts[i] : file };
                         importskeys.push(file + ((!!exts[i]) ? "." : "") + exts[i]);
 
@@ -395,14 +395,17 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
  * @param {boolean} [production=true]
  * @return {*} 
  */
-async function _installPackageDeps(rootDir, production = true) {
+async function _installPackageDeps(rootDir, production = true, options = { logger: console.log }) {
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
     try {
         let prod = (!!production) ? "--prod" : "";
         const { stdout, stderr } = await exec(`cd ${rootDir} && npm install ${prod}`);
+        options.logger("[require-urls] index.js: _installPackageDeps: stdout: ", stdout);
+        options.logger("[require-urls] index.js: _installPackageDeps: stderr: ", stderr);
         return { stderr: stderr, stdout: stdout }
     } catch (err) {
+        options.logger("[require-urls] index.js: _installPackageDeps: execution error err: ", err);
         return { err: err };
     }
 }
@@ -415,6 +418,9 @@ async function _installPackageDeps(rootDir, production = true) {
  */
 function packageJsonParser(packagejson) {
     let pjson = packagejson;
+    options.logger("[require-urls] index.js: packageJsonParser: Parsing package.json file");
+    options.logger("[require-urls] index.js: packageJsonParser: packagejson file: ", packagejson);
+
     let pjsonFilesArray = [];
 
     function getObjectValues(obj, objArr) {
@@ -427,6 +433,7 @@ function packageJsonParser(packagejson) {
                 objArr = getObjectValues(obj[k[i]], objArr);
             }
         }
+        options.logger("[require-urls] index.js: packageJsonParser: getObjectValues: objArr: ", objArr);
         return objArr;
     }
 
@@ -436,6 +443,7 @@ function packageJsonParser(packagejson) {
         } else if (!!o[k] && typeof o[k] === "string") {
             oArr.push(o[k]);
         }
+        options.logger("[require-urls] index.js: packageJsonParser: pjsonFiller: oArr: ", oArr);
         return oArr;
     }
 
@@ -446,6 +454,8 @@ function packageJsonParser(packagejson) {
     let pjsonfiles = (!!pjson.files && Array.isArray(pjson)) ? pjson.files : [];
     pjsonFilesArray.push(...pjsonfiles);
     pjsonFilesArray = new Array(...new Set(pjsonFilesArray));
+
+    options.logger("[require-urls] index.js: packageJsonParser: pjsonFilesArray: ", pjsonFilesArray);
     return pjsonFilesArray;
 }
 
@@ -457,6 +467,7 @@ function packageJsonParser(packagejson) {
  * @return { Object } packagejson 
  */
 async function _getRecursiveRemotePackageJsonUrl(request, options) {
+    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Running Imports for package.json files and dependencies");
 
     // 
     // Get package.json
@@ -467,10 +478,26 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // npm install production packages
     // 
 
-    if (!request.includes("package.json")) return false;
+    if (!request.includes("package.json")) {
+        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: packagejson file not in the URL: ", packagejson);
+        return false;
+    }
 
-    let packagejson = _getRemoteUrl(request, options);
+    let packagejson;
+    if (request.includes("package.json") && (request.split("//").includes("http:") || request.split("//").includes("https:"))) {
+        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote HTTP/s package.json: ", packagejson);
+        packagejson = _getRemoteUrl(request, options);
+    } else if (request.includes("package.json") && (request.split("//").includes("ftp:") || request.split("//").includes("ftps:"))) {
+        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching Remote FTP package.json: ", packagejson);
+        // packagejson = _getRemoteUrl(request, options);
+    } else {
+        options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching local package.json: ", packagejson);
+        packagejson = require(request);
+    }
+    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: packagejson: ", packagejson);
+
     let remotePackageRoot = _getRequirePaths(request, options);
+    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: remotePackageRoot: ", remotePackageRoot);
 
     // 
     // Get contents of a Git repository
@@ -486,8 +513,13 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // npm install options.package["production"] ==> Recursive[Dev_Array], Recursive[DevDeps_Array]
     // 
 
+    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching list of files to fetch");
     let pjsonFilesArray = packageJsonParser(packagejson);
+    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: pjsonFilesArray: ", pjsonFilesArray);
+
+    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching list of files to install");
     let npmInstallResult = await _installPackageDeps(remotePackageRoot.localFullPath, options.production);
+    options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: npmInstallResult: ", npmInstallResult);
 
     // let remoteRootArrayFiles, remoteSrcArrayFiles;
 
@@ -537,16 +569,26 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
  * @return {*} 
  */
 function requireurls(remoteUrl, options = { baseType: "git", recursive: false, forceUpdate: false, package: { production: false, directories: [], files: [] }, logger: console.log, cacheFetch: true, getMethods: false, noRequire: false }) {
-    if (options.getMethods === true) { return { remoteUrl: _getRemoteUrl, recursiveUrl: _getRecursiveRemoteUrl, packageJson: _getRecursiveRemotePackageJsonUrl } };
+    if (options.getMethods === true) {
+        options.logger("[require-urls] index.js: requireurls: [ remoteUrl, recursiveUrl, packageJson ] Functions: ", [remoteUrl, recursiveUrl, packageJson]);
+        return { remoteUrl: _getRemoteUrl, recursiveUrl: _getRecursiveRemoteUrl, packageJson: _getRecursiveRemotePackageJsonUrl }
+    };
 
     if (!remoteUrl.includes("package.json")) {
-
+        options.logger("[require-urls] index.js: Running Optional function if URL is not a package.json file _getRemoteUrl");
         if (!!options.recursive) {
+            options.logger("[require-urls] index.js: Running Functions _getRecursiveRemoteUrl Recursively: remoteUrl", remoteUrl);
+            options.logger("[require-urls] index.js: Running Functions _getRemoteUrl: options", { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: options.logger });
             return _getRecursiveRemoteUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: options.logger });
         } else {
+            options.logger("[require-urls] index.js: Running Functions _getRemoteUrl not Recursively: remoteUrl", remoteUrl);
+            options.logger("[require-urls] index.js: Running Functions _getRemoteUrl: options", { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: options.logger });
             return _getRemoteUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, logger: options.logger })
         }
     } else {
+        options.logger("[require-urls] index.js: Running Optional function if URL is a package.json file _getRemoteUrl");
+        options.logger("[require-urls] index.js: Running Functions _getRecursiveRemotePackageJsonUrl: remoteUrl", remoteUrl);
+        options.logger("[require-urls] index.js: Running Functions _getRecursiveRemotePackageJsonUrl: options", { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, package: { production: options.package.production, directories: options.package.directories, files: options.package.files }, logger: options.logger });
         return _getRecursiveRemotePackageJsonUrl(remoteUrl, options = { baseType: options.baseType, recursive: options.recursive, forceUpdate: options.forceUpdate, package: { production: options.package.production, directories: options.package.directories, files: options.package.files }, logger: options.logger });
     }
 }

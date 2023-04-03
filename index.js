@@ -479,23 +479,29 @@ function packageJsonParser(packagejson) {
     }
 
     // // Add file values of `main` key
+    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `main` key ");
     pjsonFilesArray.push(...pjsonFiller(pjson, "main", pjsonFilesArray));
 
     // // Add file values of `module` key
+    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `module` key ");
     pjsonFilesArray.push(...pjsonFiller(pjson, "module", pjsonFilesArray));
 
     // // Add file values of `exports` key
+    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `exports` key ");
     pjsonFilesArray.push(...pjsonFiller(pjson, "exports", pjsonFilesArray));
 
     // // Add files from the `files` key in package.json file
+    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `files` key ");
     let pjsonfiles = (!!pjson.files && Array.isArray(pjson.files)) ? pjson.files : (typeof pjson.files === "string") ? [pjson.files] : [];
     pjsonFilesArray.push(...pjsonfiles);
 
     // // Add folders from the `directories` key in package.json file
+    options.logger("[require-urls] index.js: packageJsonParser: Adding files from the package.json `directories` key ");
     let pjsondirectories = (!!pjson.directories && Array.isArray(pjson.directories)) ? pjson.files : (typeof pjson.directories === "string") ? [pjson.directories] : [];
     pjsondirectories = pjsondirectories.map((v) => { if (v[v.length - 1] === "/") { return v + "**"; } else { return v + "/" + "**"; } })
     pjsonFilesArray.push(...pjsondirectories);
 
+    options.logger("[require-urls] index.js: packageJsonParser: Making the files to be fetched unique values in the array ");
     pjsonFilesArray = new Array(...new Set(pjsonFilesArray));
 
     options.logger("[require-urls] index.js: packageJsonParser: pjsonFilesArray: ", pjsonFilesArray);

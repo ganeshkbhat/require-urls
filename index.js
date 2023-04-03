@@ -166,7 +166,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
     let _import = await _getRemoteUrl(request, options).then(function (data) {
 
         // .js, .cjs, .mjs, .ts, .wasm, ''
-        let optionalExtensions = ["js", "cjs", "mjs", "ts", "wasm", ""];
+        let optionalExtensions = ["js", "cjs", "mjs", "ts", "wasm", "node", "json", "coffee", ""];
         let paths = _getRequirePaths(request, options);
         options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: default paths: ", paths);
 
@@ -290,7 +290,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                 file = filearr.join(".");
 
                 if (ext !== "") {
-                    const extMatch = /\.(c|m)?js|node|wasm|ts|coffee|$/.exec(file);
+                    const extMatch = /\.(c|m)?js|ts|node|wasm|json|coffee$/.exec(file);
                     if (!!extMatch) { ext = extMatch[0]; }
                 }
 
@@ -404,10 +404,14 @@ async function _installPackageDeps(rootDir, production = true, options = { logge
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
     try {
+        // // Install npm for productoon or install all development dependencies
         let prod = (!!production) ? "--prod" : "";
+
+        // // Install dependencies for npm
         const { stdout, stderr } = await exec(`cd ${rootDir} && npm install ${prod}`);
         options.logger("[require-urls] index.js: _installPackageDeps: stdout: ", stdout);
         options.logger("[require-urls] index.js: _installPackageDeps: stderr: ", stderr);
+
         return { stderr: stderr, stdout: stdout }
     } catch (err) {
         options.logger("[require-urls] index.js: _installPackageDeps: execution error err: ", err);
@@ -428,9 +432,19 @@ function packageJsonParser(packagejson) {
 
     let pjsonFilesArray = [];
 
+    /**
+     * Fill the Array objArr object with the 
+     *      key's values of obj passed; handling 
+     *      even addition of nested object values
+     *
+     * @param {*} obj
+     * @param {*} objArr
+     * @return {*} 
+     */
     function getObjectValues(obj, objArr) {
-        let k = Object.keys(obj)
+        let k = Object.keys(obj);
         let klen = k.length;
+
         for (let i = 0; i < klen; i++) {
             if (!!obj[k[i]] && typeof obj[k[i]] === "string") {
                 objArr.push(obj[k[i]]);
@@ -438,26 +452,50 @@ function packageJsonParser(packagejson) {
                 objArr = getObjectValues(obj[k[i]], objArr);
             }
         }
+
         options.logger("[require-urls] index.js: packageJsonParser: getObjectValues: objArr: ", objArr);
         return objArr;
     }
 
+    /**
+     * Fill the Array oArr object with values of package.json file's
+     *      object `o` with the string values of the object key `k`;
+     *      handling both the cases of Object and String value
+     *
+     * @param {*} o
+     * @param {*} k
+     * @param {*} oArr
+     * @return {*} 
+     */
     function pjsonFiller(o, k, oArr) {
         if (!!o[k] && typeof o[k] === "object") {
             oArr.push(...getObjectValues(o[k], oArr));
         } else if (!!o[k] && typeof o[k] === "string") {
             oArr.push(o[k]);
         }
+
         options.logger("[require-urls] index.js: packageJsonParser: pjsonFiller: oArr: ", oArr);
         return oArr;
     }
 
+    // // Add file values of `main` key
     pjsonFilesArray.push(...pjsonFiller(pjson, "main", pjsonFilesArray));
+
+    // // Add file values of `module` key
     pjsonFilesArray.push(...pjsonFiller(pjson, "module", pjsonFilesArray));
+
+    // // Add file values of `exports` key
     pjsonFilesArray.push(...pjsonFiller(pjson, "exports", pjsonFilesArray));
 
-    let pjsonfiles = (!!pjson.files && Array.isArray(pjson)) ? pjson.files : [];
+    // // Add files from the `files` key in package.json file
+    let pjsonfiles = (!!pjson.files && Array.isArray(pjson.files)) ? pjson.files : (typeof pjson.files === "string") ? [pjson.files] : [];
     pjsonFilesArray.push(...pjsonfiles);
+
+    // // Add folders from the `directories` key in package.json file
+    let pjsondirectories = (!!pjson.directories && Array.isArray(pjson.directories)) ? pjson.files : (typeof pjson.directories === "string") ? [pjson.directories] : [];
+    pjsondirectories = pjsondirectories.map((v) => { if (v[v.length - 1] === "/") { return v + "**"; } else { return v + "/" + "**"; } })
+    pjsonFilesArray.push(...pjsondirectories);
+
     pjsonFilesArray = new Array(...new Set(pjsonFilesArray));
 
     options.logger("[require-urls] index.js: packageJsonParser: pjsonFilesArray: ", pjsonFilesArray);
@@ -475,12 +513,12 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Running Imports for package.json files and dependencies");
 
     // 
-    // Get package.json
-    // Get all files starting from (package.json).main 
-    //          or index.*[js|mjs|cjs|json|node|wasm] 
-    //          or all files in root folder `./[*.*[js|mjs|cjs|json|node|wasm]]` and folder `src/[*.*[js|mjs|cjs|json|node|wasm]]`
-    // Add .jscache/path/to/git/repo folder to path
-    // npm install production packages
+    // // Get package.json
+    // // Get all files starting from (package.json).main 
+    // //          or index.*[js|mjs|cjs|json|node|wasm] 
+    // //          or all files in root folder `./[*.*[js|mjs|cjs|json|node|wasm]]` and folder `src/[*.*[js|mjs|cjs|json|node|wasm]]`
+    // // Add .jscache/path/to/git/repo folder to path
+    // // npm install production packages
     // 
 
     if (!request.includes("package.json")) {
@@ -505,17 +543,17 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: remotePackageRoot: ", remotePackageRoot);
 
     // 
-    // Get contents of a Git repository
-    // Get contents of a Git directory
-    // Get all files
+    // // Get contents of a Git repository
+    // // Get contents of a Git directory
+    // // Get all files
     // 
 
     // 
-    // "main", "module", "exports", "files", ==> Recursive[Array]
-    // "repository"["test", "src", "dist"] ==> Recursive[Array]
-    // options.package["directory"]  ==> Recursive[Array]
-    // options.package["files"], ==> Recursive[Array]
-    // npm install options.package["production"] ==> Recursive[Dev_Array], Recursive[DevDeps_Array]
+    // // "main", "module", "exports", "files", ==> Recursive[Array]
+    // // "repository"["test", "src", "dist"] ==> Recursive[Array]
+    // // options.package["directory"]  ==> Recursive[Array]
+    // // options.package["files"], ==> Recursive[Array]
+    // // npm install options.package["production"] ==> Recursive[Dev_Array], Recursive[DevDeps_Array]
     // 
 
     options.logger("[require-urls] index.js: _getRecursiveRemotePackageJsonUrl: Fetching list of files to fetch");
@@ -528,7 +566,10 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
 
     // let remoteRootArrayFiles, remoteSrcArrayFiles;
 
+    // // 
     // // get all the in the root folder index.js/index.mjs/index.cjs `./[*.*[js|mjs|cjs|json|node|wasm]]`
+    // // 
+    //
     // let username = options.packagejson.username;
     // let repository = options.packagejson.repository;
     // let repo = `${username}` + "/" + `${repository}`
@@ -538,6 +579,7 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // let inpath = options.packagejson.inpath;
     // let extension = options.packagejson.extension || ["js", "mjs", "cjs", "json", "node", "wasm"].join("+extension:");  // extension:${extension}
     // let token = options.packagejson.token;
+    //
 
     // try {
     //     let requestOptions = {
@@ -551,6 +593,7 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     //     throw new Error("[require-urls] index.js: Unable to install npm packages.", rrafError.toString());
     // }
 
+    // 
     // try {
     //     let requestOptions = {
     //         hostname: "api.github.com",
@@ -562,6 +605,7 @@ async function _getRecursiveRemotePackageJsonUrl(request, options) {
     // } catch (rsafError) {
     //     throw new Error("[require-urls] index.js: Unable to install npm packages.", rsafError.toString());
     // }
+    //
 
     return packagejson;
 }

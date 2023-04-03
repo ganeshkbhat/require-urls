@@ -21,7 +21,8 @@
   "author": "Ganesh Bhat",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ganeshkbhat/requireurl/issues"
+    "url": "https://github.com/ganeshkbhat/requireurl/issues",
+    "email": "desktopcgi@gmail.com"
   },
   "homepage": "https://github.com/ganeshkbhat/requireurl#readme",
   "devDependencies": {

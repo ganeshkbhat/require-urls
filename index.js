@@ -367,7 +367,10 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                 options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: returnedImportedFilesArray with errors instances if any: ", returnedImportedFilesArray);
                 options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: paths.localGitFileCacheUrl: ", paths.localGitFileCacheUrl);
 
-                // // Retry import once again else err out. [TODO] Consolidate this function into a common function
+                // // 
+                // // Retry import once again else err out. 
+                // // [TODO] Consolidate this function into a common function
+                // // 
                 // let errHandlerrequired = _checkRequireModuleImports(paths.localGitFileCacheUrl);
                 // if (errHandlerrequired instanceof Error) {
                 //     // throw new Error(errHandlerrequired.toString());
@@ -384,8 +387,9 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
             }
         }
     }).catch(function (error) {
-
+        options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: Errors instances if any: error", error);
     });
+    options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: _import", _import);
     return _import;
 }
 

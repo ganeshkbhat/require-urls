@@ -1,7 +1,14 @@
+# ERROR DOCUMENTATION
 
-### require-urls : Nodejs Network Not Available Error
+
+### 1 - require-urls : Nodejs Network Not Available Error
+
+
+This error is noticed when there is no internet.
+
 
 ```
+
 
 node:internal/deps/undici/undici:6406
           p.reject(Object.assign(new TypeError("fetch failed"), { cause: response.error }));

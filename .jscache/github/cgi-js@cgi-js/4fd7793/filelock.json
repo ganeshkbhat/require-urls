@@ -1,1 +1,36 @@
-{"name":"cgi-js@cgi-js","localPath":"C:\\Users\\GB\\Documents\\projects\\requireurl\\.jscache\\github\\cgi-js@cgi-js\\4fd7793\\","repositoryPath":"https://www.github.com/cgi-js/cgi-js","sha":"","commit":"4fd7793","tag":"","dependencies":{},"files":{}}
+{
+    ""
+    "files": [
+        {
+            "name": "cgi-js@cgi-js:4fd7793:index.js",
+            "fileHash": "",
+            "localPath": "C:\\Users\\GB\\Documents\\projects\\requireurl\\.jscache\\github\\cgi-js@cgi-js\\4fd7793\\index.js",
+            "repositoryPath": "https://www.github.com/cgi-js/cgi-js",
+            "sha": "",
+            "commit": "4fd7793",
+            "tag": ""
+        },
+        {
+            "name": "cgi-js@cgi-js:4fd7793:index.js",
+            "fileHash": "",
+            "localPath": "C:\\Users\\GB\\Documents\\projects\\requireurl\\.jscache\\github\\cgi-js@cgi-js\\4fd7793\\index.js",
+            "repositoryPath": "https://www.github.com/cgi-js/cgi-js",
+            "sha": "",
+            "commit": "4fd7793",
+            "tag": ""
+        }
+    ],
+    "repository": [
+        {
+            "name": "cgi-js@cgi-js",
+            "localPath": "C:\\Users\\GB\\Documents\\projects\\requireurl\\.jscache\\github\\cgi-js@cgi-js\\4fd7793\\",
+            "repositoryPath": "https://www.github.com/cgi-js/cgi-js",
+            "sha": "",
+            "commit": "4fd7793",
+            "tag": "",
+            "dependencies": {},
+            "devDependencies": {},
+            "files": {}
+        }
+    ]
+}

@@ -120,6 +120,60 @@ const { _isValidURL, _getProtocol, _checkHttpsProtocol, _fetch, _deleteRequest, 
 // }
 
 
+async function fetchMultipleUrls(urls) {
+    const fetchUrl = async (url) => {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+        }
+        return response.text();
+    };
+
+    const results = await runFunctionInWorkerThreads(fetchUrl, urls.map((url) => [url]));
+
+    const errors = results.errors.filter((error) => error);
+    if (errors.length > 0) {
+        throw new Error(`Failed to fetch ${errors.length} URLs`);
+    }
+
+    return results.results;
+}
+
+const urls = ['https://www.google.com', 'https://www.google.com/search?q=javascript', 'https://www.google.com/search?q=web+workers'];
+fetchMultipleUrls(urls)
+    .then((results) => {
+        console.log(results);
+    })
+    .catch((error) => {
+        console.error(error);
+});
+
+// 
+// 
+// function fetchUrls(fetchObj = { fetch: [{ url: 'https://www.google.com' }, { url: 'http://www.paytm.com' }] }) {
+//     const http = require('http');
+//     const requests = fetchObj.fetch.map(obj => {
+//         return new Promise((resolve, reject) => {
+//             http.get(obj.url, res => {
+//                 let data = '';
+//                 res.on('data', chunk => {
+//                     data += chunk;
+//                 });
+//                 res.on('end', () => {
+//                     resolve(data);
+//                 });
+//             }).on('error', err => {
+//                 reject(err);
+//             });
+//         });
+//     });
+//     Promise.some(requests)
+//         .then(responses => Promise.revolve(responses))
+//         .catch(err => Promise.reject(responses));
+// }
+// 
+// 
+
 
 // Make requests
 
@@ -137,4 +191,5 @@ module.exports._isValidURL = _isValidURL;
 module.exports._getProtocol = _getProtocol;
 module.exports._checkHttpsProtocol = _checkHttpsProtocol;
 module.exports._fetch = _fetch;
+// module.exports.fetchUrls = fetchUrls;
 

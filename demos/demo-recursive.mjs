@@ -4,7 +4,7 @@
  * Author: Ganesh B
  * Description: 
  * Install: npm i require-urls --save
- * Github: https://github.com/ganeshkbhat/requireurl
+ * Github: https://github.com/ganeshkbhat/require-url
  * npmjs Link: https://www.npmjs.com/package/require-urls
  * File: demos/demo.mjs
  * File Description: Using requireurl instead of require to fetch files from git repositories like Github or Bitbucket like repository directly
@@ -25,5 +25,5 @@ console.log("[require-urls] demo-recursive.js: Getting cgi-js file: ", d.then(r 
 
 // let d = import("https://github.com/cgi-js/cgi-js/blob/main/src/index.js");
 // console.log(d.then(r => console.log(r.source)));
-
 // requireurls.then(d => console.log("Testing returns", d));
+

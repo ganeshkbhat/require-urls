@@ -198,10 +198,10 @@ export {
      _getRoot,
     _getGitRoot,
     _getSvnRoot,
-    _getFtpRoot,
+    // _getFtpRoot,
     _getNodeModulesRoot,
     _getPackageJsonRoot,
-    _createJscachePath,
+    // _createJscachePath,
     _getRequirePaths,
 
     

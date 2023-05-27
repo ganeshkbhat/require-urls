@@ -36,9 +36,11 @@ const {
 } = require("./src/concurrency.js");
 
 const {
-    _getRoot, _getGitRoot, _getSvnRoot, _getFtpRoot,
+    _getRoot, _getGitRoot, _getSvnRoot,
+    _getFtpRoot, 
+    _createJscachePath,
     _getNodeModulesRoot, _getPackageJsonRoot,
-    _createJscachePath, _getRequirePaths
+    _getRequirePaths
 } = require("./src/root.dirs.js");
 
 const {
@@ -47,11 +49,16 @@ const {
 } = require("./src/filesystem.js");
 
 const {
-    _writeFileLock, _createSHAHash, _readFileLock,
+    _writeFileLock, 
+    _createSHAHash, 
+    _readFileLock,
     _createFileLock, _updateFileLockEntry, _deleteFileLockEntry,
-    _fileContentHash, _fileContentDeHash,
-    _verifyFilelockFile, _verifyFilelock,
-    _verifySHAHash, _verifyFileContentHash
+    _fileContentHash, 
+    _fileContentDeHash,
+    _verifyFilelockFile, 
+    _verifyFilelock,
+    _verifySHAHash, 
+    _verifyFileContentHash
 } = require("./src/filelock.js");
 
 const {
@@ -66,7 +73,8 @@ const {
 const {
     _checkModuleImports, _requiresObject, _requireRegex,
     _importRegex, _importESRegex, _importRegexExtended,
-    _isESMFileExtension, _isNodeCompatibleFileExtension,
+    _isESMFileExtension, 
+    // _isNodeCompatibleFileExtension,
     _isESMCodeBase, _isCJSCodeBase,
     _isModuleInPackageJson, _checkRequireModuleImports,
     _isESCode
@@ -723,7 +731,7 @@ module.exports._importRegex = _importRegex;
 module.exports._importESRegex = _importESRegex;
 module.exports._importRegexExtended = _importRegexExtended;
 module.exports._isESMFileExtension = _isESMFileExtension;
-module.exports._isNodeCompatibleFileExtension = _isNodeCompatibleFileExtension;
+// module.exports._isNodeCompatibleFileExtension = _isNodeCompatibleFileExtension;
 module.exports._isESMCodeBase = _isESMCodeBase;
 module.exports._isCJSCodeBase = _isCJSCodeBase;
 module.exports._isModuleInPackageJson = _isModuleInPackageJson;
@@ -755,9 +763,9 @@ module.exports._getRoot = _getRoot;
 module.exports._getGitRoot = _getGitRoot;
 module.exports._getSvnRoot = _getSvnRoot;
 module.exports._getFtpRoot = _getFtpRoot;
+module.exports._createJscachePath = _createJscachePath;
 module.exports._getNodeModulesRoot = _getNodeModulesRoot;
 module.exports._getPackageJsonRoot = _getPackageJsonRoot;
-module.exports._createJscachePath = _createJscachePath;
 module.exports._getRequirePaths = _getRequirePaths;
 
 module.exports._getSvnRequest = _getSvnRequest;

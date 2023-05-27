@@ -139,15 +139,15 @@ async function fetchMultipleUrls(urls) {
     return results.results;
 }
 
-const urls = ['https://www.google.com', 'https://www.google.com/search?q=javascript', 'https://www.google.com/search?q=web+workers'];
+// const urls = ['https://www.google.com', 'https://www.google.com/search?q=javascript', 'https://www.google.com/search?q=web+workers'];
 
-fetchMultipleUrls(urls)
-    .then((results) => {
-        console.log(results);
-    })
-    .catch((error) => {
-        console.error(error);
-});
+// fetchMultipleUrls(urls)
+//     .then((results) => {
+//         console.log(results);
+//     })
+//     .catch((error) => {
+//         console.error(error);
+// });
 
 
 function fetchUrls(fetchObj = { fetch: [{ url: 'https://www.google.com' }, { url: 'http://www.paytm.com' }] }) {
@@ -167,7 +167,7 @@ function fetchUrls(fetchObj = { fetch: [{ url: 'https://www.google.com' }, { url
             });
         });
     });
-    Promise.some(requests)
+    return Promise.some(requests)
         .then(responses => Promise.revolve(responses))
         .catch(err => Promise.reject(responses));
 }

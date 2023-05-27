@@ -29,6 +29,12 @@ requireurls(request, options);
 
 ```
 
+Run the file using the following command:
+
+```
+node --experimental-loader=./node_modules/src/loaders/loader.mjs ./file.js
+```
+
 ### FEATURES
 
 Currently, the project is in development and support the following features:

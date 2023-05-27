@@ -32,7 +32,7 @@ requireurls(request, options);
 Run the file using the following command:
 
 ```
-node --experimental-loader=./node_modules/src/loaders/loader.mjs ./file.js
+node --experimental-loader=./node_modules/require-urls/src/loaders/loader.mjs ./file.js
 ```
 
 ### FEATURES

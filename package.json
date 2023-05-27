@@ -1,6 +1,6 @@
 {
   "name": "require-urls",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Deno like and GoLang like Mode in ES and commonjs: Replace nodejs require function with `requireurls` function or `use loader functionality using loader.mjs` replacing import functionality that can fetch remote urls. `require-urls` helps you require remote files (individually or recursively) from `git`, `svn`, `mercurial`, `ftp`, `remote cloud stores` using the `requireurls function",
   "main": "index.js",
   "scripts": {

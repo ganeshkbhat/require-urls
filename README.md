@@ -42,6 +42,9 @@ Currently, the project is in development and support the following features:
 - Import `remote file` from a remote URL (Github support)
 - Import `remote file and its dependencies recursively` from from a remote URL (Github support)
 - Import files are `cached` in `.jscache` folder in the project
+- [TODO] Minor addition of using `package.json` to import entire package installation for use
+- [TODO] Support of other repositories like `svn`, `mercurial`, `ftp`, or any `other cloud` stores.
+
 
 #### `options` OBJECT
 

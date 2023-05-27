@@ -20,10 +20,9 @@
 const path = require('path');
 const fs = require('fs');
 const {
-    _getRoot, _getGitRoot, _getSvnRoot, 
-    // _getFtpRoot, _createJscachePath,
-    _getNodeModulesRoot, _getPackageJsonRoot,
-    
+    _getRoot, _getGitRoot, _getSvnRoot,
+    _getFtpRoot, _createJscachePath,
+    _getNodeModulesRoot, _getPackageJsonRoot
 } = require("root-dirs");
 
 
@@ -40,7 +39,27 @@ function _getRequirePaths(request, options) {
     }
 
     let urlFetch = request.split("https://")[1];
-    let git = _getGitRoot(process.cwd(), options);
+
+    let git;
+    if (!options.jscacheDir) {
+        git = _getGitRoot(process.cwd(), options);
+    } else {
+        if (options.jscacheDir === "$pwd$") {
+            git = process.cwd();
+        } else if (options.jscacheDir === "$git$") {
+            git = _getGitRoot(process.cwd(), options);
+        } else if (options.jscacheDir === "$svn$") {
+            git = _getSvnRoot(process.cwd(), options);
+        } else if (options.jscacheDir === "$ftp$") {
+            git = _getFtpRoot(process.cwd(), options);
+        } else if (options.jscacheDir === "$nodemodules$") {
+            git = _getNodeModulesRoot(process.cwd(), options);
+        } else if (options.jscacheDir === "$packagejson$") {
+            git = _getPackageJsonRoot(process.cwd(), options);
+        } else {
+            git = options.jscacheDir;
+        }
+    }
 
     let localGitRoot = path.join(git.split(".git")[0]);
     let jsCacheUrl = path.join(localGitRoot, ".jscache");

@@ -189,7 +189,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
             }
 
             if (!!required) {
-                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: required: ", required);
+                // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: required: ", required);
                 return required;
             }
 
@@ -220,7 +220,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                 options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: importsdynamic: ", importsdynamic);
 
                 imports = { ...importses, ...importsdynamic };
-                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: imports: ", imports);
+                // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: imports: ", imports);
             } else {
                 // console.log(requires, paths.localGitFileCacheUrl);
                 options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: requires: ", requires);
@@ -235,13 +235,13 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
 
                 // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all imports (importsdynamic) from the file ", paths.localGitFileCacheUrl, " are ", importsdynamic);
                 imports = { ...requires, ...importsdynamic };
-                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: imports: ", imports);
+                // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: imports: ", imports);
             }
 
             options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: all imports (combined imports) from the file ", paths.localGitFileCacheUrl, " are ", imports);
 
             let importskeys = Object.keys(imports);
-            options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: importskeys: ", importskeys);
+            // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: importskeys: ", importskeys);
 
             // Import files in the list
             for (let i = 0; i < importskeys.length; i++) {
@@ -250,7 +250,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                 options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: import file key ", importskeys[i]);
 
                 let importedFile = importskeys[i].split("/");
-                options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: importskeys: ", importskeys);
+                // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: importskeys: ", importskeys);
 
                 let tmpPath = request.split("/");
                 tmpPath.pop();
@@ -351,8 +351,8 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
                         importskeys.push(file + ((!!exts[i]) ? "." : "") + exts[i]);
                     }
 
-                    options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: modified imports: ", imports);
-                    options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: importskeys: ", importskeys);
+                    // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: modified imports: ", imports);
+                    // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: importskeys: ", importskeys);
                     options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: import file url: ", tmpPath);
 
                     try {
@@ -394,7 +394,7 @@ async function _getRecursiveRemoteUrl(request, options, _importRemoteUrl = null)
     }).catch(function (error) {
         options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: Errors instances if any: error", error);
     });
-    options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: _import", _import);
+    // options.logger("[require-urls] index.js: _getRecursiveRemoteUrl: _import", _import);
     return _import;
 }
 

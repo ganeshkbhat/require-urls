@@ -107,6 +107,16 @@ getMethods: false
 noRequire: false
 ```
 
+```
+/* jscacheDir: The directory for .jscache folder. */
+/* Default is $pwd$ */
+/* Options are $git$, $pwd$, $packagejson$, $svn$, $ftp$, $nodemodules$, './path/to/folder' */
+/* Usage: requireurls("", { jscacheDir: '$gitroot$' }) */
+/*  */
+
+jscacheDir: '$pwd$'
+```
+
 #### DEMO USAGE CODE
 
 ```

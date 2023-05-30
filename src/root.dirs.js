@@ -40,28 +40,31 @@ function _getRequirePaths(request, options) {
 
     let urlFetch = request.split("https://")[1];
 
-    let git;
-    if (!options.jscacheDir) {
-        git = _getGitRoot(process.cwd(), options);
-    } else {
-        if (options.jscacheDir === "$pwd$") {
-            git = process.cwd();
-        } else if (options.jscacheDir === "$git$") {
-            git = _getGitRoot(process.cwd(), options);
-        } else if (options.jscacheDir === "$svn$") {
-            git = _getSvnRoot(process.cwd(), options);
-        } else if (options.jscacheDir === "$ftp$") {
-            git = _getFtpRoot(process.cwd(), options);
-        } else if (options.jscacheDir === "$nodemodules$") {
-            git = _getNodeModulesRoot(process.cwd(), options);
-        } else if (options.jscacheDir === "$packagejson$") {
-            git = _getPackageJsonRoot(process.cwd(), options);
-        } else {
-            git = options.jscacheDir;
-        }
-    }
+    let git = _getGitRoot(process.cwd(), options);
 
     let localGitRoot = path.join(git.split(".git")[0]);
+    // let localGitRoot;
+    // if (!options.jscacheDir) {
+    //     localGitRoot = _getGitRoot(process.cwd(), options);
+    // } else {
+    //     if (options.jscacheDir === "\$pwd\$") {
+    //         localGitRoot = process.cwd();
+    //     } else if (options.jscacheDir === "\$git\$") {
+    //         localGitRoot = _getGitRoot(process.cwd(), options)
+    //     } else if (options.jscacheDir === "\$svn\$") {
+    //         localGitRoot = _getSvnRoot(process.cwd(), options);
+    //     } else if (options.jscacheDir === "\$ftp\$") {
+    //         localGitRoot = _getFtpRoot(process.cwd(), options);
+    //     } else if (options.jscacheDir === "\$nodemodules\$") {
+    //         localGitRoot = _getNodeModulesRoot(process.cwd(), options);
+    //     } else if (options.jscacheDir === "\$packagejson\$") {
+    //         localGitRoot = _getPackageJsonRoot(process.cwd(), options);
+    //     } else {
+    //         localGitRoot = options.jscacheDir;
+    //     }
+    // }
+    // localGitRoot = path.join(localGitRoot.split(".git")[0]);
+
     let jsCacheUrl = path.join(localGitRoot, ".jscache");
     let localGitFileCacheUrl;
     let remoteGitRoot, remotePackagejsonRoot, remoteFullPath;

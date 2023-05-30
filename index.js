@@ -37,7 +37,7 @@ const {
 
 const {
     _getRoot, _getGitRoot, _getSvnRoot,
-    _getFtpRoot, 
+    _getFtpRoot,
     _createJscachePath,
     _getNodeModulesRoot, _getPackageJsonRoot,
     _getRequirePaths
@@ -49,15 +49,15 @@ const {
 } = require("./src/filesystem.js");
 
 const {
-    _writeFileLock, 
-    _createSHAHash, 
+    _writeFileLock,
+    _createSHAHash,
     _readFileLock,
     _createFileLock, _updateFileLockEntry, _deleteFileLockEntry,
-    _fileContentHash, 
+    _fileContentHash,
     _fileContentDeHash,
-    _verifyFilelockFile, 
+    _verifyFilelockFile,
     _verifyFilelock,
-    _verifySHAHash, 
+    _verifySHAHash,
     _verifyFileContentHash
 } = require("./src/filelock.js");
 
@@ -73,7 +73,7 @@ const {
 const {
     _checkModuleImports, _requiresObject, _requireRegex,
     _importRegex, _importESRegex, _importRegexExtended,
-    _isESMFileExtension, 
+    _isESMFileExtension,
     // _isNodeCompatibleFileExtension,
     _isESMCodeBase, _isCJSCodeBase,
     _isModuleInPackageJson, _checkRequireModuleImports,

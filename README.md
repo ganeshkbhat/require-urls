@@ -46,13 +46,39 @@ Currently, the project is in development and support the following features:
 - [TODO] Support of other repositories like `svn`, `mercurial`, `ftp`, or any `other cloud` stores.
 
 
-#### `options` OBJECT
+### OBJECT `options` 
+
+
+You can add all inbuilt default options of require's resolve function. The default require options can be found here: [require.resolve](https://nodejs.org/api/modules.html#requireresolverequest-options). All other options customized for `require-urls` function's `options` argument object are as below:
+
+
+Following is a sample `options` object. All are options object and everything have defaults.
+
 
 ```
-/* You can add all inbuilt default options of require's resolve function */
+
+// .... all imports etc
+
+let options  = {
+  paths: "", // require.resolve options key
+  baseType: "git",
+  recursive: false,
+  forceUpdate: false,
+  logger: console.log,
+  cacheFetch: true,
+  getMethods: true,
+  noRequire: false,
+  jscacheDir: '\$pwd\$'
+}
+
+requireurls(request, options)
+
 ```
 
-The default require options can be found here: [require.resolve](https://nodejs.org/api/modules.html#requireresolverequest-options). All other options customized for `require-urls` function's `options` argument object are as below:
+
+### KEY DETAILS `options` 
+
+
 
 ```
 /* options: git, bitbucket, gitlab, svn [TODO], ftp [TODO], etc.*/
@@ -111,10 +137,10 @@ noRequire: false
 /* jscacheDir: The directory for .jscache folder. */
 /* Default is $pwd$ */
 /* Options are $git$, $pwd$, $packagejson$, $svn$, $ftp$, $nodemodules$, './path/to/folder' */
-/* Usage: requireurls("", { jscacheDir: '$gitroot$' }) */
+/* Usage: requireurls("", { jscacheDir: '\$git\$' }) */
 /*  */
 
-jscacheDir: '$pwd$'
+jscacheDir: '\$pwd\$'
 ```
 
 #### DEMO USAGE CODE

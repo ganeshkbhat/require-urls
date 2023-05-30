@@ -19,7 +19,7 @@
 
 let requireurls = require("../index");
 
-let d = requireurls("https://github.com/cgi-js/cgi-js/blob/main/src/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false });
+let d = requireurls("https://github.com/cgi-js/cgi-js/blob/main/src/index.js", { baseType: "git", recursive: true, forceUpdate: true, logger: console.log, cacheFetch: false, getMethods: false, noRequire: false, jscacheDir: "\$pwd\$" });
 console.log("[require-urls] demo-recursive.js: Getting cgi-js file: ", d.then(r => console.log(r)));
 
 

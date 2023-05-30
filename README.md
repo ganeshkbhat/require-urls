@@ -63,15 +63,15 @@ let options  = {
   paths: "", // require.resolve options key
   baseType: "git", // Which repository or store the file is being pulled from
   recursive: false, // Require urls recursively 
-  // if forceUpdate is false and files are present then require from jscache folder, if already downloaded. 
-  // if forceUpdate is false and files are not present then fetch from remote and save. 
-  // if forceUpdate is true and files are present then forceUpdate the files.
+      // if forceUpdate is [A] false, [B] true.  
+      // [A]: if files are present then require from jscache folder, if already downloaded. 2. if files are not present then fetch from remote and save.  
+      // [B]: if files are present then forceUpdate the files. 
   forceUpdate: false, 
   logger: console.log, // Add logger to the require function, gives detailed logging during fetch
   cacheFetch: true, // TODO: ReConsidering feature. require from jscache folder, if already downloaded. Conflicting with forceUpdate
   getMethods: true, // get individual methods of remoteUrl, recursiveUrl, packageJson
   noRequire: false, // TODO: require 
-  jscacheDir: '\$pwd\$'
+  jscacheDir: '\$pwd\$' // TODO: specify the jscacheDir for caching files 
 }
 
 requireurls(request, options)

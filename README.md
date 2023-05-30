@@ -61,20 +61,39 @@ Following is a sample `options` object. All are options object and everything ha
 
 let options  = {
   /* You can add all inbuilt default options of require's resolve function */
-  paths: "", // require.resolve options key
-  baseType: "git", // Which repository or store the file is being pulled from. options: git, bitbucket
-  recursive: false, // Require urls recursively, recursive: will allow for recursive pull and cache of files relative to remote url path
-      // forceUpdate: force update the .jscache folder for the remote url files
-      // if forceUpdate is [A] false, [B] true.  
-      // [A]: 1. if files are present then require from jscache folder, if already downloaded. 2. if files are not present then fetch from remote and save.  
-      // [B]: if files are present then forceUpdate the files. 
+
+  // require.resolve options key
+  paths: "", 
+
+  // Which repository or store the file is being pulled from. options: git, bitbucket
+  baseType: "git", 
+
+  // Require urls recursively, recursive: will allow for recursive pull and cache of files relative to remote url path
+  recursive: false, 
+      
+  // forceUpdate: force update the .jscache folder for the remote url files
+  // if forceUpdate is [A] false, [B] true.  
+  // [A]: 1. if files are present then require from jscache folder, if already downloaded. 2. if files are not present then fetch from remote and save.  
+  // [B]: if files are present then forceUpdate the files. 
   forceUpdate: false, 
-  logger: console.log, // Add logger to the require function, gives detailed logging during fetch. logger: provide a logger function to use. default is console.log
-  cacheFetch: true, // TODO: ReConsidering feature. require from jscache folder, if already downloaded. Conflicting with forceUpdate
-  getMethods: true, // get individual methods of remoteUrl, recursiveUrl, packageJson
-  noRequire: false, // TODO: require 
-  jscacheDir: '\$pwd\$' // TODO: specify the jscacheDir for caching files 
-  package: { production: false, directories: [], files: [] } // TODO: package.json packages download and install options 
+
+  // Add logger to the require function, gives detailed logging during fetch. logger: provide a logger function to use. default is console.log
+  logger: console.log, 
+
+  // TODO: ReConsidering feature. require from jscache folder, if already downloaded. Conflicting with forceUpdate
+  cacheFetch: true, 
+
+  // get individual methods of remoteUrl, recursiveUrl, packageJson
+  getMethods: true, 
+
+  // TODO: require 
+  noRequire: false, 
+
+  // TODO: specify the jscacheDir for caching files 
+  jscacheDir: '\$pwd\$' 
+
+  // TODO: package.json packages download and install options 
+  package: { production: false, directories: [], files: [] } 
 }
 
 requireurls(request, options)

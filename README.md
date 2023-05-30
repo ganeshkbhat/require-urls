@@ -72,6 +72,7 @@ let options  = {
   getMethods: true, // get individual methods of remoteUrl, recursiveUrl, packageJson
   noRequire: false, // TODO: require 
   jscacheDir: '\$pwd\$' // TODO: specify the jscacheDir for caching files 
+  package: { production: false, directories: [], files: [] } // TODO: package.json packages download and install options 
 }
 
 requireurls(request, options)

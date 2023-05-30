@@ -642,6 +642,10 @@ function requireurls(remoteUrl, options = { baseType: "git", recursive: false, f
         return { remoteUrl: _getRemoteUrl, recursiveUrl: _getRecursiveRemoteUrl, packageJson: _getRecursiveRemotePackageJsonUrl }
     };
 
+    if (!!options.cacheFetch) {
+        // fetch from jscache
+    }
+
     if (!remoteUrl.includes("package.json")) {
         options.logger("[require-urls] index.js: Running Optional function if URL is not a package.json file _getRemoteUrl");
         if (!!options.recursive) {

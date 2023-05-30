@@ -60,14 +60,16 @@ Following is a sample `options` object. All are options object and everything ha
 // .... all imports etc
 
 let options  = {
+  /* You can add all inbuilt default options of require's resolve function */
   paths: "", // require.resolve options key
-  baseType: "git", // Which repository or store the file is being pulled from
-  recursive: false, // Require urls recursively 
+  baseType: "git", // Which repository or store the file is being pulled from. options: git, bitbucket
+  recursive: false, // Require urls recursively, recursive: will allow for recursive pull and cache of files relative to remote url path
+      // forceUpdate: force update the .jscache folder for the remote url files
       // if forceUpdate is [A] false, [B] true.  
-      // [A]: if files are present then require from jscache folder, if already downloaded. 2. if files are not present then fetch from remote and save.  
+      // [A]: 1. if files are present then require from jscache folder, if already downloaded. 2. if files are not present then fetch from remote and save.  
       // [B]: if files are present then forceUpdate the files. 
   forceUpdate: false, 
-  logger: console.log, // Add logger to the require function, gives detailed logging during fetch
+  logger: console.log, // Add logger to the require function, gives detailed logging during fetch. logger: provide a logger function to use. default is console.log
   cacheFetch: true, // TODO: ReConsidering feature. require from jscache folder, if already downloaded. Conflicting with forceUpdate
   getMethods: true, // get individual methods of remoteUrl, recursiveUrl, packageJson
   noRequire: false, // TODO: require 
@@ -161,14 +163,13 @@ let filethree = requireurls("https://github.com/ganeshkbhat/requireurl/blob/main
 
 let requireurls = require("require-urls");
 let c = requireurls(
-        "https://raw.githubusercontent.com/ganeshkbhat/requireurl/8d8681c4a28d64f23fb473064fa86880a0b930ff/index.js", // request remote url 
+              // request remote url
+        "https://raw.githubusercontent.com/ganeshkbhat/requireurl/8d8681c4a28d64f23fb473064fa86880a0b930ff/index.js",  
         {
-            /* You can add all inbuilt default options of require's resolve function */
-            
-            baseType: "git", // options: git, bitbucket
-            recursive: true, // recursive: will allow for recursive pull and cache of files relative to remote url path
-            forceUpdate: true, // forceUpdate: force update the .jscache folder for the remote url files
-            logger: console.log // logger: provide a logger function to use. default is console.log
+            baseType: "git", 
+            recursive: true, 
+            forceUpdate: true,
+            logger: console.log
         });
 
 c.then(d => console.log("testing", d));

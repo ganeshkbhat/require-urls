@@ -250,7 +250,7 @@ Documented Errors [errors](./docs/errors.md)
 - [D] Github support for remote files import
   - [D] single file import.
   - [D] file import and dependency file imports recursively.
-  - [D] importing project using package.json.
+  - [T] importing project using package.json.
 - [T] Gitlab support for remote files import
   - [T] single file import.
   - [T] file import and dependency file imports recursively.

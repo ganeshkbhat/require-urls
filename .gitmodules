@@ -37,3 +37,6 @@
 [submodule "glob-traverse-fs"]
 	path = glob-traverse-fs
 	url = https://github.com/traverse-fs/glob-traverse-fs.git
+[submodule "fssys"]
+	path = fssys
+	url = https://github.com/traverse-fs/fssys.git

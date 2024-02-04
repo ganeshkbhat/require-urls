@@ -86,6 +86,17 @@ git pull origin main
 git checkout main
 npm install --force
 cd ..
+cd queues.js
+git init
+git remote -v
+git remote remove main
+git remote remove origin
+git remote add origin https://github.com/ganeshkbhat/queues.js.git
+git remote -v
+git pull origin main
+git checkout main
+npm install --force
+cd ..
 cd filelock.json
 git init
 git remote -v

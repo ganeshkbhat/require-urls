@@ -34,3 +34,6 @@
 [submodule "concurrency.js.extended"]
 	path = concurrency.js.extended
 	url = https://github.com/ganeshkbhat/concurrency.js.extended.git
+[submodule "queues.js"]
+	path = queues.js
+	url = https://github.com/ganeshkbhat/queues.js.git

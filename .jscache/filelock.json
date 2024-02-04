@@ -1,7 +1,7 @@
 {
     "base": "C:\\Users\\GB\\Documents\\projects\\requireurl\\.jscache\\",
-    "files": [
-        {
+    "files": {
+        "github:cgi-js@cgi-js:4fd7793:index.js": {
             "name": "github:cgi-js@cgi-js:4fd7793:index.js",
             "alias": [],
             "fileHash": "",
@@ -11,7 +11,7 @@
             "commit": "4fd7793",
             "tag": ""
         },
-        {
+        "github:cgi-js@cgi-js:4fd7793:src/change.js": {
             "name": "github:cgi-js@cgi-js:4fd7793:src/change.js",
             "alias": [],
             "fileHash": "",
@@ -21,7 +21,7 @@
             "commit": "4fd7793",
             "tag": ""
         },
-        {
+        "github:cgi-js@cgi-js:4fd7793:src/index.js": {
             "name": "github:cgi-js@cgi-js:4fd7793:src/index.js",
             "alias": [],
             "fileHash": "",
@@ -31,7 +31,7 @@
             "commit": "4fd7793",
             "tag": ""
         },
-        {
+        "github:ganeshkbhat@requireurl:2e5181793dd8c076aafd46f3330c59e4abd70908:index.js": {
             "name": "github:ganeshkbhat@requireurl:2e5181793dd8c076aafd46f3330c59e4abd70908:index.js",
             "alias": [],
             "fileHash": "",
@@ -41,11 +41,11 @@
             "commit": "4fd7793",
             "tag": ""
         }
-    ],
-    "repository": [
-        {
+    },
+    "repository": {
+        "github:cgi-js@cgi-js": {
             "name": "github:cgi-js@cgi-js",
-            "alias": [],
+            "alias": {},
             "localPath": "github\\cgi-js@cgi-js\\4fd7793\\",
             "repositoryPath": "https://www.github.com/cgi-js/cgi-js",
             "package.json": "https://www.github.com/cgi-js/cgi-js/package.json",
@@ -56,9 +56,9 @@
             "devDependencies": {},
             "files": {}
         },
-        {
+        "github:ganeshkbhat@fastprimenumbers:main:nodejs": {
             "name": "github:ganeshkbhat@fastprimenumbers:main:nodejs",
-            "alias": [],
+            "alias": {},
             "localPath": "github\\ganeshkbhat@fastprimenumbers\\main\\nodejs",
             "repositoryPath": "https://www.github.com/ganeshkbhat/fastprimenumbers/tree/main/nodejs",
             "package.json": "https://www.github.com/ganeshkbhat/fastprimenumbers/tree/main/nodejs/package.json",
@@ -67,15 +67,15 @@
             "tag": "",
             "dependencies": {},
             "devDependencies": {},
-            "files": []
+            "files": {}
         },
-        {
+        "github:ganeshkbhat@fastprimenumbers:main:nodejs": {
             "name": "github:ganeshkbhat@fastprimenumbers:main:nodejs",
-            "alias": [
-                "github:ganeshkbhat@fastprimenumbers:2e5181793dd8c076aafd46f3330c59e4abd70908:nodejs",
-                "github:ganeshkbhat@fastprimenumbers:main:nodejs",
-                "github:ganeshkbhat@fastprimenumbers:4fd7793:nodejs"
-            ],
+            "alias": {
+                "github:ganeshkbhat@fastprimenumbers:2e5181793dd8c076aafd46f3330c59e4abd70908:nodejs": true,
+                "github:ganeshkbhat@fastprimenumbers:main:nodejs": true,
+                "github:ganeshkbhat@fastprimenumbers:4fd7793:nodejs": true
+            },
             "localPath": "github\\ganeshkbhat@fastprimenumbers\\main\\nodejs",
             "repositoryPath": "https://www.github.com/ganeshkbhat/fastprimenumbers/tree/main/nodejs",
             "package.json": "https://www.github.com/ganeshkbhat/fastprimenumbers/tree/main/nodejs/package.json",
@@ -84,11 +84,11 @@
             "tag": "",
             "dependencies": {},
             "devDependencies": {},
-            "files": []
+            "files": {}
         },
-        {
+        "github:ganeshkbhat@requireurl:2e5181793dd8c076aafd46f3330c59e4abd70908": {
             "name": "github:ganeshkbhat@requireurl:2e5181793dd8c076aafd46f3330c59e4abd70908",
-            "alias": [],
+            "alias": {},
             "localPath": "github\\ganeshkbhat@requireurl\\2e5181793dd8c076aafd46f3330c59e4abd70908",
             "repositoryPath": "https://www.github.com/ganeshkbhat/requireurl/",
             "package.json": "https://github.com/ganeshkbhat/requireurl/blob/2e5181793dd8c076aafd46f3330c59e4abd70908/nodejs/package.json",
@@ -97,10 +97,10 @@
             "tag": "",
             "dependencies": {},
             "devDependencies": {},
-            "files": [
-                {
+            "files": {
+                "ganeshkbhat@requireurl:2e5181793dd8c076aafd46f3330c59e4abd70908:index.js": {
                     "name": "ganeshkbhat@requireurl:2e5181793dd8c076aafd46f3330c59e4abd70908:index.js",
-                    "alias": [],
+                    "alias": {},
                     "fileHash": "",
                     "localPath": "github\\ganeshkbhat@requireurl\\2e5181793dd8c076aafd46f3330c59e4abd70908\\index.js",
                     "repositoryPath": "https://raw.github.com/ganeshkbhat/requireurl/blob/2e5181793dd8c076aafd46f3330c59e4abd70908/index.js",
@@ -108,9 +108,9 @@
                     "commit": "4fd7793",
                     "tag": ""
                 },
-                {
+                "ganeshkbhat@requireurl:2e5181793dd8c076aafd46f3330c59e4abd70908:src/concurrency.js": {
                     "name": "ganeshkbhat@requireurl:2e5181793dd8c076aafd46f3330c59e4abd70908:src/concurrency.js",
-                    "alias": [],
+                    "alias": {},
                     "fileHash": "",
                     "localPath": "github\\ganeshkbhat@requireurl\\2e5181793dd8c076aafd46f3330c59e4abd70908\\src\\concurrency.js",
                     "repositoryPath": "https://raw.github.com/ganeshkbhat/requireurl/blob/2e5181793dd8c076aafd46f3330c59e4abd70908/src/concurrency.js",
@@ -118,7 +118,7 @@
                     "commit": "4fd7793",
                     "tag": ""
                 }
-            ]
+            }
         }
-    ]
+    }
 }

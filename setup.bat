@@ -42,6 +42,17 @@ git pull origin main
 git checkout main
 npm install --force
 cd ..
+cd apis-mercurial
+git init
+git remote -v
+git remote remove main
+git remote remove origin
+git remote add origin https://github.com/ganeshkbhat/apis-mercurial.git
+git remote -v
+git pull origin main
+git checkout main
+npm install --force
+cd ..
 cd apis-request
 git init
 git remote -v
@@ -93,10 +104,20 @@ git remote remove main
 git remote remove origin
 git remote add origin https://github.com/traverse-fs/fssys.git
 git remote -v
-git pull origin main
+git pull origin main --allow-unrelated-histories
 git checkout main
 npm install --force
-cd ..
+cd glob-traverse-fs
+git init
+git remote -v
+git remote remove main
+git remote remove origin
+git remote add origin https://github.com/traverse-fs/glob-traverse-fs.git
+git remote -v
+git pull origin main --allow-unrelated-histories
+git checkout main
+npm install --force
+cd ../..
 cd get-imports
 git init
 git remote -v
